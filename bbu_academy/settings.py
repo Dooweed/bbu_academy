@@ -25,7 +25,8 @@ SECRET_KEY = 'nnb87jc!tv3a$hw=#pfkb+5y2v=65=on1^2%as@ejl8&zb$^n1'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-LOCAL = True
+LOCAL = environ.get("LOCAL")
+LOCAL = LOCAL if LOCAL else True
 
 ALLOWED_HOSTS = ["*"]
 
