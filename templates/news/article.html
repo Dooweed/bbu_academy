@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}<title>{{ article.title }}</title>{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative blurred-background">
+        <div class="fixed-bg" style="background-image: url({% if article.has_image %}{{ article.image.url }}{% else %}{% static 'images/blog.jpg' %}{% endif %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="breadcrumbs-wrap w-100">
+                    <ul class="breadcrumbs mb-0 list-unstyled d-inline-flex">
+                        {{ page.breadcrumbs| safe }}
+                    </ul><!-- Breadcrumbs -->
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="w-100 pt-50 pb-130">
+        <div class="container">
+
+            <div class="about-wrap5 w-100">
+                <div class="row align-items-center">
+                    <div class="col-md-12 col-sm-12 col-lg-12 pr-3 pr-sm-5 pl-3 pl-sm-5">
+
+                        <div class="page-title-inner text-center mb-5">
+                            <h2 class="mb-0 text-color7">{{ article.title }}</h2>
+                        </div>
+                            <script>
+                                window.addEventListener("load", function () {
+                                    const header = document.querySelector(".page-title-inner").querySelector("h2");
+                                    let length = header.innerHTML.length;
+                                    if(length > 150) {
+                                        header.style.fontSize = "2.4em";
+                                    } else if (length > 120) {
+                                        header.style.fontSize = "2.7em";
+                                    } else if (length > 90) {
+                                        header.style.fontSize = "3em";
+                                    } else if (length > 50) {
+                                        header.style.fontSize = "3.2em";
+                                    }
+                                }, false);
+                            </script>
+
+                        {{ article.text | safe }}
+
+                        <div class="row flex-wrap justify-content-between">
+                            {% if prev_article %}
+                                <a class="prev-article align-items-center row col-6 col-md-4 col-lg-3 pl-4" href="{% url 'news:article' prev_article.url %}" title="Предыдущая статья: '{{ prev_article.title }}'">
+                                    <p class="icon col-1 p-0 m-0"></p>
+                                    <p class="title col-11 pl-3 pr-0 m-0">{{ prev_article.title }}</p>
+                                </a>
+                                {% else %} <a class="prev-article align-items-center row col-6 col-md-4 col-lg-3" href="#"></a>
+                            {% endif %}
+                            {% if next_article %}
+                                <a class="next-article align-items-center row col-6 col-md-4 col-lg-3 pr-4" href="{% url 'news:article' next_article.url %}" title="Следующая статья: '{{ next_article.title }}'">
+                                    <p class="title col-11 pl-0 pr-3 m-0">{{ next_article.title }}</p>
+                                    <p class="icon col-1 p-0 m-0"></p>
+                                </a>
+                                {% else %} <a class="prev-article align-items-center row col-6 col-md-4 col-lg-3" href="#"></a>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% load news %}
+{% load courses %}
+
+{% other_courses %}
+
+{% load trainings %}
+
+{% recent_news article.id "#F4F4F4" %}
+
+{% category_news article.id article.category %}
+
+{% endblock %}

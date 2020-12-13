@@ -1,0 +1,331 @@
+.blurred-background .fixed-bg{
+  filter: brightness(40%);
+  -webkit-filter: brightness(40%);
+}
+
+.blurred-background .container .page-title-wrap .page-title-inner h2{
+  text-shadow: 1px 1px 2px #000000;
+}
+.blurred-background .container .page-title-wrap .breadcrumbs-wrap .breadcrumbs {
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.44);
+}
+
+
+
+.next-article .title, .prev-article .title {
+  font-weight: bold;
+  background-color: #fff;
+  font-size: 18px;
+  text-align: right;
+}
+@media screen and (max-width: 500px) {
+  .next-article .title, .prev-article .title {
+    font-size: 16px;
+  }
+}
+.prev-article .title {
+  text-align: left;
+}
+.next-article .icon::after {
+  text-align: center;
+  content: "\f182";
+  font-family: "metaicon", serif;
+    color: #40a6ff;
+}
+.prev-article .icon::before {
+  text-align: center;
+  content: "\f183";
+  font-family: "metaicon", serif;
+  color: #40a6ff;
+}
+
+
+
+header.fixed {
+  padding: 10px 0;
+  background-color: var(--color14);
+}
+
+
+
+
+@media (max-width: 1030px){
+  .post-list-style1.style4 .post-img4 {
+      flex: 0 0 47%;
+      max-width: 47%;
+      padding-right: 50px;
+  }
+  .post-list-style1.style4 .post-info4 {
+      flex: 0 0 calc(100% - 47%);
+      max-width: calc(100% - 47%);
+  }
+}
+@media (max-width: 760px){
+  .post-list-style1.style4 .post-img4 {
+      padding-right: 20px;
+  }
+}
+@media (max-width: 600px){
+  .post-list-style1.style4 {
+    justify-content: center;
+  }
+  .post-list-style1.style4 .post-img4 {
+      flex: 0 0 100%;
+      max-width: 80%;
+      padding-right: 0;
+  }
+  .post-list-style1.style4 .post-info4 {
+      flex: 0 0 100%;
+      max-width: 100%;
+  }
+}
+@media (max-width: 460px) {
+  .post-list-style1.style4 .post-img4 {
+    max-width: 100%;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+    .container {
+        padding: 0 15px
+    }
+}
+
+
+
+
+footer{
+    margin-top: 40px;
+}
+
+
+
+.course-price-text {
+    margin-top: 80px;
+    font-size: 1.6em;
+    font-weight: bold;
+}
+.course-price-text .course-price {
+    font-size: 1.5em;
+    font-weight: bolder;
+    color: var(--color7);
+}
+.sign-up-container {
+    margin-top: 30px;
+}
+.sign-up-container .sign-up-button {
+    color: #fff;
+}
+
+
+.owl-stage {
+    padding: 0!important;
+}
+.owl-nav {
+    margin: 14px 0 0 0;
+    display: flex;
+    justify-content: center;
+}
+.owl-nav span{
+    font-size: 44px;
+    margin: 5px;
+    font-weight: bold;
+}
+.chunk-card {
+    padding-right: 20px;
+}
+.chunk-card .background {
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    min-height: 240px;
+    width: 420px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    overflow: hidden;
+}
+.chunk-card .background.course-background {
+    border: 1px solid rgba(13,41,105, 0.7);
+}
+.chunk-card .background .pad {
+    width: 100%;
+    height: 240px;
+    top: 140px;
+    position: relative;
+    background-color: rgba(218,77,32, 0.7);
+    padding: 14px 20px 20px 20px;
+    transition: all 0.4s ease-in-out 0s;
+}
+.chunk-card .background .pad.course-pad {
+    background-color: rgba(13,41,105, 0.7);
+}
+.chunk-card .background .pad .date {
+    color: #B4B4B4;
+    font-size: 13px;
+    text-shadow: 0 0 6px #000;
+    opacity: 1;
+    transition: all 0.4s ease-in-out 0s;
+    position: absolute;
+    top: -24px;
+    left: 10px;
+    margin: 0;
+    font-weight: bold;
+    padding-bottom: 10px;
+}
+.chunk-card .background:hover .pad .date {
+    opacity: 0;
+}
+.chunk-card .background .pad .title {
+    width: 90%;
+    color: #fff;
+    font-size: 1.2em;
+    font-weight: bold;
+}
+.chunk-card .background .pad .description {
+    color: #001252;
+    font-size: 15px;
+    opacity: 0;
+    transition: all 0.4s ease-in-out 0s;
+    line-height: 1.4;
+}
+.chunk-card .background:hover .pad {
+    top: 0;
+    padding: 20px 20px 20px 20px;
+}
+.chunk-card .background:hover .pad .description {
+    color: #E9E9E9;
+    opacity: 1;
+}
+@media screen and (max-width: 460px){
+    .chunk-card {
+        padding-right: 0;
+    }
+    .chunk-card .background {
+        width: 100%;
+    }
+    .owl-nav {
+        margin: 14px 0 0 0;
+        display: flex;
+        justify-content: center;
+    }
+}
+
+
+
+
+.download-pdf {
+    color: #fff;
+    background-color: var(--color14);
+    padding: 8px 20px;
+    border-radius: 10px;
+    margin-bottom: 40px;
+}
+.download-pdf:hover{
+    background-color: rgba(13,41,105, 0.8);
+    color: #fff!important;
+}
+
+
+
+
+
+
+.responsive-menu ul li a.active,
+.main-menu li a.active{
+    color: var(--color7) !important;
+}
+.responsive-menu ul li a.active:hover,
+.main-menu li a.active:hover{
+    color: var(--color7) !important;
+}
+
+
+
+
+.contact-info-box {
+    padding: 10px 12px;
+    border-radius: 10px;
+}
+.contact-info-box-hover:hover {
+    background-color: #FFD7CA;
+}
+.contact-info-box-hover:hover i {
+    background-color: #1F5ABC;
+    color: #fff;
+}
+
+
+
+html {
+    scroll-behavior: smooth;
+}
+
+
+
+.training-info {
+    margin-bottom: 30px;
+}
+.training-info .property {
+    font-weight: bold;
+    color: var(--color14);
+    margin-bottom: 5px!important;
+}
+.training-info .property .value {
+    color: var(--color7)
+}
+
+.main-slider-item {
+    white-space: normal!important;
+    width: 80vw;
+}
+.main-slider-item .title {
+    font-size: 35px;
+    padding-bottom: 60px;
+}
+@media screen and (min-width: 1380px) {
+    .main-slider-item {
+        width: 45vw!important;
+        padding-right: 10vw;
+    }
+    .main-slider-item .title {
+        width: 45vw!important;
+    }
+}
+@media screen and (max-width: 768px) {
+    .main-slider-item .title {
+        font-size: 25px;
+    }
+    .main-slider-item .text {
+        font-size: 14px;
+    }
+}
+@media screen and (max-width: 510px) {
+    .main-slider-item .title {
+        padding: 40px 0 0 0;
+    }
+    .main-slider-item .text {
+        display: none;
+    }
+}
+
+
+
+
+.about-desc .single-header {
+    font-size: 2.6em;
+}
+.service-box-wrap2 .service-img2 {
+    max-height: 300px;
+}
+@media screen and (min-width: 1030px) {
+    .service-wrap2 > .row {
+        align-items: center;
+    }
+}
+@media screen and (max-width: 768px) {
+    .service-wrap2 > .row {
+        align-items: center;
+    }
+}

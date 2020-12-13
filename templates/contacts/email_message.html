@@ -1,0 +1,10 @@
+<p>
+    <b>Имя: </b><i>{{ name }}</i><br>
+    <b>Почта: </b><i>{{ email }}</i><br>
+</p>
+<p>
+    <b>Тема: </b><i>{% if subject %}{{ subject }}{% else %}-{% endif %}</i>
+</p>
+<p>
+    <b>Сообщение: </b><i>{{ message }}</i>
+</p>

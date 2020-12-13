@@ -1,0 +1,20 @@
+{% load static %}
+{% load thumbnail %}
+{% load modulo %}
+
+<div class="col-md-6 col-sm-12 col-lg-6">
+    <div class="service-box-wrap2 d-flex flex-wrap align-items-center mb-30">
+        <div class="service-img2 overflow-hidden">
+            <img class="img-fluid" src="{% if item.has_image %}{% thumbnail item.get_key.image 1430x1080 crop=True %}{% elif forloop.counter0|modulo:2 == 0 %}
+                                                                                                {% static 'images/resources/service-img2-1.jpg' %}
+                                                                                            {% else %}
+                                                                                                {% static 'images/resources/service-img2-2.jpg' %}
+                                                                                            {% endif %}" alt="{{ item.get_key.image.name }}">
+        </div>
+        <div class="service-info2 text-color12">
+            <h6 class="mb-3">{{ item.get_title }}</h6>
+            <p class="mb-0">{{ item.get_text| safe }}</p>
+            <a class="service-btn" href="{{ item.get_link }}" title="Подробнее">Подробнее</a>
+        </div>
+    </div>
+</div>

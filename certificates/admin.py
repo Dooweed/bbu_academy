@@ -1,0 +1,71 @@
+from django.contrib import admin
+
+from django.template.response import TemplateResponse
+from django.urls import path
+
+from .forms import CertificateAdminForm, MultiCertificateAdminForm
+from .models import Certificate
+from tools.colorsets import SUCCESS_COLORS, COMMON_COLORS
+
+
+# Register your models here.
+
+@admin.register(Certificate)
+class CertificateAdmin(admin.ModelAdmin):
+    list_display = ("full_name", "inn", "certificate_n", "date_received")
+    search_fields = ("inn", "certificate_n", "contract_n", "full_name", "date_received")
+    fields = ("contract_n", "certificate_n", "inn", "full_name", "date_received")
+
+    form = CertificateAdminForm
+
+    def get_urls(self):
+        urls = super().get_urls()
+        my_urls = [
+            path('add_multiple/', self.admin_site.admin_view(self.multiple_certificate_view), name="add_multiple"),
+        ]
+        return my_urls + urls
+
+    def multiple_certificate_view(self, request):
+        context = dict(
+            self.admin_site.each_context(request),
+            opts=self.opts,
+            add=True,
+            change=False,
+            save_as=self.save_as,
+            has_add_permission=self.has_add_permission,
+            has_change_permission=self.has_change_permission,
+            has_view_permission=self.has_view_permission,
+            has_delete_permission=self.has_delete_permission,
+            has_editable_inline_admin_formsets=False,
+            has_file_field=True,
+            show_save=True,
+            show_save_and_continue=False,
+            show_save_and_add_another=False,
+            title="Загрузить файл с сертификатами",
+        )
+
+        if request.method == "POST":
+            form = MultiCertificateAdminForm(request.POST, request.FILES)
+            if form.is_valid():
+                created, renewed, skipped, incorrect, report = form.save_certificates()
+                context['colors'] = SUCCESS_COLORS
+                context['help_text'] = f"""<b>Загрузка прошла успешно.</b><br>
+                                           <span style="margin-left: 10px">Создано записей: <b>{created}</b></span>
+                                           <span style="margin-left: 20px">Обновлено записей: <b>{renewed}</b></span>
+                                           <span style="margin-left: 20px">Пропущено записей: <b>{skipped}</b></span>
+                                           <span style="color: red; margin-left: 20px">Неверных сертификатов: <b>{incorrect}</b></span>
+                                           <span style="margin-left: 20px; text-decoration: underline;">Всего сертификатов: <b>{created+renewed+skipped+incorrect}</b></span>"""
+                if incorrect > 0:
+                    context['report'] = report
+                form = MultiCertificateAdminForm()
+            else:
+                context['colors'] = COMMON_COLORS
+                context['help_text'] = f"""Загрузка новых сертификатов может занять некоторое время"""
+
+        else:
+            form = MultiCertificateAdminForm()
+            context['colors'] = COMMON_COLORS
+            context['help_text'] = f"""Загрузка новых сертификатов может занять некоторое время"""
+
+        context['form'] = form
+        return TemplateResponse(request, "admin/certificates/multi-certificate-form.html", context)

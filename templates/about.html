@@ -1,0 +1,74 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static '/images/about.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{{ page.title }}</h2>
+                </div>
+                <div class="breadcrumbs-wrap w-100">
+                    <ul class="breadcrumbs mb-0 list-unstyled d-inline-flex">
+                        {{ page.breadcrumbs| safe }}
+                    </ul><!-- Breadcrumbs -->
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div id="particles1" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
+             data-count="8" data-speed="2" data-hide="770" data-image="assets"></div>
+        <div class="container">
+            <div class="about-wrap5 w-100">
+                <div class="row align-items-center">
+
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <p class="about-desc5 w-100 mt-40">
+                            <h2 class="mb-30">О нас</h2>
+                            <p class="mb-30">29 мая 2018 года учрежден <b>ООО «Центр подготовки и переподготовки
+                                    специалистов по таможенному оформлению при Ассоциации таможенных брокеров» (далее-
+                                    Центр)</b>, на который Ассоциация таможенных брокеров (АТБ) возложила выполнение
+                                таких задач
+                                АТБ, как пропаганда таможенного законодательства и эффективное консультирование
+                                участников ВЭД и таможенных брокеров – участников АТБ. Также Центр выполняет для АТБ и
+                                научно-исследовательскую работу.</p>
+
+                            <h5 class="mb-10">Обучение. Пропаганда таможенного законодательства.</h5>
+                            <p class="mb-10">На основании <a
+                                        href="http://atb.uz/wp-content/uploads/2018/08/Edinyj_portal_interaktivnyh_gosudarstvennyh-4.pdf"
+                                        target="_blank" style="text-decoration: underline;">Лицензии № KMO 0083</a> Центр осуществляет подготовку и
+                                переподготовку специалистов по таможенному оформлению.</p>
+                            <p class="mb-30"> Учитывая потребности участников внешне-экономической деятельности,
+                                таможенных брокеров и
+                                других субъектов, оказывающих услуги в около-таможенной сфере, Центр также проводит
+                                краткосрочные тренинги по актуальным темам.
+                                Для членов АТБ и партнерских ассоциаций и организаций Центр организовывает бесплатные
+                                круглые столы и семинары с участием таможенных органов и других государственных органов
+                                и организаций.
+                            </p>
+
+                            <h5>Научно-исследовательская работа</h5>
+                            <p class="mb-10">При Центре создан Департамент по научно-исследовательской работе, областью
+                                задач которого является:</p>
+                            <p class="mb-10">аналитическая работа для собственных потребностей Центра - постоянное совершенствование
+                               методов обучения, лекционных материалов и способов их подачи,</p>
+                            <p class="mb-10">проведение опросов и исследований в сфере взаимоотношений между участниками ВЭД,
+                                таможенными брокерами и государственными органами,</p>
+                            <p class="mb-10">   аналитическая работа по изучению действующего законодательства и передового зарубежного
+                                опыта в целях выработки предложений по совершенствованию действующего законодательства.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+{% endblock %}

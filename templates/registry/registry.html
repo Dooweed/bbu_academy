@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+
+<script type="text/javascript" src="{% static 'js/jquery.min.js' %}"></script>
+
+<style>
+    .contact-form-wrap{
+        padding-left: 0;
+    }
+    .fill-btn2:hover, .fill-btn2:focus{
+        color: var(--color7);
+    }
+</style>
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/trainigs.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{{ page.title }}</h2>
+                </div>
+                <div class="breadcrumbs-wrap w-100">
+                    <ul class="breadcrumbs mb-0 list-unstyled d-inline-flex">
+                        {{ page.breadcrumbs| safe }}
+                    </ul><!-- Breadcrumbs -->
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div id="particles1" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
+             data-count="8" data-speed="2" data-hide="770" data-image="assets"></div>
+        <div class="container">
+            <div class="about-wrap5 w-100">
+                <div class="row align-items-center">
+
+                    <div class="col-md-12 col-sm-12 col-lg-12">
+                        <p class="about-desc5 w-100 mt-40">
+                        <h2 class="mb-30 text-center">Поиск специалистов по ИНН</h2>
+
+                        <div class="row justify-content-center">
+                            <div class="col-sm-6 col-md-4 p-sm-0">
+                                <div class="contact-form-wrap">
+                                    <form id="search-form" action="{% url 'registry:certificate' %}" method="GET">
+                                        {{ form.inn }}
+                                    </form>
+                                    {% if not_found %}<small class="text-danger">Сертификата по данному ИНН не найдено</small>{% endif %}
+                                </div>
+                            </div>
+                            <div class="pl-3">
+                                <button id="search" form="search-form" type="submit" class="theme-btn fill-btn2 mt-20">поиск</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+
+
+{% load news %}
+{% load courses %}
+
+{% other_courses %}
+{% recent_news %}
+
+{% endblock %}

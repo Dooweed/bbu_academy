@@ -1,0 +1,19 @@
+{% load modulo %}
+
+<div class="service-box-wrap">
+    <div class="service-box">
+        {% if forloop.counter0|modulo:3|add:1 == 1 %}
+            {% include 'main_page/secondary_slider/icon-1.html' %}
+        {% elif forloop.counter0|modulo:3|add:1 == 2 %}
+            {% include 'main_page/secondary_slider/icon-2.html' %}
+        {% else %}
+            {% include 'main_page/secondary_slider/icon-3.html' %}
+        {% endif %}
+        <div class="service-info">
+            <i class="font-style-normal">{{ forloop.counter1|stringformat:"02d" }}</i>
+            <h3 class="mb-0">{{ item.get_title }}</h3>
+            <p class="mb-0">{{ item.get_text| safe }}</p>
+            <a class="service-btn" href="{{ item.get_link }}" title="">ПОДРОБНЕЕ</a>
+        </div>
+    </div>
+</div>

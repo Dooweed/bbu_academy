@@ -1,0 +1,29 @@
+{% load static %}
+{% load cropping %}
+
+<div class="widget style2 mt-45 w-100">
+    <h3 class="position-relative"><a href="{% url 'trainings:trainings' %}">Тренинги</a></h3>
+    <div class="mini-pst-wrap">
+
+        {% for training in trainings %}
+
+            <div class="mini-pst brd-rd15 d-flex flex-wrap w-100">
+                <div class="mini-img brd-rd10 overflow-hidden">
+                    <a href="{% url 'trainings:training' training.url %}" title="">
+                        <img
+                                src="{% if training.has_image %}{% cropped_thumbnail training 'sidebar_size' %}{% else %}{% static 'images/red-square.png' %}{% endif %}"
+                                alt="Recent Image 1">
+                    </a>
+                </div>
+                <div class="mini-inf">
+                    <h4 class="mb-0">
+                        <a style="font-size: 13px" href="{% url 'trainings:training' training.url %}" title="{{ training.title }}">{{ training.short_title }}</a>
+                    </h4>
+                    <span class="d-inline-block"><a href="{% url 'trainings:training' training.url %}" title="">Подробнее</a></span>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>

@@ -1,0 +1,126 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/contact.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{{ page.title }}</h2>
+                </div>
+                <div class="breadcrumbs-wrap w-100">
+                    <ul class="breadcrumbs mb-0 list-unstyled d-inline-flex">
+                        {{ page.breadcrumbs| safe }}
+                    </ul><!-- Breadcrumbs -->
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="w-100 pt-50 pb-86">
+        <div class="container">
+            <div class="contact-wrap w-100">
+                <div class="row align-items-center">
+                    <div class="col-md-5 col-sm-12 col-lg-4">
+                        <div class="get-in-touch-wrap mt-40 text-white w-100 overflow-hidden brd-rd20"
+                             style="background-image: url({% static 'images/46230.jpg' %});">
+                            <h2 class="mb-0">Локация</h2>
+                            <div class="contact-info-box mt-20 d-flex flex-wrap w-100">
+                                <i class="fas fa-map-marker-alt"></i>
+                                <div class="contact-info-inner">
+                                    <p class="mb-0">{{ address }}</p>
+                                </div>
+                            </div>
+                            <a href="mailto:{{ email }}" class="contact-info-box contact-info-box-hover mt-20 d-flex flex-wrap w-100">
+                                <i class="fas fa-envelope"></i>
+                                <div class="contact-info-inner">
+                                    <h4 class="mb-0">{{ email }}</h4>
+                                </div>
+                            </a>
+                            <a href="tel:{{ phone1 }}" class="contact-info-box contact-info-box-hover mt-20 d-flex flex-wrap w-100">
+                                <i class="fas fa-mobile-alt"></i>
+                                <div class="contact-info-inner">
+                                    <h4 class="mb-0">{{ phone1 }}</h4>
+                                </div>
+                            </a>
+                            <a href="https://t.me/{% if telegram|slice:":1" == "@" %}{{ telegram|slice:"1:" }}{% else %}{{ telegram }}{% endif %}" class="contact-info-box contact-info-box-hover mt-20 d-flex flex-wrap w-100">
+                                <i class="fab fa-telegram"></i>
+                                <div class="contact-info-inner">
+                                    <h4 class="mb-0">{% if telegram|slice:":1" == "@" %}{{ telegram }}{% else %}@{{ telegram }}{% endif %}</h4>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="col-md-7 col-sm-12 col-lg-8">
+                        <div class="contact-form-wrap contact-form mt-40 w-100">
+                            <h2 class="mb-0">Отправить сообщение</h2>
+                            <form class="w-100" method="POST" id="email-form">
+                                {% csrf_token %}
+
+                                <div class="form-group">
+                                    <div class="response"></div>
+                                </div>
+
+                                <div class="row mrg20">
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
+                                        <div class="form-group field-contactform-name required">
+                                            <label class="control-label" for="contactform-name">Ваше имя</label>
+                                            {{ form.name }}
+
+                                            <p class="help-block help-block-error">{{ form.name.errors }}</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6 col-sm-6 col-lg-6">
+
+                                        <div class="form-group field-contactform-email required">
+                                            <label class="control-label" for="contactform-email">Ваша почта</label>
+                                            {{ form.email }}
+
+                                            <p class="help-block help-block-error">{{ form.email.errors }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12 col-sm-12 col-lg-12">
+                                        <div class="form-group field-contactform-subject required">
+                                            <label class="control-label" for="contactform-subject">Тема сообщения</label>
+                                            {{ form.subject }}
+
+                                            <p class="help-block help-block-error">{{ form.subject.errors }}</p>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="col-md-12 col-sm-12 col-lg-12">
+                                        <div class="form-group field-contactform-body required">
+                                            <label class="control-label" for="contactform-body">Текст сообщения</label>
+                                            {{ form.message }}
+
+                                            <p class="help-block help-block-error">{{ form.message.errors }}</p>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <button type="submit" class="theme-btn fill-btn2 mt-20" name="contact-button">Отправить</button>
+                                    </div>
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- Contact Wrap -->
+            <div id="map" class="contact-map w-100 mt-50 brd-rd20">
+                <script type="text/javascript" charset="utf-8" async
+                        src="https://api-maps.yandex.ru/services/constructor/1.0/js/?um=constructor%3A7ef554b9c9f0facd2e215884acc17bde1680d8ab4a9c8565d844b4ac7fdf0514&amp;width=100%25&amp;height=400&amp;lang=ru_RU&amp;scroll=true"></script>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

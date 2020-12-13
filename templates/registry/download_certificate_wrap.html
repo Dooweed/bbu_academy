@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="ru">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+    <base href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ request.path }}">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <style>
+        .wkhtmltopdf-flex {
+            display: -webkit-box; /* wkhtmltopdf uses this one */
+        }
+        .wkhtmltopdf-justify-content-end {
+            -webkit-box-pack: end; /* wkhtmltopdf uses this one */
+        }
+
+        .row > div {
+            -webkit-box-flex: 1;
+            -webkit-flex: 1;
+            flex: 1;
+        }
+        .wkhtmltopdf-mt-50 {
+            margin-top: 50px;
+        }
+
+        .row > div:last-child {
+            margin-right: 0;
+        }
+    </style>
+</head>
+<body>
+    {% include 'registry/certificate.html' %}
+</body>
+</html>

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block title %}
+    <title>Сертификат</title>
+{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/trainigs.jpg' %});"></div>
+        <div class="container">
+            <div style="padding-top: 60px" class="page-title-wrap text-center w-100 d-inline-block"></div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div id="particles1" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
+             data-count="8" data-speed="2" data-hide="770" data-image="assets"></div>
+        <div class="container">
+            <div class="about-wrap5 w-100">
+                {% include 'registry/certificate.html' %}
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}

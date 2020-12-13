@@ -1,0 +1,18 @@
+{% load static %}
+{% load thumbnail %}
+
+<div class="testi-box">
+    <div class="testi-info">
+        <img class="img-fluid rounded-circle" src="{% if item.has_image %}{% thumbnail item.image 150x150 crop=True %}{% else %}{% static 'images/anonymus-avatar.png' %}{% endif %}" alt="Аватар пользователя">
+        <div class="testi-info-inner">
+            <h4 class="mb-0">{{ item.name }}</h4>
+            <span class="d-block">{{ item.status }}</span>
+        </div>
+    </div>
+    <p class="mb-0">{{ item.text }}</p>
+    <span class="d-block star-rating">
+        {% for class in item.rating_classes %}
+            <i class="metaicon-star-in-black-of-five-points-shape {{ class }}"></i>
+        {% endfor %}
+    </span>
+</div>

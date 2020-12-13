@@ -1,0 +1,34 @@
+from adminsortable2.admin import SortableAdminMixin
+from ckeditor.widgets import CKEditorWidget
+from django.contrib import admin
+
+# Register your models here.
+from django import forms
+from image_cropping import ImageCroppingMixin
+
+from courses.models import Course
+
+class CourseForm(forms.ModelForm):
+    class Meta:
+        fields = ("title", "url", "active", "image", "sidebar_size", "thumbnail_size", "price", "short_text", "meta_description", "text")
+        widgets = {
+            'title': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
+            'url': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
+            'short_text': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
+            'text': CKEditorWidget(),
+            'price': forms.NumberInput(),
+            "meta_description": forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
+        }
+
+
+@admin.register(Course)
+class CourseAdmin(SortableAdminMixin, ImageCroppingMixin, admin.ModelAdmin):
+    list_display = ("title", "url", "has_image", "short_text", "price", "sorting")
+    search_fields = ("title", "short_text", "text")
+    fieldsets = (
+        (None, {"fields": ("title", "url", "active", "price")}),
+        ("Описание", {"fields": ("text", "short_text", "meta_description")}),
+        ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size")}),
+    )
+    prepopulated_fields = {'url': ('title',), }
+    form = CourseForm

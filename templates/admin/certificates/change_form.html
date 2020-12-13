@@ -1,0 +1,12 @@
+{% extends "admin/change_form.html" %}
+
+{% block field_sets %}
+    {% if add %}
+        <div style="margin: 10px 0 20px 0;">
+            <a style="background: #808080; padding: 10px 15px; border: none; border-radius: 4px; color: #fff; cursor: pointer;" href="{% url 'admin:add_multiple' %}">Загрузить сертификаты в Excel файле</a>
+        </div>
+    {% endif %}
+{% for fieldset in adminform %}
+  {% include "admin/includes/fieldset.html" %}
+{% endfor %}
+{% endblock %}

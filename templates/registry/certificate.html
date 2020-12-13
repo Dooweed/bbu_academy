@@ -1,0 +1,85 @@
+{% load static %}
+
+<div class="row align-items-center justify-content-center">
+
+    <div class="col-md-8 word-document" style="margin-top: 50px;">
+        {% if not pdf %}
+            <div class="d-flex justify-content-end">
+                <a class="download-pdf" href="{% url 'registry:download_pdf_certificate' certificate.inn %}">Скачать PDF сертификат</a>
+            </div>
+        {% endif %}
+        <div class="word-sample">
+            <p style="text-align: center; font-weight: bold; margin-bottom: 3px;">
+                O’ZBEKISTON RESPUBLIKASI
+            </p>
+            <p style="text-align: center; font-weight: bold; margin-bottom: 10px;">
+                РЕСПУБЛИКА УЗБЕКИСТАН
+            </p>
+            <p class="text-center">
+                <img src="{% static 'images/logo.png' %}" alt="BBU" width="220">
+            </p>
+            <br/>
+            <p class="text-center">
+                BOJXONA BROKERLARI UYUSHMASI QOSHIDAGI
+            </p>
+            <p class="text-center">
+                BOJXONA RASMIYLASHTIRUVI BO'YICHA MUTAXASSISLARNI TAYYORLASH VA QAYTA
+                TAYYORLASH MARKAZI
+            </p>
+            <p class="text-center">
+                ЦЕНТР ПОДГОТОВКИ И ПЕРЕПОДГОТОВКИ СПЕЦИАЛИСТОВ ПО ТАМОЖЕННОМУ ОФОРМЛЕНИЮ ПРИ АССОЦИАЦИИ ТАМОЖЕННЫХ БРОКЕРОВ
+            </p>
+
+            <p class="text-center">
+                <strong><em>S E R T I F I K A T</em></strong>
+            </p>
+            <p class="text-center">
+                <strong><em>С Е Р Т И Ф И К А Т</em></strong>
+            </p>
+            <p class="text-center">
+                Bojxona brokerlari uyushmasi qoshidagi bojxona rasmiylashtiruvi bo'yicha
+                mutaxassislarni tayyorlash va qayta tayyorlash markazi ushbu sertifikatini
+                berayotib haqiqatdan ham fuqaro
+            </p>
+            <p class="text-center">
+                Настоящим Центр по подготовке и переподготовке специалистов по таможенному
+                оформлению при Ассоциации таможенных брокеров подтверждает, что гражданин
+                (ка)
+            </p>
+            <p style="font-size: 26px;" class="student-name text-center">
+                <em>{{ certificate.full_name }}</em>
+            </p>
+            <p class="text-center">
+                "Bojxona rasmiylashtiruvi mutaxassislarini tayyorlash" o`quv dasturini
+                tinglagani va yakuniy testni muvaffaqiyatli topshirganini tasdiqlaydi.    <em><u></u></em>
+            </p>
+            <p class="text-center">
+                прослушал(а) учебный курс «Подготовка специалистов по таможенному
+                оформлению» и успешно сдал(а) итоговый тест.
+            </p>
+
+            <div class="row wkhtmltopdf-flex">
+                <div class="col-sm-6 order-2 order-sm-0 wkhtmltopdf-mt-50">
+                    <p class="mt-50">
+                        Директор Шамсутдинов Р.М.
+                    </p>
+                    <p>
+                        Direktor _______________
+                    </p>
+                    <p>
+                        №<em>{{ certificate.inn }} {{ certificate.get_month }}{{ certificate.get_short_year }} {{ certificate.certificate_n }}</em> М.Ў./М.П.
+                    </p>
+                    <p>
+                        Sana / Дата: <em><u>{{ certificate.dotted_date }} y./г.</u></em>
+                    </p>
+                </div>
+                <div class="col-sm-6 d-flex justify-content-center justify-content-sm-end order-1 order-sm-0 wkhtmltopdf-flex wkhtmltopdf-justify-content-end">
+                    <img style="max-height: 220px; margin: 10px;" src="{% url 'registry:qr_code' certificate.inn %}" alt="">
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
