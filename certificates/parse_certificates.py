@@ -1,8 +1,7 @@
+from datetime import date
 from typing import List
 
 import xlrd
-from pprint import pprint
-from datetime import date
 
 NUMBER_OF_CERTIFICATE_COLS = 8
 NUMBER_OF_CERTIFICATE_FIELDS = 5

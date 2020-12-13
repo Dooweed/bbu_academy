@@ -1,16 +1,13 @@
 from django.db import models
+# Create your models here.
+from django.urls import reverse
 
 from bbu_academy.settings import LANGUAGES
 from courses.models import Course
+from news.models import Article
 from settings.models import StaticInformation
 from tools.image_mixin import ImageMixin
 from trainings.models import Training
-from news.models import Article
-
-
-# Create your models here.
-from django.template.loader import render_to_string
-from django.urls import reverse
 
 REFERENCE_CHOICES = (
     ("news_reference", "Новости"),
