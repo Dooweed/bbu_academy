@@ -9,8 +9,12 @@ def main_view(request):
     page = Page.objects.get(name="index")
 
     slides = MainSlider.objects.all()
-    main_slide1 = slides[0]
-    main_slide2 = slides[1]
+    if slides.exists():
+        main_slide1 = slides[0]
+        main_slide2 = slides[1]
+    else:
+        main_slide1 = None
+        main_slide2 = None
 
     secondary_slides = SecondarySlider.objects.filter(active=True)
 
