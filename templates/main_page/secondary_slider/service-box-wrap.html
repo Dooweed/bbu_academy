@@ -1,4 +1,5 @@
 {% load modulo %}
+{% load i18n %}
 
 <div class="service-box-wrap">
     <div class="service-box">
@@ -13,7 +14,7 @@
             <i class="font-style-normal">{{ forloop.counter1|stringformat:"02d" }}</i>
             <h3 class="mb-0">{{ item.get_title }}</h3>
             <p class="mb-0">{{ item.get_text| safe }}</p>
-            <a class="service-btn" href="{{ item.get_link }}" title="">ПОДРОБНЕЕ</a>
+            <a class="service-btn text-uppercase" href="{{ item.get_link }}" title="">{% translate "Подробнее" %}</a>
         </div>
     </div>
 </div>

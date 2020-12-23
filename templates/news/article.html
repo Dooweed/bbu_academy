@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block title %}<title>{{ article.title }}</title>{% endblock %}
 
@@ -52,14 +53,14 @@
 
                         <div class="row flex-wrap justify-content-between">
                             {% if prev_article %}
-                                <a class="prev-article align-items-center row col-6 col-md-4 col-lg-3 pl-4" href="{% url 'news:article' prev_article.url %}" title="Предыдущая статья: '{{ prev_article.title }}'">
+                                <a class="prev-article align-items-center row col-6 col-md-4 col-lg-3 pl-4" href="{% url 'news:article' prev_article.url %}" title="{% translate "Предыдущая статья" %}: '{{ prev_article.title }}'">
                                     <p class="icon col-1 p-0 m-0"></p>
                                     <p class="title col-11 pl-3 pr-0 m-0">{{ prev_article.title }}</p>
                                 </a>
                                 {% else %} <a class="prev-article align-items-center row col-6 col-md-4 col-lg-3" href="#"></a>
                             {% endif %}
                             {% if next_article %}
-                                <a class="next-article align-items-center row col-6 col-md-4 col-lg-3 pr-4" href="{% url 'news:article' next_article.url %}" title="Следующая статья: '{{ next_article.title }}'">
+                                <a class="next-article align-items-center row col-6 col-md-4 col-lg-3 pr-4" href="{% url 'news:article' next_article.url %}" title="{% translate "Следующая статья" %}: '{{ next_article.title }}'">
                                     <p class="title col-11 pl-0 pr-3 m-0">{{ next_article.title }}</p>
                                     <p class="icon col-1 p-0 m-0"></p>
                                 </a>

@@ -1,5 +1,6 @@
 from django.template.loader import render_to_string
 from django import template
+from django.utils.translation import gettext as _
 
 from ..models import Article
 
@@ -22,9 +23,9 @@ def recent_news(current_id=None, bg_color="#FFF"):
     news = Article.objects.filter(status="published")
     if current_id is not None:
         news = news.exclude(id=current_id)
-        slider_title = "Читайте также"
+        slider_title = _("Читайте также")
     else:
-        slider_title = "Свежие новости"
+        slider_title = _("Свежие новости")
     news = news[:4]
 
     context = {
@@ -44,7 +45,7 @@ def category_news(current_id, category, bg_color="#FFF"):
     news = Article.objects.filter(status="published", category__name=category).exclude(id=current_id)[:4]
 
     context = {
-        "slider_title": f"Ещё новости из категории \"{category}\"",
+        "slider_title": _(f"Ещё новости из категории \"{category}\""),
         "news": news,
         "bg_color": bg_color,
         "unique_id": "category"

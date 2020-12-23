@@ -14,7 +14,7 @@ class TrainingForm(forms.ModelForm):
         widgets = {
             'title': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
             'url': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
-            'location': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
+            # 'location': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
             'short_text': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
             'text': CKEditorWidget(),
             "meta_description": forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
@@ -23,10 +23,10 @@ class TrainingForm(forms.ModelForm):
 
 @admin.register(Training)
 class TrainingAdmin(SortableAdminMixin, ImageCroppingMixin, admin.ModelAdmin):
-    list_display = ("title", "url", "short_text", "date_arranged", "location", "sorting")
+    list_display = ("title", "url", "short_text", "sorting")
     search_fields = ("title", "short_text", "location", "text")
     fieldsets = (
-        (None, {"fields": ("title", "url", "active", "date_arranged", "location")}),
+        (None, {"fields": ("title", "url", "active")}),
         ("Описание", {"fields": ("text", "short_text", "meta_description")}),
         ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size")}),
     )

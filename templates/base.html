@@ -3,6 +3,7 @@
 <head>
     <!-- Template loaders -->
     {% load static %}
+    {% load i18n %}
 
     <!-- Meta-tags -->
 
@@ -58,7 +59,7 @@
                     <nav class="nav-wrap d-flex flex-row align-items-center justify-content-between flex-nowrap">
                         <div class="menu-wrap d-flex flex-row justify-content-start flex-nowrap w-100">
                             <div class="logo">
-                                <a class="desktop-logo" href="{% url 'index' %}" title="Главная">
+                                <a class="desktop-logo" href="{% url 'index' %}" title="{{ page.title }}">
                                     <img class="default-logo img-fluid" src="{% static '/images/logo-w.png' %}" alt="Logo"
                                          srcset="{% static '/images/logo-w.png' %}" width="160">
                                     <img class="sticky-logo img-fluid" src="{% static '/images/logo.png' %}" alt="Logo"
@@ -72,28 +73,33 @@
                             </div><!-- Menu -->
                         </div><!-- Menu Wrap -->
                         <div class="menu-right-icons d-flex flex-row align-items-center justify-content-end flex-nowrap">
-                            <span class="search-btn"></span>
+                            <div class="languages d-flex">
+                                <a href="{% url 'set_language' 'ru' %}" class="language-item {% if request.LANGUAGE_CODE == "ru" %}active{% endif %}">
+                                    <img src="{% static 'images/flag-ru.png' %}" alt="Флаг России">
+                                </a>
+                                <a href="{% url 'set_language' 'uz' %}" class="language-item {% if request.LANGUAGE_CODE == "uz" %}active{% endif %}">
+                                    <img src="{% static 'images/flag-uz.png' %}" alt="Флаг Узбекистана">
+                                </a>
+                            </div>
                         </div>
                     </nav>
                 </div><!-- Header Nav Wrap -->
             </div>
         </header><!-- Header -->
-        <div class="header-search d-flex flex-wrap justify-content-center align-items-center w-100">
-            <span class="search-close-btn"><i class="metaicon-cancel-music"></i></span>
-            <form>
-                <input type="text" placeholder="Поиск...">
-            </form>
-        </div><!-- Header Search -->
+{#        <div class="header-search d-flex flex-wrap justify-content-center align-items-center w-100">#}
+{#            <span class="search-close-btn"><i class="metaicon-cancel-music"></i></span>#}
+{#            <form>#}
+{#                <input type="text" placeholder="Поиск...">#}
+{#            </form>#}
+{#        </div><!-- Header Search -->#}
         <div class="responsive-header w-100">
             <div class="responsive-topbar w-100">
                 <div class="container d-flex flex-wrap justify-content-between">
                     <div class="logo">
-                        <a href="#" title="Home"><img class="img-fluid" src="{% static '/images/logo.png' %}" width="120"
-                                                                              alt="Logo"></a>
+                        <a href="#" title="Home"><img class="img-fluid" src="{% static '/images/logo.png' %}" width="120" alt="Logo"></a>
                     </div><!-- Logo -->
                     <div class="menu-right-icons text-white d-flex flex-row align-items-center justify-content-end flex-nowrap">
                         <span class="responsive-menu-btn"><i class="fas fa-align-justify"></i></span>
-                        <span class="search-btn"></span>
                     </div>
                 </div>
             </div>
@@ -101,8 +107,24 @@
                 <div class="logo d-inline-block w-100">
                     <a href="#" title="Главная страница"><img class="img-fluid" src="{% static '/images/logo.png' %}" width="120" alt="Logo"></a>
                 </div>
+
                 <ul class="mb-0 list-unstyled">
                     {{ page_menu| safe }}
+                </ul>
+
+                <ul class="language-list-small mb-0 list-unstyled">
+                    <li class="language-item-small">
+                        <a href="{% url 'set_language' 'ru' %}" class="language-item {% if request.LANGUAGE_CODE == "ru" %}active{% endif %}">
+                            <img src="{% static 'images/flag-ru.png' %}" alt="Флаг России">
+                            Русский
+                        </a>
+                    </li>
+                    <li class="language-item-small">
+                        <a href="{% url 'set_language' 'uz' %}" class="language-item {% if request.LANGUAGE_CODE == "uz" %}active{% endif %}">
+                            <img src="{% static 'images/flag-uz.png' %}" alt="Флаг Узбекистана">
+                            O'zbek
+                        </a>
+                    </li>
                 </ul>
             </div><!-- Responsive Menu -->
         </div><!-- Responsive Header -->
@@ -119,23 +141,22 @@
                     <div class="footer-content-wrap align-items-center d-flex justify-content-between flex-wrap w-100">
                         <div class="footer-content-inner">
                             <ul class="mb-0 d-flex list-unstyled">
-                                <li class="text-white"><a href="tel:{{ phone1 }}" title="Позвонить на номер {{ phone1 }}"><i
+                                <li class="text-white"><a href="tel:{{ phone1 }}" title="{% translate "Позвонить на номер" %} {{ phone1 }}"><i
                                         class="fas fa-phone-alt text-color15"></i>{{ phone1 }}</a></li>
-                                <li class="text-white"><i class="far fa-map text-color15"></i>23 Фаргона Йули, Яшнабадский
-                                    район
+                                <li class="text-white"><i class="far fa-map text-color15"></i>{{ address }}
                                 </li>
                             </ul>
                             <ul class="mb-0 d-flex list-unstyled">
-                                <li class="text-white"><a href="tel:{{ phone2 }}" title="Позвонить на номер {{ phone2 }}"><i
+                                <li class="text-white"><a href="tel:{{ phone2 }}" title="{% translate "Позвонить на номер" %} {{ phone2 }}"><i
                                         class="fas fa-phone-alt text-color15"></i>{{ phone2 }}</a></li>
-                                <li class="text-white"><a href="tel:{{ phone3 }}" title="Позвонить на номер {{ phone3 }}"><i
+                                <li class="text-white"><a href="tel:{{ phone3 }}" title="{% translate "Позвонить на номер" %} {{ phone3 }}"><i
                                         class="fas fa-phone-alt text-color15"></i>{{ phone3 }}</a></li>
                             </ul>
                         </div>
                         <div class="scl-links2">
-                            <a href="https://t.me/{% if telegram|slice:":1" == "@" %}{{ telegram|slice:"1:" }}{% else %}{{ telegram }}{% endif %}" title="Перейти в наш telegram" target="_blank"><i
-                                    class="fab fa-telegram"></i></a>
-                            <a href="mailto:{{ email }}" title="Написать сообщение на нашу почту" target="_blank"><i
+                            <a href="https://t.me/{% if telegram|slice:":1" == "@" %}{{ telegram|slice:"1:" }}{% else %}{{ telegram }}{% endif %}"
+                               title="{% translate "Перейти в наш telegram" %}" target="_blank"><i class="fab fa-telegram"></i></a>
+                            <a href="mailto:{{ email }}" title="{% translate "Написать сообщение на нашу почту" %}" target="_blank"><i
                                     class="fas fa-envelope"></i></a>
                         </div>
                     </div><!-- Footer Content Wrap -->

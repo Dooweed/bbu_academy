@@ -1,5 +1,6 @@
 from django import template
 from django.template.loader import render_to_string
+from django.utils.translation import gettext as _
 
 from ..models import Course
 
@@ -22,9 +23,9 @@ def other_courses(current_id=None, bg_color="#FFF"):
     courses = Course.objects.filter(active=True)
     if current_id is not None:
         courses = courses.exclude(id=current_id)
-        slider_title = "У нас есть и другие курсы"
+        slider_title = _("У нас есть и другие курсы")
     else:
-        slider_title = "Попробуйте наши курсы"
+        slider_title = _("Попробуйте наши курсы")
     courses = courses[:NUMBER_OF_COURSES]
 
     context = {

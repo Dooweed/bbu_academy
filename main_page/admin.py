@@ -69,7 +69,7 @@ class StaticBlockAdmin(admin.ModelAdmin):
 
 @admin.register(Review)
 class ReviewAdmin(SortableAdminMixin, admin.ModelAdmin):
-    list_display = ("name", "status", "active", "rating", "has_image", "sorting")
+    list_display = ("name", "status", "active", "rating", "language", "has_image", "sorting")
     list_editable = ("active", )
 
     form = ReviewForm

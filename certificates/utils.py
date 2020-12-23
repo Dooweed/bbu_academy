@@ -1,7 +1,10 @@
 from datetime import date
+from io import BytesIO
 from typing import List
 
 import xlrd
+import xlwt
+from xlwt import XFStyle, Borders, easyxf, easyfont, Font
 
 NUMBER_OF_CERTIFICATE_COLS = 8
 NUMBER_OF_CERTIFICATE_FIELDS = 5
@@ -147,3 +150,49 @@ def parse_excel(file):
     print(f"Сломаны: {len(broken_certificates)}\t\tНормальные: {len(correct_certificates)}")
 
     return correct_certificates, broken_certificates
+
+def build_certificate_excel(queryset):
+    workbook = xlwt.Workbook()
+    sheet = workbook.add_sheet("Сертификаты")
+
+    title_style = XFStyle()
+    borders = Borders()
+    borders.bottom = Borders.MEDIUM
+    borders.right = Borders.MEDIUM
+    borders.left = Borders.MEDIUM
+    title_style.borders = borders
+    title_style.font = easyfont(f"bold on, height {12*20};")
+
+    font_style = XFStyle()
+    font_style.font = easyfont(f"height {12*20};")
+
+    sheet.write(0, 1, "ФИО", title_style)
+    sheet.write(0, 2, "№ Договора", title_style)
+    sheet.write(0, 3, "ИНН", title_style)
+    sheet.write(0, 4, "День", title_style)
+    sheet.write(0, 5, "Месяц", title_style)
+    sheet.write(0, 6, "Год", title_style)
+    sheet.write(0, 7, "Сертификат №", title_style)
+
+    for r, obj in enumerate(queryset):
+        n = r+1
+        sheet.write(n, 0, str(n), font_style)
+        sheet.write(n, 1, str(obj.full_name), font_style)
+        sheet.write(n, 2, str(obj.contract_n), font_style)
+        sheet.write(n, 3, str(obj.inn), font_style)
+        sheet.write(n, 4, str(obj.date_received.year), font_style)
+        sheet.write(n, 5, str(obj.date_received.month), font_style)
+        sheet.write(n, 6, str(obj.date_received.day), font_style)
+        sheet.write(n, 7, str(obj.certificate_n), font_style)
+
+    sheet.col(0).width = 1400
+    sheet.col(1).width = 14000
+    sheet.col(2).width = 4500
+    sheet.col(3).width = 4000
+    sheet.col(7).width = 5500
+
+    file = BytesIO()
+    workbook.save(file)
+    return file
+
+

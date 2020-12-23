@@ -1,8 +1,9 @@
 {% load static %}
 {% load cropping %}
+{% load i18n %}
 
 <div class="widget style2 mt-45 w-100">
-    <h3 class="position-relative"><a href="{% url 'trainings:trainings' %}">Тренинги</a></h3>
+    <h3 class="position-relative"><a href="{% url 'trainings:trainings' %}">{% translate "Тренинги" %}</a></h3>
     <div class="mini-pst-wrap">
 
         {% for training in trainings %}
@@ -19,7 +20,7 @@
                     <h4 class="mb-0">
                         <a style="font-size: 13px" href="{% url 'trainings:training' training.url %}" title="{{ training.title }}">{{ training.short_title }}</a>
                     </h4>
-                    <span class="d-inline-block"><a href="{% url 'trainings:training' training.url %}" title="">Подробнее</a></span>
+                    <span class="d-inline-block"><a href="{% url 'trainings:training' training.url %}" title="">{% translate "Подробнее" %}</a></span>
                 </div>
             </div>
 

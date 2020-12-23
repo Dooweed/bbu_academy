@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block main %}
 
@@ -28,9 +29,7 @@
             <div class="contact-wrap w-100">
                 <div class="row align-items-center">
                     <div class="col-md-5 col-sm-12 col-lg-4">
-                        <div class="get-in-touch-wrap mt-40 text-white w-100 overflow-hidden brd-rd20"
-                             style="background-image: url({% static 'images/46230.jpg' %});">
-                            <h2 class="mb-0">Локация</h2>
+                        <div class="get-in-touch-wrap mt-40 text-white w-100 overflow-hidden brd-rd20" style="background-image: url({% static 'images/46230.jpg' %});">
                             <div class="contact-info-box mt-20 d-flex flex-wrap w-100">
                                 <i class="fas fa-map-marker-alt"></i>
                                 <div class="contact-info-inner">
@@ -59,7 +58,7 @@
                     </div>
                     <div class="col-md-7 col-sm-12 col-lg-8">
                         <div class="contact-form-wrap contact-form mt-40 w-100">
-                            <h2 class="mb-0">Отправить сообщение</h2>
+                            <h2 class="mb-0">{% translate "Отправить сообщение" %}</h2>
                             <form class="w-100" method="POST" id="email-form">
                                 {% csrf_token %}
 
@@ -70,7 +69,7 @@
                                 <div class="row mrg20">
                                     <div class="col-md-6 col-sm-6 col-lg-6">
                                         <div class="form-group field-contactform-name required">
-                                            <label class="control-label" for="contactform-name">Ваше имя</label>
+                                            <label class="control-label" for="contactform-name">{% translate "Ваше имя" %}</label>
                                             {{ form.name }}
 
                                             <p class="help-block help-block-error">{{ form.name.errors }}</p>
@@ -79,7 +78,7 @@
                                     <div class="col-md-6 col-sm-6 col-lg-6">
 
                                         <div class="form-group field-contactform-email required">
-                                            <label class="control-label" for="contactform-email">Ваша почта</label>
+                                            <label class="control-label" for="contactform-email">{% translate "Ваша почта" %}</label>
                                             {{ form.email }}
 
                                             <p class="help-block help-block-error">{{ form.email.errors }}</p>
@@ -88,7 +87,7 @@
 
                                     <div class="col-md-12 col-sm-12 col-lg-12">
                                         <div class="form-group field-contactform-subject required">
-                                            <label class="control-label" for="contactform-subject">Тема сообщения</label>
+                                            <label class="control-label" for="contactform-subject">{% translate "Тема сообщения" %}</label>
                                             {{ form.subject }}
 
                                             <p class="help-block help-block-error">{{ form.subject.errors }}</p>
@@ -98,7 +97,7 @@
 
                                     <div class="col-md-12 col-sm-12 col-lg-12">
                                         <div class="form-group field-contactform-body required">
-                                            <label class="control-label" for="contactform-body">Текст сообщения</label>
+                                            <label class="control-label" for="contactform-body">{% translate "Текст сообщения" %}</label>
                                             {{ form.message }}
 
                                             <p class="help-block help-block-error">{{ form.message.errors }}</p>
@@ -106,7 +105,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        <button type="submit" class="theme-btn fill-btn2 mt-20" name="contact-button">Отправить</button>
+                                        <button type="submit" class="theme-btn fill-btn2 mt-20" name="contact-button">{% translate "Отправить" %}</button>
                                     </div>
                                 </div>
 

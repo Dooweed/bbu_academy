@@ -4,6 +4,8 @@ from django.contrib import messages
 from django.utils.translation import ngettext
 from image_cropping import ImageCroppingMixin
 from ckeditor.widgets import CKEditorWidget
+from modeltranslation.admin import TranslationAdmin
+
 from .models import *
 
 # Register your models here.
@@ -21,12 +23,22 @@ class ArticleForm(forms.ModelForm):
         model = Article
 
 @admin.register(Article)
-class ArticleAdmin(ImageCroppingMixin, admin.ModelAdmin):
+class ArticleAdmin(ImageCroppingMixin, TranslationAdmin):
     list_display = ("title", "status", "url", "has_image", "date", "short_text", "category")
     search_fields = ("title", "short_text", "text")
     list_editable = ("status",)
     actions = ("make_published", 'make_pending', 'make_editing')
     prepopulated_fields = {'url': ('title',), }
+
+    fieldsets = (
+        ("Заголовок", {"fields": ("title", )}),
+        (None, {"fields": ("url", "category")}),
+        (None, {"fields": ("status", "date", "image", "thumbnail_size")}),
+        ("Текст", {"fields": ("text", ), "classes": ("collapse", "wide")}),
+        ("Краткое описание", {"fields": ("short_text", )}),
+        ("Мета-теги (Описание)", {"fields": ("meta_description", )}),
+    )
+
     form = ArticleForm
 
     def make_published(self, request, queryset):

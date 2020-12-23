@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
+{% load i18n %}
 
 {% block main %}
 <section>
@@ -34,7 +35,7 @@
 
                         <!-- LAYER NR. 6 -->
                         <div class="tp-caption rev-btn theme-btn fill-btn2" id="slide1-layer-6" data-x="['left','center','center','center']" data-hoffset="['0','-100','-100','-100']" data-y="['middle','middle','bottom','middle']" data-voffset="['167','150','120','120']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="button" data-actions='[{"event":"click","action":"simplelink","slide":"next","delay":"","target": "_self", "url": "{{ main_slide1.get_link }}"}]' data-responsive_offset="on" data-responsive="on" data-frames='[{"from":"y:-[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:0;s:inherit;e:inherit;","speed":1500,"to":"o:1;","delay":0,"ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]' data-textAlign="['center','center','center','center']" data-paddingtop="[21,17,14,12]" data-paddingright="[44,40,35,30]" data-paddingbottom="[21,17,14,12]" data-paddingleft="[44,40,35,30]" style="cursor:pointer;line-height: 14px;display: inline-block;font-family: Rubik;font-size: 1rem;letter-spacing: 0;font-weight: 600;">
-                            Подробнее
+                            {% translate "Подробнее" %}
                         </div>
 
                         <!-- LAYER NR. 7 -->
@@ -69,7 +70,7 @@
 
                         <!-- LAYER NR. 7 -->
                         <div class="tp-caption rev-btn theme-btn fill-btn2" id="slide3-layer-7" data-x="['left','center','center','center']" data-hoffset="['0','-100','-100','-100']" data-y="['middle','middle','bottom','middle']" data-voffset="['167','150','120','120']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="button" data-actions='[{"event":"click","action":"simplelink","slide":"next","delay":"","target": "_self", "url": "{{ main_slide2.get_link }}"}]' data-responsive_offset="on" data-responsive="on" data-frames='[{"from":"y:-[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:0;s:inherit;e:inherit;","speed":1500,"to":"o:1;","delay":2000,"ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]' data-textAlign="['center','center','center','center']" data-paddingtop="[21,17,14,12]" data-paddingright="[44,40,35,30]" data-paddingbottom="[21,17,14,12]" data-paddingleft="[44,40,35,30]" style="cursor:pointer;line-height: 14px;display: inline-block;font-family: Rubik;font-size: 1rem;letter-spacing: 0;font-weight: 600;">
-                            Подробнее
+                            {% translate "Подробнее" %}
                         </div>
 
                         {% if main_slide2.has_button %}<div class="tp-caption rev-btn theme-btn bordered-btn2" id="slide3-layer-8" data-x="['left','center','center','center']" data-hoffset="['210','100','100','100']" data-y="['middle','middle','bottom','middle']" data-voffset="['167','150','120','120']" data-width="none" data-height="none" data-whitespace="nowrap" data-type="button" data-actions='[{"event":"click","action":"simplelink","slide":"next","delay":"","target": "_self", "url": "{{ main_slide2.get_button_action }}"}]' data-responsive_offset="on" data-responsive="on" data-frames='[{"from":"y:-[100%];z:0;rX:0deg;rY:0;rZ:0;sX:1;sY:1;skX:0;skY:0;opacity:0;","mask":"x:0px;y:0;s:inherit;e:inherit;","speed":1500,"to":"o:1;","delay":2000,"ease":"Power4.easeInOut"},{"delay":"wait","speed":1000,"to":"y:[100%];","mask":"x:inherit;y:inherit;s:inherit;e:inherit;","ease":"Power2.easeInOut"}]' data-textAlign="['center','center','center','center']" data-paddingtop="[21,17,14,12]" data-paddingright="[44,40,35,30]" data-paddingbottom="[21,17,14,12]" data-paddingleft="[44,40,35,30]" style="cursor:pointer;line-height: 14px;display: inline-block;font-family: Rubik;font-size: 1rem;letter-spacing: 0;font-weight: 600;">
@@ -120,8 +121,8 @@
                                 {{ single_block.get_text| safe }}
                             </p>
                             <div class="btns">
-                                <a class="icon-btn theme-btn icon-right fill-btn" href="{{ single_block.get_link }}" title="Читать дальше"><i class="metaicon-028-arrow-metamax"></i>ЧИТАТЬ<i class="metaicon-028-arrow-metamax"></i></a>
-                                <a class="simple-btn theme-btn bordered-btn" href="{% url 'contacts' %}" title="Связаться с нами">Написать</a>
+                                <a class="icon-btn theme-btn icon-right fill-btn text-uppercase" href="{{ single_block.get_link }}" title="{% translate "Читать дальше" %}"><i class="metaicon-028-arrow-metamax"></i>{% translate "Читать" %}<i class="metaicon-028-arrow-metamax"></i></a>
+                                <a class="simple-btn theme-btn bordered-btn" href="{% url 'contacts' %}" title="{% translate "Связаться с нами" %}">{% translate "Написать" %}</a>
                             </div>
                         </div>
                     </div>
@@ -150,20 +151,20 @@
         <div class="container">
             <div class="check-website-form w-100">
                 <div class="sec-title text-uppercase w-100 d-md-flex text-center text-md-left justify-content-center">
-                    <span class="d-block">Позвоните</span>
+                    <span class="d-block">{% translate "Позвоните" %}</span>
                     <h2 class="mb-0">{{ phone1 }}</h2>
                 </div>
                 <div class="sec-title pt-4 pb-4 w-100 d-flex justify-content-center">
-                    <span class="text-center">или</span>
+                    <span class="text-center">{% translate "или" %}</span>
                 </div>
                 <div class="form-wrap sec-title position-relative w-100 text-center">
-                    <span class="text-uppercase">Мы сами вам позвоним</span>
+                    <span class="text-uppercase">{% translate "Мы сами вам позвоним" %}</span>
                     <form class="w-100 mt-10 d-flex justify-content-center">
                         <div class="input-field w-100 position-relative">
-                            <input type="url" placeholder="Номер телефона">
+                            <input type="url" placeholder="{% translate "Номер телефона" %}">
                         </div>
                         <div class="form-button">
-                            <button class="theme-btn with-icon fill-btn2" type="submit">Отправить</button>
+                            <button class="theme-btn with-icon fill-btn2" type="submit">{% translate "Отправить" %}</button>
                         </div>
                     </form>
                 </div>
@@ -178,8 +179,8 @@
         <div class="container">
             <div class="sec-title2 mb-70 text-center w-100">
                 <div class="d-inline-block">
-                    <h2 class="mb-0 text-uppercase text-color2"><span>этапы</span>Обучения</h2>
-                    <p class="mb-0">Мы разделили тренинги на несколько этапов, <br> чтобы материал усваивался легче.
+                    <h2 class="mb-0 text-uppercase text-color2">{% translate "<span>этапы</span>Обучения" %}</h2>
+                    <p class="mb-0">{% translate "Мы разделили тренинги на несколько этапов, <br> чтобы материал усваивался легче." %}
                     </p>
                 </div>
             </div><!-- Section Title Style 2 -->
@@ -188,23 +189,23 @@
                         <span class="d-inline-block position-absolute roadmap-icon"><i
                                     class="metaicon-search-1"></i></span>
                     <span class="d-inline-block roadmap-label"><i class="font-style-normal">01</i></span>
-                    <h5 class="mb-0">Определние навыков</h5>
+                    <h5 class="mb-0">{% translate "Определние навыков" %}</h5>
                 </div>
                 <div class="roadmap-item color2 position-relative">
                     <span class="d-inline-block position-absolute roadmap-icon"><i class="metaicon-idea"></i></span>
                     <span class="d-inline-block roadmap-label"><i class="font-style-normal">02</i></span>
-                    <h5 class="mb-0">Подбор группы</h5>
+                    <h5 class="mb-0">{% translate "Подбор группы" %}</h5>
                 </div>
                 <div class="roadmap-item color3 position-relative">
                         <span class="d-inline-block position-absolute roadmap-icon"><i
                                     class="metaicon-analytics"></i></span>
                     <span class="d-inline-block roadmap-label"><i class="font-style-normal">03</i></span>
-                    <h5 class="mb-0">Начало обучения</h5>
+                    <h5 class="mb-0">{% translate "Начало обучения" %}</h5>
                 </div>
                 <div class="roadmap-item color4 position-relative">
                     <span class="d-inline-block position-absolute roadmap-icon"><i class="metaicon-analytics-1"></i></span>
                     <span class="d-inline-block roadmap-label"><i class="font-style-normal">04</i></span>
-                    <h5 class="mb-0">Применение навыков</h5>
+                    <h5 class="mb-0">{% translate "Применение навыков" %}</h5>
                 </div>
             </div><!-- Roadmap Wrap -->
         </div>

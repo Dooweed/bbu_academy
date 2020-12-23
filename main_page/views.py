@@ -18,7 +18,7 @@ def main_view(request):
 
     static_blocks = StaticBlock.objects.filter(active=True)
 
-    reviews = Review.objects.filter(active=True)[:10]
+    reviews = Review.objects.filter(active=True, language=request.LANGUAGE_CODE)[:10]
 
     context = {
         "page": page,

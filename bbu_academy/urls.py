@@ -29,6 +29,7 @@ urlpatterns = [
     path('admin/', admin.site.urls, name="admin"),
     path('', main_view, name='index'),
     path('contacts/', other_views.contacts, name='contacts'),
+    path('set_language/<str:language>/', other_views.set_language_view, name="set_language"),
 
 
     path('about/', other_views.Static.as_view(), name='about'),

@@ -3,7 +3,7 @@ from django.core.validators import FileExtensionValidator
 from django.forms import widgets
 
 from certificates.models import Certificate
-from certificates.parse_certificates import parse_excel, populate_certificate, broken_certificates_report
+from certificates.utils import parse_excel, populate_certificate, broken_certificates_report
 
 ACTION_CHOICES = (
     ("skip", "Пропустить существующие сертификаты"),

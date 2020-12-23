@@ -1,6 +1,7 @@
 from django.db import models
-# Create your models here.
 from django.urls import reverse
+
+from django.utils.translation import gettext as _
 
 from bbu_academy.settings import LANGUAGES
 from courses.models import Course
@@ -35,11 +36,11 @@ class MainSlider(models.Model):
     reference = models.CharField("Привязка к разделу", choices=REFERENCE_CHOICES, help_text="Выберите раздел, к которому будет привязан слайд", max_length=30,
                                  default="news_reference")
     news_reference = models.ForeignKey(verbose_name="Выберите новость", help_text="Выберите статью, на которую будет ссылаться данный слайд", to=Article,
-                                       on_delete=models.DO_NOTHING, null=True, blank=True)
+                                       on_delete=models.RESTRICT, null=True, blank=True)
     training_reference = models.ForeignKey(verbose_name="Выберите тренинг", help_text="Выберите тренинг, на который будет ссылаться данный слайд", to=Training,
-                                           on_delete=models.DO_NOTHING, null=True, blank=True)
+                                           on_delete=models.RESTRICT, null=True, blank=True)
     course_reference = models.ForeignKey(verbose_name="Выберите курс", help_text="Выберите курс, на который будет ссылаться данный слайд", to=Course,
-                                         on_delete=models.DO_NOTHING, null=True, blank=True)
+                                         on_delete=models.RESTRICT, null=True, blank=True)
 
     button = models.CharField("Дополнительная кнопка", choices=BUTTON_CHOICES, default=None, max_length=100, null=True, blank=True)
     sorting = models.PositiveIntegerField("Порядок отображения в слайдере", default=0, blank=False, null=False)
@@ -88,9 +89,9 @@ class MainSlider(models.Model):
 
     def get_button_text(self):
         if self.button == "call":
-            return "Позвонить"
+            return _("Позвонить")
         elif self.button == "contact":
-            return "Написать"
+            return _("Написать")
 
     def get_link(self):
         if self.reference == "news_reference":
@@ -102,8 +103,8 @@ class MainSlider(models.Model):
 
     class Meta:
         ordering = ['sorting']
-        verbose_name = "Элемент карусели"
-        verbose_name_plural = "Элементы карусели"
+        verbose_name = "Элемент слайдера"
+        verbose_name_plural = "Блок #1 (Первый слайдер)"
 
 class SecondarySlider(models.Model):
     title = models.CharField("Заголовок", help_text="Оставьте поле пустым, чтобы использовать заголовок выбранной записи", max_length=100, null=True, blank=True)
@@ -113,11 +114,11 @@ class SecondarySlider(models.Model):
     reference = models.CharField("Привязка к разделу", choices=REFERENCE_CHOICES, help_text="Выберите раздел, к которому будет привязан слайд", max_length=30,
                                  default="news_reference")
     news_reference = models.ForeignKey(verbose_name="Выберите новость", help_text="Выберите статью, на которую будет ссылаться данный слайд", to=Article,
-                                       on_delete=models.DO_NOTHING, null=True, blank=True)
+                                       on_delete=models.RESTRICT, null=True, blank=True)
     training_reference = models.ForeignKey(verbose_name="Выберите тренинг", help_text="Выберите тренинг, на который будет ссылаться данный слайд", to=Training,
-                                           on_delete=models.DO_NOTHING, null=True, blank=True)
+                                           on_delete=models.RESTRICT, null=True, blank=True)
     course_reference = models.ForeignKey(verbose_name="Выберите курс", help_text="Выберите курс, на который будет ссылаться данный слайд", to=Course,
-                                         on_delete=models.DO_NOTHING, null=True, blank=True)
+                                         on_delete=models.RESTRICT, null=True, blank=True)
 
     sorting = models.PositiveIntegerField("Порядок отображения в слайдере", default=0, blank=False, null=False)
 
@@ -158,7 +159,7 @@ class SecondarySlider(models.Model):
     class Meta:
         ordering = ['sorting']
         verbose_name = "Элемент слайдера"
-        verbose_name_plural = "Элементы слайдера"
+        verbose_name_plural = "Блок #2 (Второй слайдер)"
 
 class SingleBlock(models.Model):
     title = models.CharField("Заголовок", help_text="Оставьте поле пустым, чтобы использовать заголовок выбранной записи", max_length=100, null=True, blank=True)
@@ -167,11 +168,11 @@ class SingleBlock(models.Model):
     reference = models.CharField("Привязка к разделу", choices=REFERENCE_CHOICES, help_text="Выберите раздел, к которому будет привязан данный блок", max_length=30,
                                  default="news_reference")
     news_reference = models.ForeignKey(verbose_name="Выберите новость", help_text="Выберите статью, на которую будет ссылаться данный блок", to=Article,
-                                       on_delete=models.DO_NOTHING, null=True, blank=True)
+                                       on_delete=models.RESTRICT, null=True, blank=True)
     training_reference = models.ForeignKey(verbose_name="Выберите тренинг", help_text="Выберите тренинг, на который будет ссылаться данный блок", to=Training,
-                                           on_delete=models.DO_NOTHING, null=True, blank=True)
+                                           on_delete=models.RESTRICT, null=True, blank=True)
     course_reference = models.ForeignKey(verbose_name="Выберите курс", help_text="Выберите курс, на который будет ссылаться данный блок", to=Course,
-                                         on_delete=models.DO_NOTHING, null=True, blank=True)
+                                         on_delete=models.RESTRICT, null=True, blank=True)
 
     def __str__(self):
         return self.get_title()
@@ -209,7 +210,7 @@ class SingleBlock(models.Model):
 
     class Meta:
         verbose_name = "Одиночный блок"
-        verbose_name_plural = "Одиночный блок"
+        verbose_name_plural = "Блок #3 (Одиночный блок)"
 
 
 class StaticBlock(models.Model):
@@ -220,11 +221,11 @@ class StaticBlock(models.Model):
     reference = models.CharField("Привязка к разделу", choices=REFERENCE_CHOICES, help_text="Выберите раздел, к которому будет привязан данный блок", max_length=30,
                                  default="news_reference")
     news_reference = models.ForeignKey(verbose_name="Выберите новость", help_text="Выберите статью, на которую будет ссылаться данный блок", to=Article,
-                                       on_delete=models.DO_NOTHING, null=True, blank=True)
+                                       on_delete=models.RESTRICT, null=True, blank=True)
     training_reference = models.ForeignKey(verbose_name="Выберите тренинг", help_text="Выберите тренинг, на который будет ссылаться данный блок", to=Training,
-                                           on_delete=models.DO_NOTHING, null=True, blank=True)
+                                           on_delete=models.RESTRICT, null=True, blank=True)
     course_reference = models.ForeignKey(verbose_name="Выберите курс", help_text="Выберите курс, на который будет ссылаться данный блок", to=Course,
-                                         on_delete=models.DO_NOTHING, null=True, blank=True)
+                                         on_delete=models.RESTRICT, null=True, blank=True)
 
     def __str__(self):
         return self.get_title()
@@ -268,7 +269,7 @@ class StaticBlock(models.Model):
 
     class Meta:
         verbose_name = "Статичный блок"
-        verbose_name_plural = "Статичные блоки"
+        verbose_name_plural = "Блок #4 (Статичные блоки)"
 
 
 class Review(ImageMixin):

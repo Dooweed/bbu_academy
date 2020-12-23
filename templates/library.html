@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load front_tags %}
 
 {% block main %}
 
@@ -31,14 +32,16 @@
 
                     <div class="col-md-12 col-sm-12 col-lg-12">
                         <div class="about-desc5 w-100 mt-40">
-                            <h2 class="mb-0">Библиотека</h2>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ БОЖХОНА КОДЕКСИ</a></p>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">Таможенный кодекс Республики Узбекистан</a></p>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ ҚОНУНИ ТАШҚИ ИҚТИСОДИЙ ФАОЛИЯТ ТЎҒРИСИДА</a></p>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЗАКОН РЕСПУБЛИКИ УЗБЕКИСТАН О ВНЕШНЕЭКОНОМИЧЕСКОЙ ДЕЯТЕЛЬНОСТИ</a></p>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ ҚОНУНИ ЧЕТ ЭЛ ИНВЕСТИЦИЯЛАРИ ТЎҒРИСИДА</a></p>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЗАКОН РЕСПУБЛИКИ УЗБЕКИСТАН ОБ ИНОСТРАННЫХ ИНВЕСТИЦИЯХ</a></p>
-                            <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ ҚОНУНИ МАҲСУЛОТЛАР ВА ХИЗМАТЛАРНИ СЕРТИФИКАТЛАШТИРИШ ТЎҒРИСИДА</a></p>
+                            {% front_edit "main_library" request.path request.LANGUAGE_CODE %}
+                                <h2 class="mb-0">Библиотека</h2>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ БОЖХОНА КОДЕКСИ</a></p>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">Таможенный кодекс Республики Узбекистан</a></p>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ ҚОНУНИ ТАШҚИ ИҚТИСОДИЙ ФАОЛИЯТ ТЎҒРИСИДА</a></p>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЗАКОН РЕСПУБЛИКИ УЗБЕКИСТАН О ВНЕШНЕЭКОНОМИЧЕСКОЙ ДЕЯТЕЛЬНОСТИ</a></p>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ ҚОНУНИ ЧЕТ ЭЛ ИНВЕСТИЦИЯЛАРИ ТЎҒРИСИДА</a></p>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЗАКОН РЕСПУБЛИКИ УЗБЕКИСТАН ОБ ИНОСТРАННЫХ ИНВЕСТИЦИЯХ</a></p>
+                                <p style="text-align: justify;"><a href="http://www.lex.uz/docs/2876354" target="_blank" rel="noopener">ЎЗБЕКИСТОН РЕСПУБЛИКАСИНИНГ ҚОНУНИ МАҲСУЛОТЛАР ВА ХИЗМАТЛАРНИ СЕРТИФИКАТЛАШТИРИШ ТЎҒРИСИДА</a></p>
+                            {% end_front_edit %}
                         </div>
                     </div>
                 </div>
@@ -47,4 +50,11 @@
     </div>
 </section>
 
+{% endblock %}
+
+{% block script %}
+    {% front_edit_scripts editor="ckeditor" %}
+    {% if request.user.is_staff %}
+        <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    {% endif %}
 {% endblock %}

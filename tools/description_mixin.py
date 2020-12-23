@@ -22,7 +22,7 @@ class DescriptionMixin(models.Model):
 
     def description(self, length=DESCRIPTION_LENGTH):
         if self.short_text:
-            return strip_tags(self.short_text)[:length]
+            return strip_tags(self.short_text)[:length] + "..."
         else:
             short_text = strip_tags(self.text[:length * 2])[:length]
             index = short_text.rfind(" ")

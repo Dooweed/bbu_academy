@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block main %}
 
@@ -43,7 +44,7 @@
 
                     <div class="col-md-12 col-sm-12 col-lg-12">
                         <p class="about-desc5 w-100 mt-40">
-                        <h2 class="mb-30 text-center">Поиск специалистов по ИНН</h2>
+                        <h2 class="mb-30 text-center">{% translate "Поиск специалистов по ИНН" %}</h2>
 
                         <div class="row justify-content-center">
                             <div class="col-sm-6 col-md-4 p-sm-0">
@@ -51,11 +52,11 @@
                                     <form id="search-form" action="{% url 'registry:certificate' %}" method="GET">
                                         {{ form.inn }}
                                     </form>
-                                    {% if not_found %}<small class="text-danger">Сертификата по данному ИНН не найдено</small>{% endif %}
+                                    {% if not_found %}<small class="text-danger">{% translate "Сертификата по данному ИНН не найдено" %}</small>{% endif %}
                                 </div>
                             </div>
                             <div class="pl-3">
-                                <button id="search" form="search-form" type="submit" class="theme-btn fill-btn2 mt-20">поиск</button>
+                                <button id="search" form="search-form" type="submit" class="theme-btn fill-btn2 mt-20">{% translate "поиск" %}</button>
                             </div>
                         </div>
                     </div>

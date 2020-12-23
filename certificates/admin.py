@@ -1,5 +1,7 @@
 from django.contrib import admin
 
+from urllib.parse import quote
+from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import path
 
@@ -8,15 +10,26 @@ from .models import Certificate
 from tools.colorsets import SUCCESS_COLORS, COMMON_COLORS
 
 
-# Register your models here.
+from .utils import build_certificate_excel
+
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
     list_display = ("full_name", "inn", "certificate_n", "date_received")
     search_fields = ("inn", "certificate_n", "contract_n", "full_name", "date_received")
     fields = ("contract_n", "certificate_n", "inn", "full_name", "date_received")
+    actions = ("download_excel", )
+    list_max_show_all = 5000
 
     form = CertificateAdminForm
+
+    def download_excel(self, request, queryset):
+        file = build_certificate_excel(queryset)
+        file.name = "Сертификаты.xls"
+        response = HttpResponse(file.getvalue(), content_type='application/vnd.ms-excel')
+        response['Content-Disposition'] = f"""attachment; filename="certificates.xls"; filename*=utf-8''{quote("Сертификаты.xls")}"""
+        return response
+    download_excel.short_description = "Скачать выбранные сертификаты в Excel файле"
 
     def get_urls(self):
         urls = super().get_urls()

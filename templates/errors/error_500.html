@@ -1,18 +1,19 @@
 {% extends 'base.html' %}
 
 {% load static %}
+{% load i18n %}
 
 {% block title %}
-    <title>Страница не найдена</title>
+    <title>{% translate "Страница не найдена" %}</title>
 {% endblock %}
 
 {% block main %}
 
 <div style="height: 80vh; width: 100%; padding-top: 20vh; border-top: 160px solid #0D2969;" class="site-error">
 
-    <h1 class="text-center">Ошибка сервера</h1>
+    <h1 class="text-center">{% translate "Ошибка сервера" %}</h1>
 
-    <p class="text-center">К сожалению, при обработке запроса на сервере произошла ошибка. Попробуйте повторить запрос позже.</p>
+    <p class="text-center">{% translate "К сожалению, при обработке запроса на сервере произошла ошибка. Попробуйте повторить запрос позже." %}</p>
     <h6 style="text-decoration: underline" class="text-center">{{ index_link| safe }}</h6>
 
 </div>

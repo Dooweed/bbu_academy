@@ -1,11 +1,12 @@
 {% load static %}
+{% load i18n %}
 
 <div class="row align-items-center justify-content-center">
 
     <div class="col-md-8 word-document" style="margin-top: 50px;">
         {% if not pdf %}
             <div class="d-flex justify-content-end">
-                <a class="download-pdf" href="{% url 'registry:download_pdf_certificate' certificate.inn %}">Скачать PDF сертификат</a>
+                <a class="download-pdf" href="{% url 'registry:download_pdf_certificate' certificate.inn %}">{% translate "Скачать PDF сертификат" %}</a>
             </div>
         {% endif %}
         <div class="word-sample">
