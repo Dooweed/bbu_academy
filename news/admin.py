@@ -8,6 +8,7 @@ from modeltranslation.admin import TranslationAdmin
 
 from .models import *
 
+
 # Register your models here.
 
 class ArticleForm(forms.ModelForm):
@@ -22,6 +23,7 @@ class ArticleForm(forms.ModelForm):
         }
         model = Article
 
+
 @admin.register(Article)
 class ArticleAdmin(ImageCroppingMixin, TranslationAdmin):
     list_display = ("title", "status", "url", "has_image", "date", "short_text", "category")
@@ -31,12 +33,12 @@ class ArticleAdmin(ImageCroppingMixin, TranslationAdmin):
     prepopulated_fields = {'url': ('title',), }
 
     fieldsets = (
-        ("Заголовок", {"fields": ("title", )}),
-        (None, {"fields": ("url", "category")}),
-        (None, {"fields": ("status", "date", "image", "thumbnail_size")}),
-        ("Текст", {"fields": ("text", ), "classes": ("collapse", "wide")}),
-        ("Краткое описание", {"fields": ("short_text", )}),
-        ("Мета-теги (Описание)", {"fields": ("meta_description", )}),
+        ("Заголовок", {"fields": ("title",), "classes": ("visual-group",)}),
+        (None, {"fields": ("url", "category", "status", "date")}),
+        ("Изображение", {"fields": ("image", "thumbnail_size"), "classes": ("visual-group", "wide",)}),
+        ("Текст", {"fields": ("text",), "classes": ("visual-group", "wide", )}),
+        ("Краткое описание", {"fields": ("short_text",), "classes": ("visual-group",)}),
+        ("Мета-теги (Описание)", {"fields": ("meta_description",), "classes": ("visual-group",)}),
     )
 
     form = ArticleForm
@@ -48,6 +50,7 @@ class ArticleAdmin(ImageCroppingMixin, TranslationAdmin):
             '%d статей были успешно опубликованы.',
             updated,
         ) % updated, messages.SUCCESS)
+
     make_published.short_description = "Опубликовать"
 
     def make_pending(self, request, queryset):
@@ -57,6 +60,7 @@ class ArticleAdmin(ImageCroppingMixin, TranslationAdmin):
             '%d статей были успешно переведены в режим ожидания.',
             updated,
         ) % updated, messages.SUCCESS)
+
     make_pending.short_description = "Перевести в режим ожидания"
 
     def make_editing(self, request, queryset):
@@ -66,8 +70,15 @@ class ArticleAdmin(ImageCroppingMixin, TranslationAdmin):
             '%d статей были успешно переведены в режим редактирования.',
             updated,
         ) % updated, messages.SUCCESS)
+
     make_editing.short_description = "Перевести в режим редактирования"
+
+    class Media:
+        css = {
+            "all": ("css/admin-visual-grouping.css", ),
+        }
+
 
 @admin.register(ArticleCategory)
 class ArticleCategoryAdmin(admin.ModelAdmin):
-    list_display = ("name", )
+    list_display = ("name",)

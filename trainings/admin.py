@@ -18,6 +18,7 @@ class TrainingForm(forms.ModelForm):
             # 'location': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
             'short_text': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
             'text': CKEditorWidget(),
+            'price': forms.NumberInput(),
             "meta_description": forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
         }
 
@@ -27,9 +28,17 @@ class TrainingAdmin(SortableAdminMixin, ImageCroppingMixin, TranslationAdmin):
     list_display = ("title", "url", "short_text", "sorting")
     search_fields = ("title", "short_text", "location", "text")
     fieldsets = (
-        (None, {"fields": ("title", "url", "active")}),
-        ("Описание", {"fields": ("text", "short_text", "meta_description")}),
-        ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size")}),
+        ("Заголовок", {"fields": ("title",), "classes": ("visual-group",)}),
+        (None, {"fields": ("url", "active", "price")}),
+        ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size"), "classes": ("visual-group", "wide",)}),
+        ("Текст", {"fields": ("text",), "classes": ("visual-group", "wide",)}),
+        ("Краткое описание", {"fields": ("short_text",), "classes": ("visual-group",)}),
+        ("Мета-теги (Описание)", {"fields": ("meta_description",), "classes": ("visual-group",)}),
     )
     prepopulated_fields = {'url': ('title',), }
     form = TrainingForm
+
+    class Media:
+        css = {
+            "all": ("css/admin-visual-grouping.css", ),
+        }
