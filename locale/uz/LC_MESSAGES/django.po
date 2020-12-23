@@ -1,0 +1,312 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-23 22:04+0500\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\courses\templatetags\courses.py:26
+msgid "У нас есть и другие курсы"
+msgstr ""
+
+#: .\courses\templatetags\courses.py:28
+msgid "Попробуйте наши курсы"
+msgstr ""
+
+#: .\main_page\models.py:92
+msgid "Позвонить"
+msgstr ""
+
+#: .\main_page\models.py:94 .\templates\main_page\index.html:125
+msgid "Написать"
+msgstr ""
+
+#: .\news\admin.py:47
+#, python-format
+msgid "%d статья была успешно опубликована."
+msgid_plural "%d статей были успешно опубликованы."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\news\admin.py:56
+#, python-format
+msgid "%d статья была успешно переведена в режим ожидания."
+msgid_plural "%d статей были успешно переведены в режим ожидания."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\news\admin.py:65
+#, python-format
+msgid "%d статья была успешно переведена в режим редактирования."
+msgid_plural "%d статей были успешно переведены в режим редактирования."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\news\templatetags\news.py:26
+msgid "Читайте также"
+msgstr ""
+
+#: .\news\templatetags\news.py:28
+msgid "Свежие новости"
+msgstr ""
+
+#: .\news\templatetags\news.py:48
+#, python-brace-format
+msgid "Ещё новости из категории \"{category}\""
+msgstr ""
+
+#: .\templates\base.html:144 .\templates\base.html:150
+#: .\templates\base.html:152
+msgid "Позвонить на номер"
+msgstr ""
+
+#: .\templates\base.html:158
+msgid "Перейти в наш telegram"
+msgstr ""
+
+#: .\templates\base.html:159
+msgid "Написать сообщение на нашу почту"
+msgstr ""
+
+#: .\templates\contacts\contacts.html:61
+msgid "Отправить сообщение"
+msgstr ""
+
+#: .\templates\contacts\contacts.html:72
+msgid "Ваше имя"
+msgstr ""
+
+#: .\templates\contacts\contacts.html:81
+msgid "Ваша почта"
+msgstr ""
+
+#: .\templates\contacts\contacts.html:90
+msgid "Тема сообщения"
+msgstr ""
+
+#: .\templates\contacts\contacts.html:100
+msgid "Текст сообщения"
+msgstr ""
+
+#: .\templates\contacts\contacts.html:108 .\templates\main_page\index.html:167
+msgid "Отправить"
+msgstr ""
+
+#: .\templates\courses\course.html:64
+msgid "Стоимость курса"
+msgstr ""
+
+#: .\templates\courses\course.html:64 .\templates\trainings\training.html:72
+msgid "сум"
+msgstr ""
+
+#: .\templates\courses\course.html:66 .\templates\trainings\training.html:74
+msgid "Записаться"
+msgstr ""
+
+#: .\templates\courses\course_preview.html:20
+#: .\templates\courses\course_preview.html:33
+#: .\templates\courses\courses_sidebar.html:23
+#: .\templates\main_page\index.html:38 .\templates\main_page\index.html:73
+#: .\templates\main_page\secondary_slider\service-box-wrap.html:17
+#: .\templates\trainings\training_preview.html:20
+#: .\templates\trainings\training_preview.html:33
+#: .\templates\trainings\trainings_sidebar.html:23
+msgid "Подробнее"
+msgstr ""
+
+#: .\templates\courses\courses_sidebar.html:6
+msgid "Курсы"
+msgstr ""
+
+#: .\templates\errors\error_404.html:7 .\templates\errors\error_404.html:14
+#: .\templates\errors\error_500.html:7
+msgid "Страница не найдена"
+msgstr ""
+
+#: .\templates\errors\error_404.html:16
+msgid "К сожалению, страница по вашему запросу не была найдена."
+msgstr ""
+
+#: .\templates\errors\error_500.html:14
+msgid "Ошибка сервера"
+msgstr ""
+
+#: .\templates\errors\error_500.html:16
+msgid ""
+"К сожалению, при обработке запроса на сервере произошла ошибка. Попробуйте "
+"повторить запрос позже."
+msgstr ""
+
+#: .\templates\main_page\index.html:124
+#: .\templates\news\article_preview.html:20
+#: .\templates\news\article_preview.html:33
+msgid "Читать дальше"
+msgstr ""
+
+#: .\templates\main_page\index.html:124
+msgid "Читать"
+msgstr ""
+
+#: .\templates\main_page\index.html:125
+msgid "Связаться с нами"
+msgstr ""
+
+#: .\templates\main_page\index.html:154
+msgid "Позвоните"
+msgstr ""
+
+#: .\templates\main_page\index.html:158
+msgid "или"
+msgstr ""
+
+#: .\templates\main_page\index.html:161
+msgid "Мы сами вам позвоним"
+msgstr ""
+
+#: .\templates\main_page\index.html:164
+msgid "Номер телефона"
+msgstr ""
+
+#: .\templates\main_page\index.html:182
+msgid "<span>этапы</span>Обучения"
+msgstr ""
+
+#: .\templates\main_page\index.html:183
+msgid ""
+"Мы разделили тренинги на несколько этапов, <br> чтобы материал усваивался "
+"легче."
+msgstr ""
+
+#: .\templates\main_page\index.html:192
+msgid "Определние навыков"
+msgstr ""
+
+#: .\templates\main_page\index.html:197
+msgid "Подбор группы"
+msgstr ""
+
+#: .\templates\main_page\index.html:203
+msgid "Начало обучения"
+msgstr ""
+
+#: .\templates\main_page\index.html:208
+msgid "Применение навыков"
+msgstr ""
+
+#: .\templates\news\article.html:56
+msgid "Предыдущая статья"
+msgstr ""
+
+#: .\templates\news\article.html:63
+msgid "Следующая статья"
+msgstr ""
+
+#: .\templates\registry\certificate.html:9
+msgid "Скачать PDF сертификат"
+msgstr ""
+
+#: .\templates\registry\certificate_wrap.html:7
+msgid "Сертификат"
+msgstr ""
+
+#: .\templates\registry\registry.html:47
+msgid "Поиск специалистов по ИНН"
+msgstr ""
+
+#: .\templates\registry\registry.html:55
+msgid "Сертификата по данному ИНН не найдено"
+msgstr ""
+
+#: .\templates\registry\registry.html:59
+msgid "поиск"
+msgstr ""
+
+#: .\templates\trainings\training.html:72
+msgid "Стоимость тренинга"
+msgstr ""
+
+#: .\templates\trainings\trainings_sidebar.html:6
+msgid "Тренинги"
+msgstr ""
+
+#. Translators: Примеры: 2 января, Четырнадцатого марта
+#: .\tools\date_mixin.py:9
+msgid "января"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "февраля"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "марта"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "апреля"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "мая"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "июня"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "июля"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "августа"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "сентября"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "октября"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "ноября"
+msgstr ""
+
+#: .\tools\date_mixin.py:9
+msgid "декабря"
+msgstr ""
+
+#. Translators: Пример: 1 час назад
+#: .\tools\date_mixin.py:12
+msgid "час назад"
+msgstr ""
+
+#. Translators: Пример: 2 часа назад
+#: .\tools\date_mixin.py:14
+msgid "часа назад"
+msgstr ""
+
+#. Translators: Пример: 6 часов назад
+#: .\tools\date_mixin.py:16
+msgid "часов назад"
+msgstr ""
+
+#: .\tools\date_mixin.py:26
+msgid "менее часа назад"
+msgstr ""
