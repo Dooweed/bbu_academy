@@ -25,7 +25,7 @@ class DescriptionMixin(models.Model):
             return strip_tags(self.short_text)[:length] + "..."
         else:
             short_text = strip_tags(self.text[:length * 2])[:length]
-            index = short_text.rfind(" ")
+            index = short_text.rfind(" ") if len(short_text) == length else -1
             if index == -1:
                 return f"{short_text}..."
             else:
