@@ -1,17 +1,52 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError
+from django.forms import ModelForm
+from django.template import TemplateDoesNotExist
+from django.template.loader import get_template
+from django.urls import reverse, NoReverseMatch
+
 from .models import Page, StaticInformation
 from modeltranslation.admin import TranslationAdmin
 from adminsortable2.admin import SortableAdminMixin
 
 # Register your models here.
 
+class PageAdminForm(ModelForm):
+    def clean(self):
+        template_name = self.cleaned_data.get("template_name")
+        name = self.cleaned_data.get("name")
+        show_in_menu = self.cleaned_data.get("show_in_menu")
+        if show_in_menu:
+            try:
+                if not template_name:
+                    raise ValidationError({"show_in_menu": "Невозможно добавить в меню. Шаблон не найден."})
+                if not name:
+                    raise ValidationError({"show_in_menu": "Невозможно добавить в меню. Имя страницы не зарегестрировано в urls.py."})
+
+                get_template(template_name)
+                reverse(name)
+            except TemplateDoesNotExist:
+                raise ValidationError({"show_in_menu": "Невозможно добавить в меню. Шаблон не найден."})
+            except NoReverseMatch:
+                raise ValidationError({"show_in_menu": "Невозможно добавить в меню. Имя страницы не зарегестрировано в urls.py."})
+
+
 @admin.register(Page)
 class PageAdmin(SortableAdminMixin, TranslationAdmin):
     list_display = ("title", "name", "show_in_menu", "sorting")
     fieldsets = (
-        ("Главная информация", {'fields': ("name", "title", "template_name", "parent_page", "show_in_menu", "menu_name")}),
+        ("Главная информация", {'fields': ("title", "menu_name", "show_in_menu", "parent_page", "name", "template_name")}),
         ("Мета-теги (Поисковая оптимизация)", {'fields': ("meta_description", "meta_keywords", "meta_robots")})
     )
+    readonly_fields = ("name", "template_name")
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    form = PageAdminForm
 
 @admin.register(StaticInformation)
 class StaticInformationAdmin(admin.ModelAdmin):
