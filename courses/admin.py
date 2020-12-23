@@ -5,6 +5,7 @@ from django.contrib import admin
 # Register your models here.
 from django import forms
 from image_cropping import ImageCroppingMixin
+from modeltranslation.admin import TranslationAdmin
 
 from courses.models import Course
 
@@ -22,7 +23,7 @@ class CourseForm(forms.ModelForm):
 
 
 @admin.register(Course)
-class CourseAdmin(SortableAdminMixin, ImageCroppingMixin, admin.ModelAdmin):
+class CourseAdmin(SortableAdminMixin, ImageCroppingMixin, TranslationAdmin):
     list_display = ("title", "url", "has_image", "short_text", "price", "sorting")
     search_fields = ("title", "short_text", "text")
     fieldsets = (
