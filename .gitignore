@@ -1,2 +1,10 @@
 /logs/
 *.sqlite3
+/settings/migrations/
+/certificates/migrations/
+/news/migrations/
+/courses/migrations/
+/trainings/migrations/
+/main_page/migrations/
+/purchase/migrations/
+/payme_billing/migrations/
