@@ -1,0 +1,24 @@
+{% load i18n %}
+
+{% csrf_token %}
+{{ student_form.id }}
+
+<div>
+    <h3 class="text-center mt-5 mb-3">{% translate 'Студент' %}</h3>
+    {% for field in student_form.visible_fields  %}
+        <div class="form-group">
+            {{ field.label_tag }}
+            <span class="warn">{% for error in field.errors %}{{ error }}{% endfor %}</span>
+            <div class="field">{{ field }}</div>
+            <small>{{ field.help_text }}</small>
+        </div>
+    {% endfor %}
+</div>
+
+<div class="submit-button d-flex align-items-center justify-content-end">
+    {% if editing %}
+        <span class="text-info mr-4">Редактирование</span>
+        <button type="button" class="reload-student disagree mr-2">{% translate "Отмена" %}</button>
+    {% endif %}
+    <button type="submit" class="sheen no-sheen">{% translate 'Отправить' %}</button>
+</div>

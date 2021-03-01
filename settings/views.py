@@ -8,7 +8,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
-from bbu_academy.settings import ADMIN_EMAIL
+from bbu_academy.settings import STAFF_MAILS, EMAIL_HOST_USER
 from settings.models import Page
 from django.views.generic import View
 from django.urls import resolve
@@ -34,8 +34,8 @@ def contacts(request):
             send_mail(
                 subject=f"Новое сообщение от {name} с сайта {request.get_host()}",
                 message=strip_tags(rendered_message),
-                from_email=user_email,
-                recipient_list=[ADMIN_EMAIL, ],
+                from_email=EMAIL_HOST_USER,
+                recipient_list=STAFF_MAILS,
                 fail_silently=True,
                 html_message=rendered_message
             )

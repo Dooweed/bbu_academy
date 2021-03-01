@@ -19,6 +19,9 @@ def course_view(request, course_url):
     page = get_object_or_404(Page, name="courses:course")
     course = get_object_or_404(Course, url=course_url, active=True)
 
+    request.session["product_class"] = "Course"
+    request.session["product_id"] = course.id
+
     context = {
         "course": course,
         "page": page

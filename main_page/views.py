@@ -32,5 +32,6 @@ def main_view(request):
         "single_block": single_block,
         "static_blocks": static_blocks,
         "reviews": reviews,
+        "data_offset": "['210','100','100','100']" if request.LANGUAGE_CODE == "ru" else "['270','150','140','120']"  # Width of additional button
     }
     return render(request, "main_page/index.html", context)

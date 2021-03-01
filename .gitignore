@@ -1,5 +1,7 @@
 /logs/
+
 *.sqlite3
+
 /settings/migrations/
 /certificates/migrations/
 /news/migrations/
@@ -8,3 +10,5 @@
 /main_page/migrations/
 /purchase/migrations/
 /payme_billing/migrations/
+
+/emails/

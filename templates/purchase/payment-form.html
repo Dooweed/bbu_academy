@@ -1,0 +1,84 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load front_tags %}
+{% load i18n %}
+
+{% block title %}
+    <title>{% translate 'Заполнение данных' %}</title>
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/shining-button.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/library.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{% translate 'Заполнение данных' %}</h2>
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div class="container">
+            <div class="about-wrap5 form-wrap w-100">
+                <div class="row align-items-center form-tab-content">
+
+                    <p class="warn text-center mt-3 mb-60 w-75 ml-auto mr-auto"><b>{% translate 'Внимание!' %}</b> {% translate 'Вводите данные корректно. Ошибка при вводе данных может привести к ошибкам в последующих документах Исполнителя, выдаваемых заказчику (сертификатах, счетах-фактурах и т.п.)' %}</p>
+
+                    <form class="form w-100 row justify-content-center" method="POST">
+                        {% csrf_token %}
+                        <div class="col-12 col-md-6 form-column">
+                            <div class="form-group">
+                                {{ form.payment_type.label_tag }}
+                                {{ form.payment_type }}
+                            </div>
+                        </div>
+
+                        <div class="col-12 payment-details text-center">
+                            <p class="line">
+                                <span class="label">{% translate 'Название продукта' %}: </span>
+                                <span class="value">{{ record.product }}</span>
+                            </p>
+                            <p class="line">
+                                <span class="label">{% translate 'Плательщик' %}: </span>
+                                <span class="value">{% if record.get_entity_payer_or_none %}{% translate 'Юридическое лицо' %}{% else %}{% translate 'Физическое лицо' %}{% endif %}</span>
+                            </p>
+                            <p class="line">
+                                <span class="label">{% translate 'Количество студентов' %}: </span>
+                                <span class="value">{{ record.students.count }}</span>
+                            </p>
+                            {% if record.special_price %}<p class="line">
+                                <span class="label">{% translate 'Специальная цена' %}: </span>
+                                <span class="value">{% translate 'Да' %}</span>
+                            </p>{% endif %}
+                            <p class="line">
+                                <span class="label">{% translate 'Цена за единицу продукта' %}: </span>
+                                <span class="value"><span class="price-value">{{ record.f_price }}</span> {% if record.special_price %}<span class="special-price">{% translate '(специальная цена)' %}</span>{% endif %}</span>
+                            </p>
+                            <p class="line overall-price">
+                                <span class="label">{% translate 'Общая цена' %}: </span>
+                                <span class="value"><span class="price-value">{{ record.f_overall_price }}</span></span>
+                            </p>
+                        </div>
+
+                        <div class="submit-button col-12 mt-2 mb-4 d-flex justify-content-end">
+                            <button type="submit" class="sheen no-sheen">{% translate 'Подтвердить' %}</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}

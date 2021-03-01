@@ -19,6 +19,7 @@ class Course(ImageMixin, DescriptionMixin):
     thumbnail_size = ImageRatioField(verbose_name="Обрезка изображения для превью (список курсов)", image_field='image', size="512x288")
 
     price = models.IntegerField("Цена на курс")
+    special_price = models.IntegerField("Специальная цена на курс")
     sorting = models.PositiveIntegerField("Порядок отображения в списках", default=0, blank=False, null=False)
 
     def __str__(self):

@@ -1,24 +1,24 @@
 from django.db import models
-from django.core.validators import MinValueValidator, MaxValueValidator, DecimalValidator
+from django.core.validators import MinValueValidator, MaxValueValidator, validate_integer
 
 
 # Create your models here.
 
 class Certificate(models.Model):
-    contract_n = models.IntegerField("Номер договора")
-    certificate_n = models.CharField("Номер сертификата", max_length=20, validators=[DecimalValidator, ])
+    contract_n = models.IntegerField("Номер договора", null=True, blank=True)
+    certificate_n = models.CharField("Номер сертификата", max_length=20, validators=[validate_integer, ])
     inn = models.PositiveBigIntegerField("ИНН студента", validators=[MinValueValidator, MaxValueValidator], unique=True)
     full_name = models.CharField("ФИО студента", max_length=200)
     date_received = models.DateField("Дата получения договора")
 
     def get_day(self):
-        return self.date_received.day
+        return f"{self.date_received.day:02}"
 
     def get_month(self):
-        return self.date_received.month
+        return f"{self.date_received.month:02}"
 
     def get_year(self):
-        return self.date_received.year
+        return f"{self.date_received.year:02}"
 
     def get_short_year(self):
         return str(self.date_received.year)[-2:]

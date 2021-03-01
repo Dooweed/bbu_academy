@@ -4,10 +4,10 @@ from typing import List
 
 import xlrd
 import xlwt
-from xlwt import XFStyle, Borders, easyxf, easyfont, Font
+from xlwt import XFStyle, Borders, easyfont
 
 NUMBER_OF_CERTIFICATE_COLS = 8
-NUMBER_OF_CERTIFICATE_FIELDS = 5
+NUMBER_OF_CERTIFICATE_FIELDS = 4
 
 
 class ParsedCertificate:
@@ -44,9 +44,15 @@ class ParsedCertificate:
             pass
 
     def set_certificate_n(self, certificate_n):
-        self.certificate_n = str(certificate_n)
-        if self.certificate_n == "":
+        if certificate_n == "":
             self.certificate_n = None
+        else:
+            try:
+                temp_certificate_n = str(int(certificate_n))
+                certificate_n = "0" * (3-len(temp_certificate_n)) + temp_certificate_n
+            except ValueError:
+                pass
+            self.certificate_n = certificate_n
 
     def set_inn(self, inn):
         try:
@@ -70,8 +76,6 @@ class ParsedCertificate:
 
     def filled_fields(self):
         count = 0
-        if self.contract_n is not None:
-            count += 1
         if self.certificate_n is not None:
             count += 1
         if self.inn is not None:
@@ -99,7 +103,6 @@ def broken_certificates_report(broken_certificates: List[ParsedCertificate]):
         if certificate.has_inn:
             wrong_fields = "<u>Имя</u>, " if not certificate.has_full_name else ""
             wrong_fields += "<u>Дата получения</u>, " if not certificate.has_date_received else ""
-            wrong_fields += "<u>Номер договора</u>, " if not certificate.has_contract_n else ""
             wrong_fields += "<u>Номер сертификата</u>, " if not certificate.has_certificate_n else ""
 
             wrong_fields = wrong_fields[:-2]

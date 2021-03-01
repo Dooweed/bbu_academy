@@ -15,7 +15,7 @@ def courses_sidebar():
         "courses": courses,
     }
 
-    return render_to_string("chunks/../../templates/courses/courses_sidebar.html", context) if courses.exists() else ""
+    return render_to_string("courses/courses_sidebar.html", context) if courses.exists() else ""
 
 @register.simple_tag
 def other_courses(current_id=None, bg_color="#FFF"):
@@ -35,4 +35,4 @@ def other_courses(current_id=None, bg_color="#FFF"):
         "unique_id": "other"
     }
 
-    return render_to_string("chunks/../../templates/courses/courses_slider.html", context) if courses.exists() else ""
+    return render_to_string("courses/courses_slider.html", context) if courses.exists() else ""

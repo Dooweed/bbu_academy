@@ -39,9 +39,13 @@ urlpatterns = [
     path('trainings/', include('trainings.urls'), name='trainings'),
     path('news/', include('news.urls'), name="news"),
     path('registry/', include('certificates.urls'), name="registry"),
+    path('purchase/', include('purchase.urls'), name='purchase'),
 
     # Package urls
     url(r'^front-edit/', include('front.urls')),
+
+    # Payment urls
+    path('payme-billing/', include('payme_billing.urls'), name="uzpayments"),
 ]
 urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

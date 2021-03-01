@@ -1,3 +1,6 @@
+import os
+from pathlib import Path
+
 import qrcode
 import pdfkit
 from PIL import Image
@@ -5,11 +8,12 @@ from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
 from django.urls import reverse
-# import time
 
+from bbu_academy.settings import BASE_DIR
 from .forms import RegistryForm
 from .models import Certificate
 from settings.models import Page
+from django.conf import settings
 
 # Create your views here.
 
@@ -29,7 +33,7 @@ def registry_view(request):
 
     return render(request, page.template_name, context)
 
-def qr_code(request, inn: int):
+def qr_code(request, inn: int, only_image=False):
     try:
         logo = Image.open('static/images/logo.png')
         width = 150
@@ -50,6 +54,10 @@ def qr_code(request, inn: int):
         pos = ((img_qr_big.size[0] - logo.size[0]) // 2, (img_qr_big.size[1] - logo.size[1]) // 2)
 
         img_qr_big.paste(logo, pos)
+
+        if only_image:
+            return img_qr_big
+
         response = HttpResponse(content_type='image/jpg')
         img_qr_big.save(response, "JPEG")
         response['Content-Disposition'] = 'attachment; filename="qr.jpg"'
@@ -58,36 +66,54 @@ def qr_code(request, inn: int):
     return response
 
 def download_pdf_certificate(request, inn: int):
-    path_wkhtmltopdf = r'static\wkhtmltox\bin\wkhtmltopdf.exe'
-    config = pdfkit.configuration(wkhtmltopdf=path_wkhtmltopdf)
+    config = pdfkit.configuration(wkhtmltopdf=settings.PATH_WKHTMLTOPDF)
 
-    # start = time.time()
+# file:///home/wwwtcatb/bbu_academy
     certificate = Certificate.objects.filter(inn=inn)
-    # end = time.time()
-    # print(f"DATABASE QUERY - Time spent: {int((end-start)*1000)}ms {int((end-start)*1000000)}mks {int((end-start)*1000000000)}ns")
+
     if certificate.exists():
+        # Get QR image
+        qr_name = f"{inn}.jpg"
+        qr_path = Path("media") / "temp" / "qr"
+        qr_path.mkdir(parents=True, exist_ok=True)
+        qr = qr_code(request, inn, True)
+        qr.save(BASE_DIR / qr_path / qr_name, "JPEG")
+
+        # Render template
+        print(f"{reverse('registry:certificate')}?inn={inn}")
         context = {
             "certificate": certificate.first(),
             "pdf": True,
-            "request": request
+            "qr_name": qr_name,
+            "FILE_BASE_DIR": settings.BASE_DIR,
+            "link": f"{request.build_absolute_uri(reverse('registry:certificate'))}?inn={inn}",
+            "request": request,
         }
-        # start = time.time()
         html = render_to_string('registry/download_certificate_wrap.html', context)
-        # end = time.time()
-        # print(f"RENDERING TEMPLATE - Time spent: {int((end-start)*1000)}ms {int((end-start)*1000000)}mks {int((end-start)*1000000000)}ns")
 
+        # Define pdf options
         options = {
-            'quiet': ''
+            'images': '',
+            'enable-local-file-access': '',
+            'enable-external-links': '',
+            'enable-internal-links': '',
+            'resolve-relative-links': '',
+            'load-media-error-handling': 'skip',
+            # 'quiet': '',
         }
-        # start = time.time()
+
+        # Create pdf
         pdf = pdfkit.from_string(
             html,
             False,
             configuration=config,
-            options=options
+            options=options,
         )
-        # end = time.time()
-        # print(f"Creating pdf: Time spent: {int((end-start)*1000)}ms {int((end-start)*1000000)}mks {int((end-start)*1000000000)}ns")
+
+        # Remove QR image
+        os.remove(qr_path / qr_name)
+
+        # Prepare response
         response = HttpResponse(pdf, content_type='application/pdf')
         response['Content-Disposition'] = f'attachment; filename="certificate-{inn}.pdf"'
         return response

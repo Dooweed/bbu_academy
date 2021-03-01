@@ -20,7 +20,8 @@ class Training(ImageMixin, DescriptionMixin):
     thumbnail_size = ImageRatioField(verbose_name="Обрезка изображения для превью (список тренингов)", image_field='image', size="512x288")
     sidebar_size = ImageRatioField(verbose_name="Обрезка изображения для превью (сайдбар)", image_field='image', size="140x140")
 
-    price = models.IntegerField("Цена на курс")
+    price = models.IntegerField("Цена на тренинг")
+    special_price = models.IntegerField("Специальная цена на тренинг")
     # location = models.CharField("Место проведения тренинга", max_length=500)
     # date_arranged = models.DateTimeField("Дата и время проведения тренинга", help_text="При отсутсвии даты будет отображено \"Скоро\"", blank=True, null=True)
     sorting = models.PositiveIntegerField("Порядок отображения в списках", default=0, blank=False, null=False)

@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="{{ FILE_BASE_DIR }}{% static 'css/bootstrap.min.css' %}">
+
+    <style>
+        .wkhtmltopdf-flex {
+            display: -webkit-box; /* wkhtmltopdf uses this one */
+        }
+        body .main p {
+            margin: 0;
+        }
+        body .main .header p {
+            font-size: 20px;
+        }
+        body .main .data .value,
+        body .main .signatures .value {
+            border-bottom: 1px solid #000;
+            width: 100%;
+        }
+    </style>
+</head>
+<body class="d-flex align-items-center">
+    <div class="main">
+
+
+        <div class="header text-center">
+            <h3>Счет</h3>
+            <p>№ {{ record.id }} {{ record.study_type_abbreviation }} от {{ record.dotted_date_finished }}</p>
+            <p>к договору-оферте</p>
+        </div>
+
+
+        <div class="data row wkhtmltopdf-flex">
+            <div class="supplier col-6 row wkhtmltopdf-flex">
+                <div class="label col-5">  <p>Поставщик:</p>  </div>
+                <div class="value col-7">  <p>OOO "BOJXONA BROKERLARI UYUSHMASI QOSHIDAGI BOJXONA RASMIYLA</p>  </div>
+
+                <div class="label col-5">  <p>Адрес:</p>  </div>
+                <div class="value col-7">  <p>{{ address }}</p>  </div>
+
+                <div class="label col-5">  <p>Идентификационный номер поставщика (ИНН):</p>  </div>
+                <div class="value col-7">  <p>305574224</p>  </div>
+
+                <div class="label col-5">  <p>Регистрационный код плательщика НДС:</p>  </div>
+                <div class="value col-7">  <p></p>  </div>
+
+                <div class="label col-5">  <p>Р/С:</p>  </div>
+                <div class="value col-7">  <p>20208000000885409001 </p>  </div>
+
+                <div class="label col-5">  <p>МФО:</p>  </div>
+                <div class="value col-7">  <p>00986</p>  </div>
+            </div>
+
+            <div class="customer col-6 row wkhtmltopdf-flex">
+                <div class="label col-5">  <p>Покупатель:</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_org_name }}</p>  </div>
+
+                <div class="label col-5">  <p>Адрес:</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_address }}</p>  </div>
+
+                <div class="label col-5">  <p>Идентификационный номер поставщика (ИНН):</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_org_inn }}</p>  </div>
+
+                <div class="label col-5">  <p>Регистрационный код плательщика НДС:</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_registration_code }}</p>  </div>
+
+                <div class="label col-5">  <p>Р/С:</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_payment_account }}</p>  </div>
+
+                <div class="label col-5">  <p>МФО:</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_bank_code }}</p>  </div>
+            </div>
+        </div>
+
+        <table>
+            <tr>
+                <th rowspan="2">№</th>
+                <th rowspan="2">Наименование товаров (услуг)</th>
+                <th rowspan="2">Единица измерения</th>
+                <th rowspan="2">Количество</th>
+                <th rowspan="2">Цена</th>
+                <th rowspan="2">Стоимость поставки</th>
+                <th colspan="2">НДС</th>
+                <th rowspan="2">Стоимость поставки с учётом НДС</th>
+            </tr>
+            <tr>
+                <th>Ставка</th>
+                <th>Сумма</th>
+            </tr>
+            <tr>
+                <td></td>
+                <td>1</td>
+                <td>2</td>
+                <td>3</td>
+                <td>4</td>
+                <td>5</td>
+                <td>6</td>
+                <td>7</td>
+                <td>8</td>
+            </tr>
+            <tr>
+                <td>1</td>
+                <td>{{ record.product.name }} <b>предоплата 100%</b></td>
+                <td>сум</td>
+                <td></td>
+                <td></td>
+                <td>{{ record.overall_price }}.00</td>
+                <td>Без</td>
+                <td>НДС</td>
+                <td>{{ record.overall_price }}.00</td>
+            </tr>
+            <tr>
+                <th colspan="2" class="text-right">Итого</th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>{{ record.overall_price }}.00</th>
+                <th colspan="2"></th>
+                <th>{{ record.overall_price }}.00</th>
+            </tr>
+        </table>
+
+        <p>Всего к оплате: {{ record.textual_overall_price }} сум 00 тийин. Без НДС.</p>
+
+        <div class="signatures row wkhtmltopdf-flex">
+            <div class="label col-5">  <p>Руководитель:</p>  </div>
+            <div class="value col-7">     </div>
+
+            <div class="label col-5">  <p>Главный бухгалтер:</p>  </div>
+            <div class="value col-7">     </div>
+        </div>
+
+    </div>
+</body>
+</html>

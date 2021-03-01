@@ -1,0 +1,73 @@
+{% load i18n %}
+{% load verbose_choice %}
+
+<p class="header text-center font-weight-bold p-3 m-0">{{ student.student_full_name.value }}</p>
+
+<div class="filled-record-fields">
+    {% if not mail %}<div class="filled-record-actions d-flex justify-content-end">
+
+        <form data-url="{% url "purchase:entity-ajax-student" EDIT %}" method="GET" class="edit-student">
+            {{ student.id }}
+            <button onclick="location.href = '#student'">{% translate "Изменить" %}</button>
+        </form>
+        <form data-url="{% url "purchase:entity-ajax-student" DELETE %}" method="GET" class="delete-student">
+            {{ student.id }}
+            <button>{% translate "Удалить" %}</button>
+        </form>
+    </div>{% endif %}
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_full_name.label }}</p>
+        <div class="value">{{ student.student_full_name.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_inn.label }}</p>
+        <div class="value">{{ student.student_inn.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_passport_n.label }}</p>
+        <div class="value">{{ student.student_passport_n.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_passport_received_date.label }}</p>
+        <div class="value">{{ student.student_passport_received_date.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_passport_given_by.label }}</p>
+        <div class="value">{{ student.student_passport_given_by.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_phone_number.label }}</p>
+        <div class="value">{{ student.student_phone_number.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_email.label }}</p>
+        <div class="value">{{ student.student_email.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_telegram_contact.label }}</p>
+        <div class="value">{{ student.student_telegram_contact.value }}</div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.study_type.label }}</p>
+        <div class="value">{% verbose_education student.study_type.value %}</div>
+    </div>
+
+    {% if not mail %}<div class="value-group">
+        <p class="fieldname">{{ student.study_document.label }}</p>
+        <div class="value"><a class="image-link" href="{{ student.study_document_link }}">{% translate 'Посмотреть' %}</a></div>
+    </div>
+
+    <div class="value-group">
+        <p class="fieldname">{{ student.student_passport.label }}</p>
+        <div class="value"><a class="image-link" href="{{ student.student_passport_link }}">{% translate 'Посмотреть' %}</a></div>
+    </div>{% endif %}
+</div>

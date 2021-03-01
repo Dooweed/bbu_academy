@@ -22,7 +22,6 @@
 
     <!-- Stylesheets -->
 
-    {% block links %}{% endblock %}
     <link rel="stylesheet" href="{% static 'css/all.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/flaticon.css' %}">
     <link rel="stylesheet" href="{% static 'css/animate.min.css' %}">
@@ -44,6 +43,11 @@
     <link rel="stylesheet" href="{% static 'css/revolution/navigation.css' %}">
 
     <link rel="stylesheet" href="{% static 'css/additional.css' %}">
+
+    <script src="{% static 'js/jquery.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+
+    {% block links %}{% endblock %}
 </head>
 <body>
     <main>
@@ -168,8 +172,6 @@
         </footer>
     </main><!-- Main Wrapper -->
 
-    <script src="{% static 'js/jquery.min.js' %}"></script>
-    <script src="{% static 'js/popper.min.js' %}"></script>
     <script src="{% static 'js/bootstrap.min.js' %}"></script>
     <script src="{% static 'js/bootstrap-select.min.js' %}"></script>
     <script src="{% static 'js/owl.carousel.min.js' %}"></script>

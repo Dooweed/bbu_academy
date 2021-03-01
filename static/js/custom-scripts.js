@@ -662,7 +662,7 @@ $(document).ready(function () {
             method:"POST",
             data: $(form).serialize(),
             beforeSend:function(){
-                $('#subscribe-form .response').html('<div class="text-info"><img src="/static/images/preloader.gif"> Loading...</div>');
+                $('#subscribe-form .response').html('<div class="text-info"><img src="/images/preloader.gif"> Loading...</div>');
             },
             success:function(data){
                 $('form').trigger("reset");
@@ -701,7 +701,7 @@ $(document).ready(function () {
           method:"POST",
           data: $(form).serialize(),
           beforeSend:function(){
-              $('#email-form .response').html('<div class="text-info"><img src="/static/images/preloader.gif"> Loading...</div>');
+              $('#email-form .response').html('<div class="text-info"><img src="/images/preloader.gif"> Loading...</div>');
           },
           success:function(data){
               $('form').trigger("reset");

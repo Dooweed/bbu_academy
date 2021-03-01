@@ -9,6 +9,8 @@ from adminsortable2.admin import SortableAdminMixin
 
 # Register your models here.
 
+admin.site.site_header = "ATБ - Админ панель"
+
 class PageAdminForm(ModelForm):
     def clean(self):
         name = self.instance.name

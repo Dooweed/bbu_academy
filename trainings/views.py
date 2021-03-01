@@ -19,6 +19,9 @@ def training_view(request, training_url):
     page = get_object_or_404(Page, name="trainings:training")
     training = get_object_or_404(Training, url=training_url, active=True)
 
+    request.session["product_class"] = "Training"
+    request.session["product_id"] = training.id
+
     context = {
         "training": training,
         "page": page

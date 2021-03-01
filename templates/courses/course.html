@@ -63,7 +63,7 @@
                         </div>
                         <p class="course-price-text text-center mt-40 w-100">{% translate "Стоимость курса" %}: <span class="ml-2 course-price">{{ course.f_price }} {% translate "сум" %}</span></p>
                         <div class="sign-up-container d-flex justify-content-center">
-                            <button class="sign-up-button sheen" href="#">{% translate "Записаться" %}</button>
+                            <button class="sign-up-button sheen" onclick="location.href = '{% url 'purchase:offer-agreement' %}'">{% translate "Записаться" %}</button>
                         </div>
                     </div>
                 </div>

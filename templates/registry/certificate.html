@@ -17,7 +17,7 @@
                 РЕСПУБЛИКА УЗБЕКИСТАН
             </p>
             <p class="text-center">
-                <img src="{% static 'images/logo.png' %}" alt="BBU" width="220">
+                <img src="{% if pdf %}{{ FILE_BASE_DIR }}{% static 'images/logo.png' %}{% else %}{% static 'images/logo.png' %}{% endif %}" alt="BBU" width="220">
             </p>
             <br/>
             <p class="text-center">
@@ -65,7 +65,7 @@
                         Директор Шамсутдинов Р.М.
                     </p>
                     <p>
-                        Direktor _______________
+                        Direktor Shamsutdinov R. M.
                     </p>
                     <p>
                         №<em>{{ certificate.inn }} {{ certificate.get_month }}{{ certificate.get_short_year }} {{ certificate.certificate_n }}</em> М.Ў./М.П.
@@ -75,7 +75,10 @@
                     </p>
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center justify-content-sm-end order-1 order-sm-0 wkhtmltopdf-flex wkhtmltopdf-justify-content-end">
-                    <img style="max-height: 220px; margin: 10px;" src="{% url 'registry:qr_code' certificate.inn %}" alt="">
+                    <div>
+                        <img style="max-height: 220px; margin: 10px;" src="{% if pdf %}{{ FILE_BASE_DIR }}{% static qr_name %}{% else %}{% url 'registry:qr_code' certificate.inn %}{% endif %}" alt="">
+                        {% if pdf %}<a class="wkhtmltopdf-link" href="{{ link }}">{% translate "Просмотр сертификата на сайте" %}</a>{% endif %}
+                    </div>
                 </div>
             </div>
         </div>

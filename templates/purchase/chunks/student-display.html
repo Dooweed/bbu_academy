@@ -1,0 +1,19 @@
+{% load i18n %}
+
+<h2 class="text-center mt-5">{% translate "Список студентов" %} ({{ students_list| length }})</h2>
+
+{% if students_list %}
+    <div class="mt-4 justify-content-center row">
+
+        {% for student in students_list reversed %}<div class="col-12 col-md-6 col-lg-4 pl-2 pr-2 justify-content-center mb-5 filled-record student">
+            <div class="filled-record-inner">
+                {% include 'purchase/chunks/filled-student.html' %}
+            </div>
+        </div>{% endfor %}
+
+    </div>
+{% else %}
+
+    <p class="mt-5 text-center">{% translate 'Студентов не добавлено' %}</p>
+
+{% endif %}

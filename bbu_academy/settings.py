@@ -49,6 +49,8 @@ INSTALLED_APPS = [
     'courses.apps.CoursesConfig',
     'trainings.apps.TrainingsConfig',
     'main_page.apps.MainPageConfig',
+    'purchase.apps.PurchaseConfig',
+    'payme_billing.apps.PaymeBillingConfig',
     # Package apps
     'front',  # Edit page text in frontend
     'adminsortable2',  # Drag-n-drop admin sorting
@@ -66,9 +68,11 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
+    'bbu_academy.middleware.LanguageBasedOnUrlMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'bbu_academy.middleware.ProtectPersonalFilesMiddleware',
 ]
 
 ROOT_URLCONF = 'bbu_academy.urls'
@@ -133,9 +137,9 @@ else:
     # DATABASES = {
     #     'default': {
     #         'ENGINE': 'django.db.backends.mysql',
-    #         'NAME': "h36959c_bbu",
-    #         'USER': "h36959c_bbu_db_user",
-    #         'PASSWORD': "E912bLktPZtH",
+    #         'NAME': str(environ.get("DB_NAME")),
+    #         'USER': str(environ.get("DB_USER")),
+    #         'PASSWORD': str(environ.get("DB_PASSWORD")),
     #         'HOST': 'localhost',
     #         'PORT': '',
     #         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
@@ -145,9 +149,9 @@ else:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'h36959c_bbu',
-            'USER': 'h36959c_bbu_db_user',
-            'PASSWORD': 'E912bLktPZtH',
+            'NAME': str(environ.get("DB_NAME")),
+            'USER': str(environ.get("DB_USER")),
+            'PASSWORD': str(environ.get("DB_PASSWORD")),
             'HOST': 'localhost',
             'PORT': '5432',
         }
@@ -185,13 +189,15 @@ LOCALE_PATHS = (
     BASE_DIR / "locale",
 )
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tashkent'
 
 USE_I18N = True
 
 USE_L10N = True
 
 USE_TZ = True
+
+SECURE_SSL_REDIRECT = not LOCAL
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
@@ -213,12 +219,13 @@ if LOCAL:
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_TLS = False
-EMAIL_HOST = 'localhost'
+EMAIL_HOST = str(environ.get("EMAIL_HOST"))
 EMAIL_PORT = 587
-EMAIL_HOST_USER = "mail@ramenki.doweed-showcase.ru"
-EMAIL_HOST_PASSWORD = "f!3h)vU^P1rj"
+EMAIL_HOST_USER = str(environ.get("EMAIL_HOST_USER"))
+EMAIL_HOST_PASSWORD = str(environ.get("EMAIL_HOST_PASSWORD"))
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-ADMIN_EMAIL = "bydev2001@gmail.com"
+ADMIN_EMAIL = str(environ.get("ADMIN_EMAIL"))
+STAFF_MAILS = ["bydev2001@gmail.com", ]
 
 
 # Packages' settings
@@ -234,3 +241,20 @@ IMAGE_CROPPING_SIZE_WARNING = True
 
 # Django front
 DJANGO_FRONT_EDIT_MODE = "inline"
+DJANGO_FRONT_EDITOR_OPTIONS = {
+    "toolbar": "Basic",
+}
+
+# wkhtmltopdf
+PATH_WKHTMLTOPDF = r'static\wkhtmltox\bin\wkhtmltopdf.exe' if LOCAL else r'static/wkhtmltox_linux/usr/local/bin/wkhtmltopdf'
+
+# Payme Billing
+PAYME_BILLING_SETTINGS = {
+    "test": True,
+    "web_cash_id": "",
+    "web_cash_key": "",
+    "test_web_cash_id": "60316f8573f02d9806d13daa",
+    "test_web_cash_key": "G2JIkF0vAuYbgkNFjOk0PpvOwxD?BXgitqDm",
+    "billing_model": "purchase.PurchaseRecord",  # Should be like "app_label.ModelName"
+}
+

@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load front_tags %}
+{% load i18n %}
+
+{% block title %}
+    <title>{% translate 'Заполнение данных' %}</title>
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/shining-button.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/library.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{% translate 'Заполнение данных' %}</h2>
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div class="container">
+            <div class="about-wrap5 form-wrap w-100">
+                <div class="row justify-content-center form-tab-content">
+
+                    <p class="warn text-center mt-3 mb-60 w-75 ml-auto mr-auto"><b>{% translate 'Внимание!' %}</b> {% translate 'Вводите данные корректно. Ошибка при вводе данных может привести к ошибкам в последующих документах Исполнителя, выдаваемых заказчику (сертификатах, счетах-фактурах и т.п.)' %}</p>
+
+                    <form class="form w-75 row justify-content-center" method="POST">
+                        {% csrf_token %}
+                        <div class="w-75 form-column">
+                            <div class="form-group">
+                                {{ form.product.label_tag }}<span class="warn">{% for error in form.product.errors %}{{ error }}{% endfor %}</span>
+                                {{ form.product }}{% if form.product.help_text %}<small>{{ form.product.help_text }}</small>{% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.study_type.label_tag }}<span class="warn">{% for error in form.study_type.errors %}{{ error }}{% endfor %}</span>
+                                {{ form.study_type }}{% if form.study_type.help_text %}<small>{{ form.study_type.help_text }}</small>{% endif %}
+                            </div>
+                            <div class="form-group d-flex justify-content-center">
+                                {{ form.special_price.label_tag }}<span class="warn">{% for error in form.special_price.errors %}{{ error }}{% endfor %}</span>
+                                {{ form.special_price }}{% if form.special_price.help_text %}<small>{{ form.special_price.help_text }}</small>{% endif %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.inn.label_tag }}<span class="warn">{% for error in form.inn.errors %}{{ error }}{% endfor %}</span>
+                                {{ form.inn }}{% if form.inn.help_text %}<small>{{ form.inn.help_text }}</small>{% endif %}
+                            </div>
+                        </div>
+
+                        <div class="submit-button col-12 mt-2 mb-4 d-flex justify-content-end">
+                            <button type="submit" class="sheen no-sheen">{% translate 'Отправить' %}</button>
+                        </div>
+                    </form>
+
+                </div>
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/custom/confirmation-form.js' %}"></script>
+{% endblock %}

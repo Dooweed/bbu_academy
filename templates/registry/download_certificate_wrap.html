@@ -3,8 +3,7 @@
 <head>
     {% load static %}
     <meta charset="UTF-8">
-    <base href="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{{ request.path }}">
-    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{{ FILE_BASE_DIR }}{% static 'css/bootstrap.min.css' %}">
     <style>
         .wkhtmltopdf-flex {
             display: -webkit-box; /* wkhtmltopdf uses this one */
@@ -24,6 +23,13 @@
 
         .row > div:last-child {
             margin-right: 0;
+        }
+
+        .wkhtmltopdf-link {
+            display: block;
+            color: black;
+            text-align: center;
+            text-decoration: underline;
         }
     </style>
 </head>
