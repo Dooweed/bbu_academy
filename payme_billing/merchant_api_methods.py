@@ -3,7 +3,7 @@ from django.utils import timezone
 from payme_billing.models import PaymeTransaction
 
 from .utils import Error, Correct
-from .vars import MODEL
+from .vars import MODEL, TEST
 
 
 def perform(name, params):
@@ -17,12 +17,18 @@ def _CheckPerformTransaction(params):
     if not amount or not isinstance(amount, int) or not account or not isinstance(account, dict):
         return Error(-32600)
     # Check that Account object has all necessary for operation fields
-    purchase_id = account.get("purchase_id")
-    if not purchase_id or not isinstance(purchase_id, int):
-        return Error(-32600)
-    phone = account.get("phone")
-    if not phone:
-        return Error(-32600, "Номер телефона не указан")
+    if TEST:  # If the request is testing
+        purchase_id = account.get("test")
+        if not purchase_id or not isinstance(purchase_id, int):
+            return Error(-32600)
+        phone = ""
+    else:
+        purchase_id = account.get("purchase_id")
+        if not purchase_id or not isinstance(purchase_id, int):
+            return Error(-32600)
+        phone = account.get("phone")
+        if not phone:
+            return Error(-32600, "Номер телефона не указан")
 
     # Check that purchase exist
     purchase = MODEL.objects.filter(id=purchase_id, is_paid=False, payment_type="payme")
@@ -32,9 +38,10 @@ def _CheckPerformTransaction(params):
         purchase = purchase.get()
 
     # Check that phone is correct
-    purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))  # Extract only digits from string
-    if phone not in purchase_phone:
-        return Error(-31051)
+    if not TEST:
+        purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))  # Extract only digits from string
+        if phone not in purchase_phone:
+            return Error(-31051)
 
     # Check that amount is correct
     if purchase.overall_price * 100 != amount:
@@ -55,10 +62,18 @@ def _CreateTransaction(params):
     if not id or not amount or not isinstance(amount, int) or not account or not isinstance(account, dict):
         return Error(-32600)
     # Check that Account object has all necessary for operation fields
-    purchase_id = account.get("purchase_id")
-    phone = account.get("phone")
-    if not purchase_id or not isinstance(purchase_id, int) or not phone:
-        return Error(-32600)
+    if TEST:  # If the request is testing
+        purchase_id = account.get("test")
+        if not purchase_id or not isinstance(purchase_id, int):
+            return Error(-32600)
+        phone = ""
+    else:
+        purchase_id = account.get("purchase_id")
+        if not purchase_id or not isinstance(purchase_id, int):
+            return Error(-32600)
+        phone = account.get("phone")
+        if not phone:
+            return Error(-32600, "Номер телефона не указан")
 
     # Retrieve transaction object
     transaction = PaymeTransaction.objects.filter(transaction_id=id)

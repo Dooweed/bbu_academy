@@ -42,7 +42,7 @@ class PaymeTransaction(models.Model):
     perform_time = models.DateTimeField("Дата и время осуществления транзакции", null=True, blank=True)
     state = models.IntegerField("Состояние транзакции", choices=PAYME_TRANSACTION_STATES, default=0)
     denial_reason = models.CharField("Причина отмены транзакции", choices=PAYME_TRANSACTION_DENIAL_REASONS, max_length=200, null=True, blank=True)
-    phone = models.CharField("Номер телефона плательщика", max_length=200)
+    phone = models.CharField("Номер телефона плательщика", max_length=200, blank=True)
 
     def __str__(self):
         return f"Транзакция по номеру {self.phone}, id={self.transaction_id}"
