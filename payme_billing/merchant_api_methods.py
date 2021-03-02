@@ -19,8 +19,10 @@ def _CheckPerformTransaction(params):
     # Check that Account object has all necessary for operation fields
     if TEST:  # If the request is testing
         purchase_id = account.get("test")
-        if not purchase_id or not isinstance(purchase_id, int):
+        if not purchase_id or not purchase_id.isdigit():
             return Error(-32600)
+        else:
+            purchase_id = int(purchase_id)
         phone = ""
     else:
         purchase_id = account.get("purchase_id")
@@ -64,8 +66,10 @@ def _CreateTransaction(params):
     # Check that Account object has all necessary for operation fields
     if TEST:  # If the request is testing
         purchase_id = account.get("test")
-        if not purchase_id or not isinstance(purchase_id, int):
+        if not purchase_id or not purchase_id.isdigit():
             return Error(-32600)
+        else:
+            purchase_id = int(purchase_id)
         phone = ""
     else:
         purchase_id = account.get("purchase_id")
