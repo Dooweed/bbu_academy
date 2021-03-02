@@ -27,7 +27,7 @@ available_methods = ("CheckPerformTransaction", "CreateTransaction", "PerformTra
 
 
 class MerchantApiRequest:
-    response = None
+    result = None
     request_id = None
     method = None
     params = None
@@ -62,24 +62,24 @@ class MerchantApiRequest:
             return
 
         # Check whether id was present in json
-        if "id" in content and isinstance(self.request_id, int):
+        if "id" in content and isinstance(content["id"], int):
             self.request_id = content["id"]
         else:
-            self.result = Error(-32600)
+            self.result = Error(-32600, "Идентификатор запроса отсутствует")
             return
 
         # Check whether method was present in json
         if "method" in content:
             self.method = content["method"]
         else:
-            self.result = Error(-32600)
+            self.result = Error(-32600, "Метод отсутствует")
             return
 
         # Check whether params were present in json
-        if "params" in content and isinstance(self.params, dict):
+        if "params" in content and isinstance(content["params"], dict):
             self.params = content["params"]
         else:
-            self.result = Error(-32600)
+            self.result = Error(-32600, "Объект параметров отсутствует")
             return
 
         # Check whether method is incorrect

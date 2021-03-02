@@ -18,17 +18,22 @@ def _CheckPerformTransaction(params):
         return Error(-32600)
     # Check that Account object has all necessary for operation fields
     purchase_id = account.get("purchase_id")
-    phone = account.get("phone")
-    if not purchase_id or not isinstance(purchase_id, int) or not phone:
+    if not purchase_id or not isinstance(purchase_id, int):
         return Error(-32600)
+    phone = account.get("phone")
+    if not phone:
+        return Error(-32600, "Номер телефона не указан")
 
     # Check that purchase exist
     purchase = MODEL.objects.filter(id=purchase_id, is_paid=False, payment_type="payme")
     if not purchase.exists():
         return Error(-31050)
+    else:
+        purchase = purchase.get()
 
     # Check that phone is correct
-    if purchase.phone != phone:
+    purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))  # Extract only digits from string
+    if phone not in purchase_phone:
         return Error(-31051)
 
     # Check that amount is correct
@@ -83,7 +88,7 @@ def _CreateTransaction(params):
 
     # All checks are passed, returning positive response
     response = {
-        "create_time": transaction.creation_time * 1000,
+        "create_time": transaction.creation_time.second * 1000,
         "transaction": transaction.transaction_id,
         "state": transaction.state,
     }

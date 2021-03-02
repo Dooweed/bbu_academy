@@ -32,8 +32,8 @@ class EntityPayerInline(admin.StackedInline):
 class PaymentRecordAdmin(admin.ModelAdmin):
     list_display = ("payer_name", "payer_type", "student_name", "overall_price", "payment_type", "study_type", "date_started", "finished")
 
-    fields = ("finished", "study_type", "payment_type", "get_price", "overall_price", "date")
-    readonly_fields = ("get_price", "date_started", "overall_price")
+    fields = ("id", "finished", "study_type", "payment_type", "get_price", "overall_price", "date_started", "date_finished")
+    readonly_fields = ("id", "get_price", "date_started", "date_finished", "overall_price")
     inlines = (StudentInline, IndividualPayerInline, EntityPayerInline)
 
     def get_inlines(self, request, obj):

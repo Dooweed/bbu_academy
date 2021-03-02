@@ -20,8 +20,10 @@ class PaymeResponse:
 # Concrete class
 class Error(PaymeResponse):
     code = None
+    additional_info = None
 
-    def __init__(self, code):
+    def __init__(self, code, additional_info=None):
+        self.additional_info = additional_info
         if code not in ERROR_MESSAGES:
             raise ValueError(f"Код ошибки {code} не существует")
         else:
@@ -33,6 +35,8 @@ class Error(PaymeResponse):
         message = ERROR_MESSAGES[self.code].get("message")
         if message:
             error_obj["message"] = message
+            if self.additional_info:
+                error_obj["additional_info"] = self.additional_info
 
         data = ERROR_MESSAGES[self.code].get("data")
         if data:
