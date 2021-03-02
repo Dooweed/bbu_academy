@@ -2,14 +2,14 @@
 
 *.sqlite3
 
-/settings/migrations/
-/certificates/migrations/
-/news/migrations/
-/courses/migrations/
-/trainings/migrations/
-/main_page/migrations/
-/purchase/migrations/
-/payme_billing/migrations/
+/settings/migrations/*.py
+/certificates/migrations/*.py
+/news/migrations/*.py
+/courses/migrations/*.py
+/trainings/migrations/*.py
+/main_page/migrations/*.py
+/purchase/migrations/*.py
+/payme_billing/migrations/*.py
 
 /emails/
 
