@@ -3,13 +3,21 @@
 *.sqlite3
 
 /settings/migrations/*.py
+!/settings/migrations/__init__.py
 /certificates/migrations/*.py
+!/certificates/migrations/__init__.py
 /news/migrations/*.py
+!/news/migrations/__init__.py
 /courses/migrations/*.py
+!/courses/migrations/__init__.py
 /trainings/migrations/*.py
+!/trainings/migrations/__init__.py
 /main_page/migrations/*.py
+!/main_page/migrations/__init__.py
 /purchase/migrations/*.py
+!/purchase/migrations/__init__.py
 /payme_billing/migrations/*.py
+!/payme_billing/migrations/__init__.py
 
 /emails/
 
