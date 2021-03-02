@@ -12,3 +12,5 @@
 /payme_billing/migrations/
 
 /emails/
+
+**/__pycache__/
