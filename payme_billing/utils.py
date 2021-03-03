@@ -90,7 +90,7 @@ def check_account(params: dict) -> Tuple[int, str]:
     elif not isinstance(account, dict):
         raise PaymeCheckFailedException(-32600, "Параметр account имеет неверный тип")
 
-    # Change params if an app is in TEST condition
+    # Change params if app is in TEST condition
     if TEST and "test" in account:  # If the request is testing
         purchase_id = account.get("test")
         phone = ""

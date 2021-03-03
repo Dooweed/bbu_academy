@@ -3,7 +3,7 @@ from django.utils import timezone
 from payme_billing.models import PaymeTransaction
 
 from .utils import Error, Correct, check_amount, check_account, check_transaction_id, PaymeCheckFailedException
-from .vars import MODEL
+from .vars import MODEL, TEST
 
 
 def perform(name, params):
@@ -27,6 +27,8 @@ def _CheckPerformTransaction(params):
 
     # Check that phone is correct
     purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))[-9:]  # Extract only digits from string
+    if TEST:  # Pass checking phone if app is in TEST condition
+        pass
     if phone != purchase_phone:
         return Error(-31051)
 
