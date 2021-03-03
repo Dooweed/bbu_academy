@@ -2,8 +2,8 @@ from django.utils import timezone
 
 from payme_billing.models import PaymeTransaction
 
-from .utils import Error, Correct
-from .vars import MODEL, TEST
+from .utils import Error, Correct, check_amount, check_account, check_transaction_id, PaymeCheckFailedException
+from .vars import MODEL
 
 
 def perform(name, params):
@@ -12,25 +12,11 @@ def perform(name, params):
 
 def _CheckPerformTransaction(params):
     # Check that all required params are present and correct
-    amount = params.get("amount")
-    account = params.get("account")
-    if not amount or not isinstance(amount, int) or not account or not isinstance(account, dict):
-        return Error(-32600)
-    # Check that Account object has all necessary for operation fields
-    if TEST:  # If the request is testing
-        purchase_id = account.get("test")
-        if not purchase_id or not purchase_id.isdigit():
-            return Error(-32600)
-        else:
-            purchase_id = int(purchase_id)
-        phone = ""
-    else:
-        purchase_id = account.get("purchase_id")
-        if not purchase_id or not isinstance(purchase_id, int):
-            return Error(-32600)
-        phone = account.get("phone")
-        if not phone:
-            return Error(-32600, "Номер телефона не указан")
+    try:
+        amount = check_amount(params)
+        purchase_id, phone = check_account(params)
+    except PaymeCheckFailedException as e:
+        return e.error()
 
     # Check that purchase exist
     purchase = MODEL.objects.filter(id=purchase_id, is_paid=False, payment_type="payme")
@@ -40,10 +26,9 @@ def _CheckPerformTransaction(params):
         purchase = purchase.get()
 
     # Check that phone is correct
-    if not TEST:
-        purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))  # Extract only digits from string
-        if phone not in purchase_phone:
-            return Error(-31051)
+    purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))[-9:]  # Extract only digits from string
+    if phone != purchase_phone:
+        return Error(-31051)
 
     # Check that amount is correct
     if purchase.overall_price * 100 != amount:
@@ -58,29 +43,15 @@ def _CheckPerformTransaction(params):
 
 def _CreateTransaction(params):
     # Check that all required params are present and correct
-    id = params.get("id")
-    amount = params.get("amount")
-    account = params.get("account")
-    if not id or not amount or not isinstance(amount, int) or not account or not isinstance(account, dict):
-        return Error(-32600)
-    # Check that Account object has all necessary for operation fields
-    if TEST:  # If the request is testing
-        purchase_id = account.get("test")
-        if not purchase_id or not purchase_id.isdigit():
-            return Error(-32600)
-        else:
-            purchase_id = int(purchase_id)
-        phone = ""
-    else:
-        purchase_id = account.get("purchase_id")
-        if not purchase_id or not isinstance(purchase_id, int):
-            return Error(-32600)
-        phone = account.get("phone")
-        if not phone:
-            return Error(-32600, "Номер телефона не указан")
+    try:
+        transaction_id = check_transaction_id(params)
+        amount = check_amount(params)
+        purchase_id, phone = check_account(params)
+    except PaymeCheckFailedException as e:
+        return e.error()
 
     # Retrieve transaction object
-    transaction = PaymeTransaction.objects.filter(transaction_id=id)
+    transaction = PaymeTransaction.objects.filter(transaction_id=transaction_id)
 
     # If transaction already exist
     if transaction.exists():
@@ -103,7 +74,7 @@ def _CreateTransaction(params):
         if result.is_error():
             return result
         else:
-            transaction = PaymeTransaction.objects.create(transaction_id=id, record_id=purchase_id, amount=amount, phone=phone, state=1)
+            transaction = PaymeTransaction.objects.create(transaction_id=transaction_id, record_id=purchase_id, amount=amount, phone=phone, state=1)
 
     # All checks are passed, returning positive response
     response = {
@@ -116,12 +87,13 @@ def _CreateTransaction(params):
 
 def _PerformTransaction(params):
     # Check that all required params are present and correct
-    id = params.get("id")
-    if not id:
-        return Error(-32600)
+    try:
+        transaction_id = check_transaction_id(params)
+    except PaymeCheckFailedException as e:
+        return e.error()
 
     # Retrieve transaction object
-    transaction = PaymeTransaction.objects.filter(transaction_id=id)
+    transaction = PaymeTransaction.objects.filter(transaction_id=transaction_id)
 
     # If transaction exist
     if transaction.exists():

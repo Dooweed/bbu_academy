@@ -20,7 +20,7 @@ from base64 import b64decode
 from binascii import Error as BinasciiError
 
 from .utils import Error
-from .vars import WEB_CASH_KEY
+from .vars import WEB_CASH_KEY, TEST
 from . import merchant_api_methods
 
 available_methods = ("CheckPerformTransaction", "CreateTransaction", "PerformTransaction", "CancelTransaction", "CheckTransaction", "GetStatement")
