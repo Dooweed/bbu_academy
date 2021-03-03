@@ -29,7 +29,7 @@ def _CheckPerformTransaction(params):
     purchase_phone = ''.join(filter(lambda x: x.isdigit(), purchase.phone))[-9:]  # Extract only digits from string
     if TEST:  # Pass checking phone if app is in TEST condition
         pass
-    if phone != purchase_phone:
+    elif phone != purchase_phone:
         return Error(-31051)
 
     # Check that amount is correct
