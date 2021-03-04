@@ -93,8 +93,8 @@ def check_account(params: dict) -> Tuple[int, str]:
     purchase_id = account.get("purchase_id")
     if purchase_id is None:
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не указан")
-    elif not purchase_id.isdigit():
-        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не может быть конвертирован в число")
+    elif not isinstance(purchase_id, int) and not (isinstance(purchase_id, str) and purchase_id.isdigit()):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не является числом и не может быть конвертирован в число")
 
     phone = account.get("phone")
     if phone is None:
