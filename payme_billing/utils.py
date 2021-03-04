@@ -4,7 +4,7 @@ import abc
 # Abstract class
 from typing import Tuple
 
-from payme_billing.vars import ERROR_MESSAGES
+from payme_billing.vars.static import FIELD_ERROR, ERROR_MESSAGES
 
 
 class PaymeResponse:
@@ -76,9 +76,9 @@ class PaymeCheckFailedException(Exception):
 def check_amount(params: dict) -> int:
     amount = params.get("amount")
     if amount is None:
-        raise PaymeCheckFailedException(-32600, "Параметр amount не указан")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр amount не указан")
     elif not isinstance(amount, int):
-        raise PaymeCheckFailedException(-32600, "Параметр amount имеет неверный тип")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр amount имеет неверный тип")
     return amount
 
 def check_account(params: dict) -> Tuple[int, str]:
@@ -86,25 +86,25 @@ def check_account(params: dict) -> Tuple[int, str]:
 
     account = params.get("account")
     if account is None:
-        raise PaymeCheckFailedException(-32600, "Параметр account не указан")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account не указан")
     elif not isinstance(account, dict):
-        raise PaymeCheckFailedException(-32600, "Параметр account имеет неверный тип")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account имеет неверный тип")
 
     purchase_id = account.get("purchase_id")
     if purchase_id is None:
-        raise PaymeCheckFailedException(-32600, "Параметр account[purchase_id] не указан")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не указан")
     elif not isinstance(purchase_id, int):
-        raise PaymeCheckFailedException(-32600, "Параметр account[purchase_id] имеет неверный тип")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] имеет неверный тип")
 
     phone = account.get("phone")
     if phone is None:
-        raise PaymeCheckFailedException(-32600, "Параметр account[phone] не указан")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[phone] не указан")
     elif not phone.isdigit():
-        raise PaymeCheckFailedException(-32600, "Параметр account[phone] не может быть конвертирован в число")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[phone] не может быть конвертирован в число")
     elif not isinstance(phone, str):
-        raise PaymeCheckFailedException(-32600, "Параметр account[phone] имеет неверный тип")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[phone] имеет неверный тип")
     elif len(phone) != ACCOUNT_PHONE_LENGTH:
-        raise PaymeCheckFailedException(-32600, "Параметр account[phone] имеет неверную длину")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[phone] имеет неверную длину")
 
     return purchase_id, phone
 
@@ -113,10 +113,34 @@ def check_transaction_id(params: dict) -> str:
 
     transaction_id = params.get("id")
     if transaction_id is None:
-        raise PaymeCheckFailedException(-32600, "Параметр id не указан")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр id не указан")
     elif not isinstance(transaction_id, str):
-        raise PaymeCheckFailedException(-32600, "Параметр id имеет неверный тип")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр id имеет неверный тип")
     elif len(transaction_id) != TRANSACTION_ID_LENGTH:
-        raise PaymeCheckFailedException(-32600, "Параметр id имеет неверную длину")
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр id имеет неверную длину")
 
     return transaction_id
+
+def check_time(params: dict) -> int:
+    time = params.get("time")
+
+    if time is None:
+        raise PaymeCheckFailedException(FIELD_ERROR, "Время создания транзакции не указано")
+    elif not isinstance(time, int):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр time имеет неверный тип")
+
+    return int(time/1000)
+
+def check_time_diapason(params: dict) -> Tuple[int, int]:
+    time_from, time_to = params.get("from"), params.get("to")
+
+    if time_from is None:
+        raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (from) не указана")
+    elif time_to is None:
+        raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (to) не указана")
+    elif not isinstance(time_from, int):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (from) имеет неверный тип")
+    elif not isinstance(time_to, int):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (to) имеет неверный тип")
+
+    return int(time_from/1000), int(time_to/1000)

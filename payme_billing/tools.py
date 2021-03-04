@@ -20,7 +20,8 @@ from base64 import b64decode
 from binascii import Error as BinasciiError
 
 from .utils import Error
-from .vars import WEB_CASH_KEY, TEST
+from .vars.settings import WEB_CASH_KEY
+from .vars.static import *
 from . import merchant_api_methods
 
 available_methods = ("CheckPerformTransaction", "CreateTransaction", "PerformTransaction", "CancelTransaction", "CheckTransaction", "GetStatement")
@@ -34,12 +35,12 @@ class MerchantApiRequest:
 
     def __init__(self, request):
         if request.method != "POST":  # Check if request method is not POST
-            self.result = Error(-32300)
+            self.result = Error(REQUEST_METHOD_ERROR)
             return
 
         # Check Authorization header
         if "Authorization" not in request.headers:
-            self.result = Error(-32504)
+            self.result = Error(RIGHTS_ERROR)
             return
 
         # Check Authorization key
@@ -47,10 +48,10 @@ class MerchantApiRequest:
             auth = request.headers["Authorization"]
             auth = b64decode(auth.replace("Basic ", "")).decode()
             if auth.split(":")[1] != WEB_CASH_KEY:
-                self.result = Error(-32504)
+                self.result = Error(RIGHTS_ERROR)
                 return
         except BinasciiError:
-            self.result = Error(-32504)
+            self.result = Error(RIGHTS_ERROR)
             return
 
         # Parse json
@@ -58,33 +59,33 @@ class MerchantApiRequest:
 
         # Check if request content is empty
         if not content:
-            self.result = Error(-32700)
+            self.result = Error(JSON_ERROR)
             return
 
         # Check whether id was present in json
         if "id" in content and isinstance(content["id"], int):
             self.request_id = content["id"]
         else:
-            self.result = Error(-32600, "Идентификатор запроса отсутствует")
+            self.result = Error(FIELD_ERROR, "Идентификатор запроса отсутствует")
             return
 
         # Check whether method was present in json
         if "method" in content:
             self.method = content["method"]
         else:
-            self.result = Error(-32600, "Метод отсутствует")
+            self.result = Error(FIELD_ERROR, "Метод отсутствует")
             return
 
         # Check whether params were present in json
         if "params" in content and isinstance(content["params"], dict):
             self.params = content["params"]
         else:
-            self.result = Error(-32600, "Объект параметров отсутствует")
+            self.result = Error(FIELD_ERROR, "Объект параметров отсутствует")
             return
 
         # Check whether method is incorrect
         if self.method not in available_methods:
-            self.result = Error(-32601)
+            self.result = Error(METHOD_ERROR)
             return
 
     def get_response(self):

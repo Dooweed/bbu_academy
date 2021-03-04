@@ -62,7 +62,7 @@ def qr_code(request, inn: int, only_image=False):
         img_qr_big.save(response, "JPEG")
         response['Content-Disposition'] = 'attachment; filename="qr.jpg"'
     except Exception:
-        raise Http404
+        raise Http404()
     return response
 
 def download_pdf_certificate(request, inn: int):
