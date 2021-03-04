@@ -9,3 +9,6 @@ class PaymeStateMixin(models.Model):
     @abstractmethod
     def get_amount(self) -> int:  # Should be overridden to return integer, representing amount (full cost) for order
         pass
+
+    class Meta:
+        abstract = True
