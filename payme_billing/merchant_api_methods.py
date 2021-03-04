@@ -27,11 +27,11 @@ def _CheckPerformTransaction(params):
         purchase = purchase.get()
 
     # Check that purchase is not available for new transaction (already tied to another transaction)
-    if purchase.status == 0:  # Go ahead, purchase is available
+    if purchase.state == 0:  # Go ahead, purchase is available
         pass
-    elif purchase.status == 4:
+    elif purchase.state == 4:
         return Error(RECEIPT_PAID_ERROR)
-    elif purchase.status == 50:
+    elif purchase.state == 50:
         return Error(RECEIPT_CANCELLED_ERROR)
     else:
         return Error(RECEIPT_BUSY_ERROR)
