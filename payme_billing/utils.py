@@ -4,7 +4,7 @@ import abc
 # Abstract class
 from typing import Tuple
 
-from payme_billing.vars import ERROR_MESSAGES, TEST
+from payme_billing.vars import ERROR_MESSAGES
 
 
 class PaymeResponse:
@@ -90,31 +90,21 @@ def check_account(params: dict) -> Tuple[int, str]:
     elif not isinstance(account, dict):
         raise PaymeCheckFailedException(-32600, "Параметр account имеет неверный тип")
 
-    # Change params if app is in TEST condition
-    if TEST and "test" in account:  # If the request is testing
-        purchase_id = account.get("test")
-        phone = ""
-        if purchase_id is None:
-            raise PaymeCheckFailedException(-32600, "Параметр account[test] не указан")
-        elif not purchase_id.isdigit():
-            raise PaymeCheckFailedException(-32600, "Параметр account[test] не может быть конвертирован в число")
-    # Perform ordinary check if app is NOT in TEST condition
-    else:
-        purchase_id = account.get("purchase_id")
-        if purchase_id is None:
-            raise PaymeCheckFailedException(-32600, "Параметр account[purchase_id] не указан")
-        elif not isinstance(purchase_id, int):
-            raise PaymeCheckFailedException(-32600, "Параметр account[purchase_id] имеет неверный тип")
+    purchase_id = account.get("purchase_id")
+    if purchase_id is None:
+        raise PaymeCheckFailedException(-32600, "Параметр account[purchase_id] не указан")
+    elif not isinstance(purchase_id, int):
+        raise PaymeCheckFailedException(-32600, "Параметр account[purchase_id] имеет неверный тип")
 
-        phone = account.get("phone")
-        if phone is None:
-            raise PaymeCheckFailedException(-32600, "Параметр account[phone] не указан")
-        elif not phone.isdigit():
-            raise PaymeCheckFailedException(-32600, "Параметр account[phone] не может быть конвертирован в число")
-        elif not isinstance(phone, str):
-            raise PaymeCheckFailedException(-32600, "Параметр account[phone] имеет неверный тип")
-        elif len(phone) != ACCOUNT_PHONE_LENGTH:
-            raise PaymeCheckFailedException(-32600, "Параметр account[phone] имеет неверную длину")
+    phone = account.get("phone")
+    if phone is None:
+        raise PaymeCheckFailedException(-32600, "Параметр account[phone] не указан")
+    elif not phone.isdigit():
+        raise PaymeCheckFailedException(-32600, "Параметр account[phone] не может быть конвертирован в число")
+    elif not isinstance(phone, str):
+        raise PaymeCheckFailedException(-32600, "Параметр account[phone] имеет неверный тип")
+    elif len(phone) != ACCOUNT_PHONE_LENGTH:
+        raise PaymeCheckFailedException(-32600, "Параметр account[phone] имеет неверную длину")
 
     return purchase_id, phone
 
