@@ -53,6 +53,10 @@
                                 <span class="value">{% if record.get_entity_payer_or_none %}{% translate 'Юридическое лицо' %}{% else %}{% translate 'Физическое лицо' %}{% endif %}</span>
                             </p>
                             <p class="line">
+                                <span class="label">{% translate 'Номер телефона' %}: </span>
+                                <span class="value">{{ record.payer.phone }} <span class="label">({% translate 'будет использоваться при оплате через Payme' %})</span></span>
+                            </p>
+                            <p class="line">
                                 <span class="label">{% translate 'Количество студентов' %}: </span>
                                 <span class="value">{{ record.students.count }}</span>
                             </p>
