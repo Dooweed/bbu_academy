@@ -93,8 +93,8 @@ def check_account(params: dict) -> Tuple[int, str]:
     purchase_id = account.get("purchase_id")
     if purchase_id is None:
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не указан")
-    elif not isinstance(purchase_id, int):
-        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] имеет неверный тип")
+    elif not purchase_id.isdigit():
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не может быть конвертирован в число")
 
     phone = account.get("phone")
     if phone is None:
@@ -106,7 +106,7 @@ def check_account(params: dict) -> Tuple[int, str]:
     elif len(phone) != ACCOUNT_PHONE_LENGTH:
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[phone] имеет неверную длину")
 
-    return purchase_id, phone
+    return int(purchase_id), phone
 
 def check_transaction_id(params: dict) -> str:
     TRANSACTION_ID_LENGTH = 24
