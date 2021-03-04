@@ -5,4 +5,4 @@ from .models import PaymeTransaction
 
 @admin.register(PaymeTransaction)
 class PaymeTransactionAdmin(admin.ModelAdmin):
-    readonly_fields = super().fields
+    readonly_fields = ("record_id", "transaction_id", "amount", "creation_time", "perform_time", "state", "denial_reason", "phone")
