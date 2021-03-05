@@ -134,28 +134,28 @@ if LOCAL:
     }
 else:
     # MySQL
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.mysql',
-    #         'NAME': str(environ.get("DB_NAME")),
-    #         'USER': str(environ.get("DB_USER")),
-    #         'PASSWORD': str(environ.get("DB_PASSWORD")),
-    #         'HOST': 'localhost',
-    #         'PORT': '',
-    #         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
-    #     }
-    # }
-    # PostgreSQL
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'ENGINE': 'django.db.backends.mysql',
             'NAME': str(environ.get("DB_NAME")),
             'USER': str(environ.get("DB_USER")),
             'PASSWORD': str(environ.get("DB_PASSWORD")),
             'HOST': 'localhost',
-            'PORT': '5432',
+            'PORT': '',
+            'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
         }
     }
+    # PostgreSQL
+    # DATABASES = {
+    #     'default': {
+    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'NAME': str(environ.get("DB_NAME")),
+    #         'USER': str(environ.get("DB_USER")),
+    #         'PASSWORD': str(environ.get("DB_PASSWORD")),
+    #         'HOST': 'localhost',
+    #         'PORT': '5432',
+    #     }
+    # }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -258,4 +258,3 @@ PAYME_BILLING_SETTINGS = {
     "test_web_cash_key": "G2JIkF0vAuYbgkNFjOk0PpvOwxD?BXgitqDm",
     "billing_model": "purchase.PurchaseRecord",  # Should be like "app_label.ModelName"
 }
-
