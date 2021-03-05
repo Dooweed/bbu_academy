@@ -27,16 +27,16 @@ class PaymeTransaction(models.Model):
         return (timezone.now() - self.creation_time).seconds >= TRANSACTION_TIMEOUT
 
     def get_creation_time(self):
-        return self.creation_time.timestamp()*1000 if self.creation_time else None
+        return int(self.creation_time.timestamp()*1000) if self.creation_time else 0
 
     def get_perform_time(self):
-        return self.perform_time.timestamp()*1000 if self.perform_time else None
+        return int(self.perform_time.timestamp()*1000) if self.perform_time else 0
 
     def get_cancel_time(self):
-        return self.cancel_time.timestamp()*1000 if self.cancel_time else None
+        return int(self.cancel_time.timestamp()*1000) if self.cancel_time else 0
 
     def get_payme_creation_time(self):
-        return self.payme_creation_time.timestamp()*1000 if self.payme_creation_time else None
+        return int(self.payme_creation_time.timestamp()*1000) if self.payme_creation_time else 0
 
     class Meta:
         verbose_name = "Payme транзакция"
