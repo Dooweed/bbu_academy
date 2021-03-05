@@ -46,7 +46,7 @@ ERROR_MESSAGES = {
     CANNOT_PERFORM_ERROR: {"message": {"ru": "Невозможно выполнить операцию."}},
 
     # PerformTransaction errors
-    TRANSACTION_NOT_FOUND_ERROR: {"message": {"ru": "Транзакция не найдена"}},
+    TRANSACTION_NOT_FOUND_ERROR: {"message": TRANSACTION_NOT_FOUND_ERROR_MESSAGE},
 }
 
 
