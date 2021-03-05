@@ -16,6 +16,13 @@ RECEIPT_CANCELLED_ERROR = -31062
 CANNOT_PERFORM_ERROR = -31008
 TRANSACTION_NOT_FOUND_ERROR = -31003
 
+REQUEST_METHOD_ERROR_MESSAGE = {"ru": "Неверный метод запроса. Ожидается POST", "uz": "not translated", "en": "Incorrect request method. POST expected"}
+JSON_ERROR_MESSAGE = {"ru": "Ошибка парсинга JSON", "uz": "not translated", "en": "JSON parse error"}
+FIELD_ERROR_MESSAGE = {"ru": "В RPC-запросе отсутствуют обязательные поля или тип полей не соответствует спецификации", "uz": "not translated", "en": "RPC-request missing mandatory fields or field types does not match specification"}
+METHOD_ERROR_MESSAGE = {"ru": "Запрашиваемый метод не найден", "uz": "not translated", "en": "Could not find requested method"}
+RIGHTS_ERROR_MESSAGE = {"ru": "Недостаточно привилегий для выполнения метода", "uz": "not translated", "en": "Not enough rights to perform method"}
+SYSTEM_ERROR_MESSAGE = {"ru": "Системная (внутренняя ошибка)", "uz": "not translated", "en": "System error (server error)"}
+
 AMOUNT_ERROR_MESSAGE = {"ru": "Неверная сумма", "uz": "not translated", "en": "The amount is incorrect"}
 PHONE_ERROR_MESSAGE = {"ru": "Введённый номер телефона не найден", "uz": "not translated", "en": "Could not find phone number"}
 RECEIPT_NOT_FOUND_ERROR_MESSAGE = {"ru": "Заказ не найден", "uz": "not translated", "en": "Could not find the order"}
@@ -23,16 +30,18 @@ RECEIPT_BUSY_ERROR_MESSAGE = {"ru": "Другая транзакция уже з
 RECEIPT_PAID_ERROR_MESSAGE = {"ru": "Заказ уже оплачен", "uz": "not translated", "en": "The order was already paid"}
 RECEIPT_CANCELLED_ERROR_MESSAGE = {"ru": "Заказ был отменён", "uz": "not translated", "en": "The order was cancelled"}
 
+CANNOT_PERFORM_ERROR_MESSAGE = {"ru": "Невозможно выполнить операцию.", "uz": "not translated", "en": "Cannot perform the operation"}
+
 TRANSACTION_NOT_FOUND_ERROR_MESSAGE = {"ru": "Транзакция не найдена", "uz": "not translated", "en": "Could not find the transaction"}
 
 ERROR_MESSAGES = {
     # Common errors
-    REQUEST_METHOD_ERROR: {"message": {"ru": "Ошибка возникает в том случае, если метод запроса не POST"}},
-    JSON_ERROR: {"message": {"ru": "Ошибка парсинга JSON"}},
-    FIELD_ERROR: {"message": {"ru": "В RPC-запросе отсутствуют обязательные поля или тип полей не соответствует спецификации"}},
-    METHOD_ERROR: {"message": {"ru": "Запрашиваемый метод не найден"}},  # В RPC-запросе имя запрашиваемого метода содержится в поле data.
-    RIGHTS_ERROR: {"message": {"ru": "Недостаточно привилегий для выполнения метода"}},
-    SYSTEM_ERROR: {"message": {"ru": "Системная (внутренняя ошибка)"}},  # Ошибку следует использовать в случае системных сбоев: отказа базы данных, отказа файловой системы и т.д.
+    REQUEST_METHOD_ERROR: {"message": REQUEST_METHOD_ERROR_MESSAGE},
+    JSON_ERROR: {"message": JSON_ERROR_MESSAGE},
+    FIELD_ERROR: {"message": FIELD_ERROR_MESSAGE},
+    METHOD_ERROR: {"message": METHOD_ERROR_MESSAGE},  # В RPC-запросе имя запрашиваемого метода содержится в поле data.
+    RIGHTS_ERROR: {"message": RIGHTS_ERROR_MESSAGE},
+    SYSTEM_ERROR: {"message": SYSTEM_ERROR_MESSAGE},  # Ошибку следует использовать в случае системных сбоев: отказа базы данных, отказа файловой системы и т.д.
 
     # CheckPerformTransaction errors
     AMOUNT_ERROR: {"message": AMOUNT_ERROR_MESSAGE},
@@ -43,7 +52,7 @@ ERROR_MESSAGES = {
     RECEIPT_CANCELLED_ERROR: {"message": RECEIPT_CANCELLED_ERROR_MESSAGE, "data": "account[purchase_id]"},
 
     # CreateTransaction errors
-    CANNOT_PERFORM_ERROR: {"message": {"ru": "Невозможно выполнить операцию."}},
+    CANNOT_PERFORM_ERROR: {"message": CANNOT_PERFORM_ERROR_MESSAGE},
 
     # PerformTransaction errors
     TRANSACTION_NOT_FOUND_ERROR: {"message": TRANSACTION_NOT_FOUND_ERROR_MESSAGE},
