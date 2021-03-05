@@ -129,7 +129,7 @@ def _PerformTransaction(params):
                 r = r.update(is_paid=True, state=4)
                 msg += f"\n{r}"
                 if r != 1:
-                    return Error(RECEIPT_NOT_FOUND_ERROR)
+                    return Error(RECEIPT_NOT_FOUND_ERROR, msg)
                 transaction.perform_time = timezone.now()
                 transaction.state = 2
                 transaction.save()
