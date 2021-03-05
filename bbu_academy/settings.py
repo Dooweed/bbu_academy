@@ -251,6 +251,7 @@ PATH_WKHTMLTOPDF = r'static\wkhtmltox\bin\wkhtmltopdf.exe' if LOCAL else r'stati
 # Payme Billing
 PAYME_BILLING_SETTINGS = {
     "test": True,
+    "admin": True,
     "web_cash_id": "",
     "web_cash_key": "",
     "test_web_cash_id": "60316f8573f02d9806d13daa",
