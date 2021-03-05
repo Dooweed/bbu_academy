@@ -23,6 +23,8 @@ RECEIPT_BUSY_ERROR_MESSAGE = {"ru": "Другая транзакция уже з
 RECEIPT_PAID_ERROR_MESSAGE = {"ru": "Заказ уже оплачен", "uz": "not translated", "en": "The order was already paid"}
 RECEIPT_CANCELLED_ERROR_MESSAGE = {"ru": "Заказ был отменён", "uz": "not translated", "en": "The order was cancelled"}
 
+TRANSACTION_NOT_FOUND_ERROR_MESSAGE = {"ru": "Транзакция не найдена", "uz": "not translated", "en": "Could not find the transaction"}
+
 ERROR_MESSAGES = {
     # Common errors
     REQUEST_METHOD_ERROR: {"message": {"ru": "Ошибка возникает в том случае, если метод запроса не POST"}},
