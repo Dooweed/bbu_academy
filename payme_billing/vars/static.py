@@ -1,4 +1,4 @@
-
+# Common errors
 REQUEST_METHOD_ERROR = -32300
 JSON_ERROR = -32700
 FIELD_ERROR = -32600
@@ -6,6 +6,7 @@ METHOD_ERROR = -32601
 RIGHTS_ERROR = -32504
 SYSTEM_ERROR = -32400
 
+# CheckPerformTransaction errors
 AMOUNT_ERROR = -31001
 PHONE_ERROR = -31051
 RECEIPT_NOT_FOUND_ERROR = -31050
@@ -13,8 +14,15 @@ RECEIPT_BUSY_ERROR = -31060
 RECEIPT_PAID_ERROR = -31061
 RECEIPT_CANCELLED_ERROR = -31062
 
+# CreateTransaction errors
 CANNOT_PERFORM_ERROR = -31008
+
+# PerformTransaction errors
 TRANSACTION_NOT_FOUND_ERROR = -31003
+
+# CancelTransaction errors
+CANNOT_CANCEL_ERROR = -31007
+
 
 REQUEST_METHOD_ERROR_MESSAGE = {"ru": "Неверный метод запроса. Ожидается POST", "uz": "not translated", "en": "Incorrect request method. POST expected"}
 JSON_ERROR_MESSAGE = {"ru": "Ошибка парсинга JSON", "uz": "not translated", "en": "JSON parse error"}
@@ -34,8 +42,9 @@ CANNOT_PERFORM_ERROR_MESSAGE = {"ru": "Невозможно выполнить �
 
 TRANSACTION_NOT_FOUND_ERROR_MESSAGE = {"ru": "Транзакция не найдена", "uz": "not translated", "en": "Could not find the transaction"}
 
+CANNOT_CANCEL_ERROR_MESSAGE = {"ru": "Заказ выполнен. Невозможно отменить транзакцию. Товар или услуга предоставлена покупателю в полном объеме.", "uz": "not translated", "en": "The order has been completed. Cannot cancel transaction. The product was fully provided to a customer"}
+
 ERROR_MESSAGES = {
-    # Common errors
     REQUEST_METHOD_ERROR: {"message": REQUEST_METHOD_ERROR_MESSAGE},
     JSON_ERROR: {"message": JSON_ERROR_MESSAGE},
     FIELD_ERROR: {"message": FIELD_ERROR_MESSAGE},
@@ -43,7 +52,6 @@ ERROR_MESSAGES = {
     RIGHTS_ERROR: {"message": RIGHTS_ERROR_MESSAGE},
     SYSTEM_ERROR: {"message": SYSTEM_ERROR_MESSAGE},  # Ошибку следует использовать в случае системных сбоев: отказа базы данных, отказа файловой системы и т.д.
 
-    # CheckPerformTransaction errors
     AMOUNT_ERROR: {"message": AMOUNT_ERROR_MESSAGE},
     PHONE_ERROR: {"message": PHONE_ERROR_MESSAGE, "data": "account[phone]"},
     RECEIPT_NOT_FOUND_ERROR: {"message": RECEIPT_NOT_FOUND_ERROR_MESSAGE, "data": "account[purchase_id]"},
@@ -51,11 +59,11 @@ ERROR_MESSAGES = {
     RECEIPT_PAID_ERROR: {"message": RECEIPT_PAID_ERROR_MESSAGE, "data": "account[purchase_id]"},
     RECEIPT_CANCELLED_ERROR: {"message": RECEIPT_CANCELLED_ERROR_MESSAGE, "data": "account[purchase_id]"},
 
-    # CreateTransaction errors
     CANNOT_PERFORM_ERROR: {"message": CANNOT_PERFORM_ERROR_MESSAGE},
 
-    # PerformTransaction errors
     TRANSACTION_NOT_FOUND_ERROR: {"message": TRANSACTION_NOT_FOUND_ERROR_MESSAGE},
+
+    CANNOT_CANCEL_ERROR: {"message": CANNOT_CANCEL_ERROR_MESSAGE},
 }
 
 

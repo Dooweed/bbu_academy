@@ -2,7 +2,7 @@ from django.utils import timezone
 
 from payme_billing.models import PaymeTransaction
 
-from .utils import Error, Correct, check_amount, check_account, check_transaction_id, PaymeCheckFailedException, check_time, check_time_diapason
+from .utils import Error, Correct, check_amount, check_account, check_transaction_id, PaymeCheckFailedException, check_time, check_time_diapason, check_reason
 from .vars.settings import MODEL
 from .vars.static import *
 
@@ -152,7 +152,41 @@ def _PerformTransaction(params):
 
 
 def _CancelTransaction(params):
-    return
+    try:
+        transaction_id = check_transaction_id(params)
+        reason = check_reason(params)
+    except PaymeCheckFailedException as e:
+        return e.error()
+
+    # Retrieve transaction object
+    transaction = PaymeTransaction.objects.filter(transaction_id=transaction_id)
+
+    # If transaction exist
+    if transaction.exists():
+        transaction = transaction.get()
+
+        # Transaction is in pending state
+        if transaction.state == 1:
+            transaction.state = -1
+            transaction.denial_reason = reason
+            transaction.cancel_time = timezone.now()
+            transaction.save()
+        # Transaction is already completed
+        elif transaction.state == 2:
+            return Error(CANNOT_CANCEL_ERROR)
+
+    # If transaction does not exist
+    else:
+        return Error(TRANSACTION_NOT_FOUND_ERROR)
+
+    # All checks are passed, returning positive response
+    response = {
+        "cancel_time": transaction.get_cancel_time(),
+        "state": transaction.state,
+        "transaction": transaction.transaction_id
+    }
+
+    return Correct(response)
 
 
 def _CheckTransaction(params):

@@ -200,3 +200,11 @@ def check_time_diapason(params: dict) -> Tuple[datetime, datetime]:
         raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (to) имеет неверный тип")
 
     return datetime.fromtimestamp(time_from/1000.0), datetime.fromtimestamp(time_to/1000.0)
+
+def check_reason(params: dict) -> int:
+    reason = params.get("reason")
+    if reason is None:
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр причина отмены (reason) отсутствует")
+    elif not isinstance(reason, int) and not (isinstance(reason, str) and reason.isdigit()):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр причина отмены (reason) не является числом и не может быть конвертирована в число")
+    return int(reason)
