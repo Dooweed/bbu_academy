@@ -4,8 +4,11 @@ import abc
 # Abstract class
 import json
 from base64 import b64decode
+from datetime import datetime
 from typing import Tuple
 from binascii import Error as BinasciiError
+
+from django.utils import timezone
 
 from payme_billing.vars.settings import WEB_CASH_KEY
 from payme_billing.vars.static import *
@@ -103,8 +106,10 @@ def check_json_content(request) -> dict:
 
 def check_request_id(content: dict) -> int:
     request_id = content.get("id")
-    if request_id is None or not isinstance(content["id"], int):
+    if request_id is None:
         raise PaymeCheckFailedException(FIELD_ERROR, "Идентификатор запроса отсутствует")
+    elif not isinstance(request_id, int):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Идентификатор запроса имеет неверный тип")
     return request_id
 
 def check_method(content: dict) -> str:
@@ -172,7 +177,7 @@ def check_transaction_id(params: dict) -> str:
 
     return transaction_id
 
-def check_time(params: dict) -> int:
+def check_time(params: dict) -> datetime:
     time = params.get("time")
 
     if time is None:
@@ -180,9 +185,9 @@ def check_time(params: dict) -> int:
     elif not isinstance(time, int):
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр time имеет неверный тип")
 
-    return int(time/1000)
+    return datetime.fromtimestamp(time/1000.0)
 
-def check_time_diapason(params: dict) -> Tuple[int, int]:
+def check_time_diapason(params: dict) -> Tuple[datetime, datetime]:
     time_from, time_to = params.get("from"), params.get("to")
 
     if time_from is None:
@@ -194,4 +199,4 @@ def check_time_diapason(params: dict) -> Tuple[int, int]:
     elif not isinstance(time_to, int):
         raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (to) имеет неверный тип")
 
-    return int(time_from/1000), int(time_to/1000)
+    return datetime.fromtimestamp(time_from/1000.0), datetime.fromtimestamp(time_to/1000.0)

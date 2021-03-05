@@ -85,7 +85,7 @@ def _CreateTransaction(params):
         if result.is_error():
             return result
         else:
-            transaction = PaymeTransaction.objects.create(transaction_id=transaction_id, record_id=purchase_id, amount=amount, phone=phone, state=1, payme_time=time)
+            transaction = PaymeTransaction.objects.create(transaction_id=transaction_id, record_id=purchase_id, amount=amount, phone=phone, state=1, payme_creation_time=time)
             if MODEL.objects.filter(id=purchase_id).update(state=1) != 1:
                 return Error(RECEIPT_NOT_FOUND_ERROR)
 
