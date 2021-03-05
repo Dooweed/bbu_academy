@@ -125,7 +125,7 @@ def _PerformTransaction(params):
                 # Return error if model object was not found
                 msg = ""
                 r = MODEL.objects.filter(id=transaction.record_id, is_paid=False, payment_type="payme")
-                msg += r
+                msg += str(r)
                 r = r.update(is_paid=True, state=4)
                 msg += f"\n{r}"
                 if r != 1:
