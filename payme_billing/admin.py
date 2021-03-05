@@ -2,7 +2,6 @@ from django.contrib import admin
 from .models import PaymeTransaction
 from .vars.settings import ADMIN
 
-# Register your models here.
 
 if ADMIN:
     @admin.register(PaymeTransaction)
