@@ -216,13 +216,15 @@ class EntityPayer(models.Model):
 
 class PurchaseRecord(PaymeStateMixin):
     offer_agreement = models.BooleanField("Пользовательское соглашение", default=False)
-    date_started = models.DateTimeField("Дата и время начала", auto_now_add=True)
-    date_finished = models.DateTimeField("Дата и время завершения", null=True, blank=True)
+    date_started = models.DateTimeField("Дата и время создания заказа", auto_now_add=True)
+    date_finished = models.DateTimeField("Дата и время завершения заказа", null=True, blank=True)
     study_type = models.CharField(verbose_name=_("Тип обучения"), choices=STUDY_TYPE_CHOICES, max_length=20)
+
     content_type = models.ForeignKey(verbose_name="Продукт", to=ContentType, related_name="content_type_timelines", on_delete=models.DO_NOTHING, null=True, blank=True,
                                      limit_choices_to=models.Q(app_label='trainings', model='training', active=True) | models.Q(app_label='courses', model='course'))
     object_id = models.PositiveIntegerField(null=True, blank=True)
     product = GenericForeignKey()
+
     special_price = models.BooleanField("Специальная цена", null=True, blank=True)
     price = models.BigIntegerField("Цена на курс/тренинг", null=True, blank=True)
     overall_price = models.BigIntegerField("Общая цена", null=True, blank=True)
@@ -295,7 +297,7 @@ class PurchaseRecord(PaymeStateMixin):
             return None
 
     def get_price(self):
-        return mark_safe(f"{self.price} {'<i>(текущая цена за курс/тренинг отличается)</i>' if self.price != self.product.price else ''}")
+        return mark_safe(f"{self.price} {'<i>(текущая цена за курс/тренинг отличается от цены на момент сделки)</i>' if self.price != self.product.price else ''}")
     get_price.short_description = "Цена"
 
     @property

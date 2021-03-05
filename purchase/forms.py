@@ -4,7 +4,7 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from courses.models import Course
-from purchase.models import Student, IndividualPayer, PurchaseRecord, EntityPayer, AtbMembers, PAYMENT_TYPE_CHOICES
+from purchase.models import Student, IndividualPayer, PurchaseRecord, EntityPayer, AtbMembers
 from purchase.utils import get_product_choices
 from trainings.models import Training
 
@@ -54,6 +54,19 @@ class EntityPayerForm(forms.ModelForm):
 
 class SelfPaymentForm(forms.Form):
     self_payment = forms.BooleanField(label=_("Обучаюсь сам"), initial=False, required=False)
+
+# class ProductForm(forms.ModelForm):
+#     product = forms.ChoiceField(label=_("Выбор продукта"), choices=get_product_choices())
+#
+#     class Meta:
+#         widgets = {"object_id": forms.HiddenInput()}
+#
+#     class Media:
+#         js = (
+#             '//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js',  # jquery
+#             "js/admin/generic_foreign_key.js",
+#         )
+
 
 class ConfirmationForm(forms.ModelForm):
     product = forms.ChoiceField(label=_("Выбор продукта"), choices=get_product_choices())

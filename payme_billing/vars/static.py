@@ -75,3 +75,6 @@ PAYME_TRANSACTION_DENIAL_REASONS = (
     (5, "Возврат денег."),
     (10, "Неизвестная ошибка."),
 )
+
+
+available_methods = ("CheckPerformTransaction", "CreateTransaction", "PerformTransaction", "CancelTransaction", "CheckTransaction", "GetStatement")

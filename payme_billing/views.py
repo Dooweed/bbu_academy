@@ -1,16 +1,28 @@
 from django.http import JsonResponse
 
-# Create your views here.
 from django.views.decorators.csrf import csrf_exempt
 
-from payme_billing.tools import MerchantApiRequest
+from . import merchant_api_methods
+from .utils import check_post, check_authorization, check_json_content, check_request_id, check_method, check_params, PaymeCheckFailedException
 
 @csrf_exempt
 def payme_billing(request):
-    payme_request = MerchantApiRequest(request)
+    request_id, method, params, result = None, None, None, None
 
-    import requests
-    url = "https://webhook.site/0824006a-8776-4706-bf88-e32d10b84930"
-    requests.post(url, data=request.body, headers=request.headers)
+    try:
+        check_post(request)
+        check_authorization(request)
+        content = check_json_content(request)
+        request_id = check_request_id(content)
+        method = check_method(content)
+        params = check_params(content)
+        result = merchant_api_methods.perform(method, params)
+    except PaymeCheckFailedException as e:
+        result = e.error()
 
-    return JsonResponse(data=payme_request.get_response())
+    response = {
+        "id": request_id,
+        "error" if result.is_error() else "result": result.dict()
+    }
+
+    return JsonResponse(data=response)

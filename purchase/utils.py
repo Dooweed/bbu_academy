@@ -1,4 +1,4 @@
-from django.db import ProgrammingError
+from django.db import ProgrammingError, OperationalError
 from django.utils.translation import gettext as _
 
 from purchase.models import PurchaseRecord
@@ -20,7 +20,10 @@ def get_product_choices():
 
         return tuple(choices)
     except ProgrammingError:
-        print("get_product_choices() from purchase.utils produced ProgrammingError. Skip this message if it was running of 'makemigrations' command")
+        print("get_product_choices() from purchase.utils produced ProgrammingError. Skip this message if it happened during running 'makemigrations' command")
+        return []
+    except OperationalError:  # SQLite error
+        print("get_product_choices() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
         return []
 
 def delete_session_purchase_record(request):
@@ -32,5 +35,8 @@ def delete_session_purchase_record(request):
             del request.session["record_id"]
             request.session.modified = True
     except ProgrammingError:
-        print("delete_session_purchase_record() from purchase.utils produced ProgrammingError. Skip this message if it was running of 'makemigrations' command")
+        print("delete_session_purchase_record() from purchase.utils produced ProgrammingError. Skip this message if it happened during running 'makemigrations' command")
+        return []
+    except OperationalError:  # SQLite error
+        print("delete_session_purchase_record() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
         return []

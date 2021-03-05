@@ -2,9 +2,13 @@ import abc
 
 
 # Abstract class
+import json
+from base64 import b64decode
 from typing import Tuple
+from binascii import Error as BinasciiError
 
-from payme_billing.vars.static import FIELD_ERROR, ERROR_MESSAGES
+from payme_billing.vars.settings import WEB_CASH_KEY
+from payme_billing.vars.static import *
 
 
 class PaymeResponse:
@@ -71,6 +75,53 @@ class PaymeCheckFailedException(Exception):
 
     def error(self):
         return self._error
+
+
+def check_post(request):
+    if request.method != "POST":
+        raise PaymeCheckFailedException(REQUEST_METHOD_ERROR)
+
+def check_authorization(request):
+    if "Authorization" not in request.headers:
+        raise PaymeCheckFailedException(RIGHTS_ERROR)
+    try:
+        auth = request.headers["Authorization"]
+        auth = b64decode(auth.replace("Basic ", "")).decode()
+        if auth.split(":")[1] != WEB_CASH_KEY:
+            raise PaymeCheckFailedException(RIGHTS_ERROR)
+    except BinasciiError:
+        raise PaymeCheckFailedException(RIGHTS_ERROR)
+
+def check_json_content(request) -> dict:
+    # Parse json
+    content = request.POST if request.POST else json.loads(request.body)
+
+    # Check if request content is empty
+    if not content:
+        raise PaymeCheckFailedException(JSON_ERROR)
+    return content
+
+def check_request_id(content: dict) -> int:
+    request_id = content.get("id")
+    if request_id is None or not isinstance(content["id"], int):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Идентификатор запроса отсутствует")
+    return request_id
+
+def check_method(content: dict) -> str:
+    method = content.get("method")
+    if method is None:
+        raise PaymeCheckFailedException(FIELD_ERROR, "Метод отсутствует")
+    elif method not in available_methods:
+        raise PaymeCheckFailedException(METHOD_ERROR)
+    return method
+
+def check_params(content: dict) -> dict:
+    params = content.get("params")
+    if params is None:
+        raise PaymeCheckFailedException(FIELD_ERROR, "Объект параметров отсутствует")
+    elif not isinstance(params, dict):
+        raise PaymeCheckFailedException(FIELD_ERROR, "Объект параметров имеет неверный тип")
+    return params
 
 
 def check_amount(params: dict) -> int:

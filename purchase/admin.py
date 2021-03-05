@@ -1,4 +1,6 @@
 from django.contrib import admin
+
+# from .forms import ProductForm
 from .models import *
 
 # Register your models here.
@@ -30,11 +32,17 @@ class EntityPayerInline(admin.StackedInline):
 
 @admin.register(PurchaseRecord)
 class PaymentRecordAdmin(admin.ModelAdmin):
+    list_filter = ("is_paid", "finished", "study_type", "overall_price", "payment_type", "date_started", "date_finished")
     list_display = ("payer_name", "payer_type", "student_name", "overall_price", "payment_type", "study_type", "date_started", "finished")
 
-    fields = ("id", "finished", "study_type", "payment_type", "get_price", "overall_price", "date_started", "date_finished")
+    # "id", "finished", "study_type", "payment_type", "get_price", "overall_price", "date_started", "date_finished"
+    fields = ("id", "offer_agreement", "is_paid", "finished", "study_type", "special_price", "payment_type", "get_price", "overall_price", "date_started", "date_finished")
     readonly_fields = ("id", "get_price", "date_started", "date_finished", "overall_price")
     inlines = (StudentInline, IndividualPayerInline, EntityPayerInline)
+
+    save_on_top = True
+
+    # form = ProductForm
 
     def get_inlines(self, request, obj):
         if obj.payer:

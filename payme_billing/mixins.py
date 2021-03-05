@@ -2,6 +2,8 @@ from abc import abstractmethod
 
 from django.db import models
 
+from payme_billing.models import PaymeTransaction
+
 
 class PaymeStateMixin(models.Model):
     state = models.IntegerField("Состояние чека (PayMe)", default=0)
