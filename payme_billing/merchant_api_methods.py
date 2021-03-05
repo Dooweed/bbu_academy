@@ -91,7 +91,7 @@ def _CreateTransaction(params):
 
     # All checks are passed, returning positive response
     response = {
-        "create_time": transaction.creation_time.timestamp() * 1000,
+        "create_time": transaction.get_creation_time(),
         "transaction": transaction.transaction_id,
         "state": transaction.state,
     }
@@ -171,9 +171,9 @@ def _CheckTransaction(params):
 
     # All checks are passed, returning positive response
     response = {
-        "create_time": transaction.creation_time.timestamp()*1000,
-        "perform_time": transaction.perform_time.timestamp()*1000,
-        "cancel_time": transaction.cancel_time.timestamp()*1000,
+        "create_time": transaction.get_creation_time(),
+        "perform_time": transaction.get_perform_time(),
+        "cancel_time": transaction.get_cancel_time(),
         "transaction": transaction.transaction_id,
         "state": transaction.state,
         "reason": transaction.denial_reason
@@ -192,15 +192,15 @@ def _GetStatement(params):
         purchase = MODEL.objects.get(id=transaction.record_id)
         response.append({
             "id": transaction.transaction_id,
-            "time": transaction.payme_creation_time.timestamp()*1000,
+            "time": transaction.get_payme_creation_time(),
             "amount": purchase.get_amount(),
             "account": {
                 "purchase_id": purchase.id,
                 "phone": purchase.get_9_digit_phone(),
             },
-            "create_time": transaction.create_time.timestamp()*1000,
-            "perform_time": transaction.perform_time.timestamp()*1000,
-            "cancel_time": transaction.cancel_time.timestamp()*1000,
+            "create_time": transaction.get_creation_time(),
+            "perform_time": transaction.get_perform_time(),
+            "cancel_time": transaction.get_cancel_time(),
             "transaction": transaction.transaction_id,
             "state": transaction.state,
             "reason": transaction.denial_reason,
