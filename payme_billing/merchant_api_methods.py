@@ -123,13 +123,11 @@ def _PerformTransaction(params):
             # Transaction is NOT timed out
             else:
                 # Return error if model object was not found
-                msg = ""
-                r = MODEL.objects.filter(id=transaction.record_id, is_paid=False, payment_type="payme")
-                msg += str(r)
-                r = r.update(is_paid=True, state=4)
-                msg += f"\n{r}"
-                if r != 1:
-                    return Error(RECEIPT_NOT_FOUND_ERROR, msg)
+                purchase = MODEL.objects.filter(id=transaction.record_id, payment_type="payme")
+                if purchase.is_paid:
+                    return Error(RECEIPT_PAID_ERROR)
+                if purchase.update(is_paid=True, state=4) != 1:
+                    return Error(RECEIPT_NOT_FOUND_ERROR)
                 transaction.perform_time = timezone.now()
                 transaction.state = 2
                 transaction.save()
