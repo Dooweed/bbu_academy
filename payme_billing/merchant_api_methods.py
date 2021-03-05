@@ -141,7 +141,7 @@ def _PerformTransaction(params):
     # All checks are passed, returning positive response
     response = {
         "state": transaction.state,
-        "perform_time": transaction.perform_time,
+        "perform_time": transaction.get_perform_time(),
         "transaction": transaction.transaction_id,
     }
 
