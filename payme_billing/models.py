@@ -12,7 +12,7 @@ class PaymeTransaction(models.Model):
     transaction_id = models.CharField("Идентификатор транзакции", max_length=24, unique=True, primary_key=True)
     amount = models.PositiveBigIntegerField("Цена")
     state = models.IntegerField("Состояние транзакции", choices=PAYME_TRANSACTION_STATES, default=0)
-    denial_reason = models.CharField("Причина отмены транзакции", choices=PAYME_TRANSACTION_DENIAL_REASONS, max_length=200, null=True, blank=True)
+    denial_reason = models.IntegerField("Причина отмены транзакции", choices=PAYME_TRANSACTION_DENIAL_REASONS, null=True, blank=True)
     phone = models.CharField("Номер телефона плательщика", max_length=200, blank=True)
 
     creation_time = models.DateTimeField("Дата и время создания транзакции", auto_now_add=True)
