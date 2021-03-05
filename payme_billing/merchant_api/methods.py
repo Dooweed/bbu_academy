@@ -2,9 +2,10 @@ from django.utils import timezone
 
 from payme_billing.models import PaymeTransaction
 
-from .utils import Error, Correct, check_amount, check_account, check_transaction_id, PaymeCheckFailedException, check_time, check_time_diapason, check_reason
-from .vars.settings import MODEL
-from .vars.static import *
+from payme_billing.merchant_api.classes import Error, Correct, PaymeCheckFailedException
+from payme_billing.merchant_api.checks import check_amount, check_account, check_transaction_id, check_time, check_time_diapason, check_reason
+from payme_billing.vars.settings import MODEL
+from payme_billing.vars.static import *
 
 
 def perform(name, params):

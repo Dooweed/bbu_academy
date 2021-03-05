@@ -2,8 +2,10 @@ from django.http import JsonResponse
 
 from django.views.decorators.csrf import csrf_exempt
 
-from . import merchant_api_methods
-from .utils import check_post, check_authorization, check_json_content, check_request_id, check_method, check_params, PaymeCheckFailedException
+from .merchant_api import methods
+from .merchant_api.classes import PaymeCheckFailedException
+from payme_billing.merchant_api.checks import check_post, check_authorization, check_json_content, check_request_id, check_method, check_params
+
 
 @csrf_exempt
 def payme_billing(request):
@@ -16,7 +18,7 @@ def payme_billing(request):
         request_id = check_request_id(content)
         method = check_method(content)
         params = check_params(content)
-        result = merchant_api_methods.perform(method, params)
+        result = methods.perform(method, params)
     except PaymeCheckFailedException as e:
         result = e.error()
 

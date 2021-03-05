@@ -1,88 +1,18 @@
-import abc
-
-
-# Abstract class
 import json
 from base64 import b64decode
+from binascii import Error as BinasciiError
 from datetime import datetime
 from typing import Tuple
-from binascii import Error as BinasciiError
 
-from django.utils import timezone
-
+from payme_billing.merchant_api.classes import PaymeCheckFailedException
 from payme_billing.vars.settings import WEB_CASH_KEY
-from payme_billing.vars.static import *
-
-
-class PaymeResponse:
-    @abc.abstractmethod
-    def __dict__(self) -> dict:
-        pass
-
-    @abc.abstractmethod
-    def is_error(self) -> bool:
-        pass
-
-    def dict(self):
-        return self.__dict__()
-
-# Concrete class
-class Error(PaymeResponse):
-    code = None
-    additional_info = None
-
-    def __init__(self, code, additional_info=None):
-        self.additional_info = additional_info
-        if code not in ERROR_MESSAGES:
-            raise ValueError(f"Код ошибки {code} не существует")
-        else:
-            self.code = code
-
-    def __dict__(self):
-        error_obj = {"code": self.code}
-
-        message = ERROR_MESSAGES[self.code].get("message")
-        if message:
-            error_obj["message"] = message
-            if self.additional_info:
-                error_obj["additional_info"] = self.additional_info
-
-        data = ERROR_MESSAGES[self.code].get("data")
-        if data:
-            error_obj["data"] = data
-
-        return error_obj
-
-    def is_error(self) -> bool:
-        return True
-
-# Concrete class
-class Correct(PaymeResponse):
-    response = None
-
-    def __init__(self, response):
-        self.response = response
-
-    def __dict__(self):
-        return self.response
-
-    def is_error(self) -> bool:
-        return False
-
-# Exception container for Error
-class PaymeCheckFailedException(Exception):
-    _error = None
-
-    def __init__(self, code, additional_info=None):
-        self._error = Error(code, additional_info)
-
-    def error(self):
-        return self._error
+from payme_billing.vars.static import REQUEST_METHOD_ERROR, RIGHTS_ERROR, JSON_ERROR, FIELD_ERROR, available_methods, METHOD_ERROR
 
 
 def check_post(request):
     if request.method != "POST":
         raise PaymeCheckFailedException(REQUEST_METHOD_ERROR)
+
 
 def check_authorization(request):
     if "Authorization" not in request.headers:
@@ -95,6 +25,7 @@ def check_authorization(request):
     except BinasciiError:
         raise PaymeCheckFailedException(RIGHTS_ERROR)
 
+
 def check_json_content(request) -> dict:
     # Parse json
     content = request.POST if request.POST else json.loads(request.body)
@@ -104,6 +35,7 @@ def check_json_content(request) -> dict:
         raise PaymeCheckFailedException(JSON_ERROR)
     return content
 
+
 def check_request_id(content: dict) -> int:
     request_id = content.get("id")
     if request_id is None:
@@ -112,6 +44,7 @@ def check_request_id(content: dict) -> int:
         raise PaymeCheckFailedException(FIELD_ERROR, "Идентификатор запроса имеет неверный тип")
     return request_id
 
+
 def check_method(content: dict) -> str:
     method = content.get("method")
     if method is None:
@@ -119,6 +52,7 @@ def check_method(content: dict) -> str:
     elif method not in available_methods:
         raise PaymeCheckFailedException(METHOD_ERROR)
     return method
+
 
 def check_params(content: dict) -> dict:
     params = content.get("params")
@@ -136,6 +70,7 @@ def check_amount(params: dict) -> int:
     elif not isinstance(amount, int):
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр amount имеет неверный тип")
     return amount
+
 
 def check_account(params: dict) -> Tuple[int, str]:
     ACCOUNT_PHONE_LENGTH = 9
@@ -164,6 +99,7 @@ def check_account(params: dict) -> Tuple[int, str]:
 
     return int(purchase_id), phone
 
+
 def check_transaction_id(params: dict) -> str:
     TRANSACTION_ID_LENGTH = 24
 
@@ -177,6 +113,7 @@ def check_transaction_id(params: dict) -> str:
 
     return transaction_id
 
+
 def check_time(params: dict) -> datetime:
     time = params.get("time")
 
@@ -186,6 +123,7 @@ def check_time(params: dict) -> datetime:
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр time имеет неверный тип")
 
     return datetime.fromtimestamp(time/1000.0)
+
 
 def check_time_diapason(params: dict) -> Tuple[datetime, datetime]:
     time_from, time_to = params.get("from"), params.get("to")
@@ -200,6 +138,7 @@ def check_time_diapason(params: dict) -> Tuple[datetime, datetime]:
         raise PaymeCheckFailedException(FIELD_ERROR, "Левая граница времени (to) имеет неверный тип")
 
     return datetime.fromtimestamp(time_from/1000.0), datetime.fromtimestamp(time_to/1000.0)
+
 
 def check_reason(params: dict) -> int:
     reason = params.get("reason")

@@ -67,6 +67,7 @@ ERROR_MESSAGES = {
 }
 
 
+# Choices for PaymeTransaction "state" attribute
 PAYME_TRANSACTION_STATES = (
     (1, "Транзакция успешно создана, ожидание подтверждения (начальное состояние 0)"),
     (2, "Транзакция успешно завершена (начальное состояние 1)"),
@@ -74,6 +75,8 @@ PAYME_TRANSACTION_STATES = (
     (-2, "Транзакция отменена после завершения (начальное состояние 2)"),
 )
 
+
+# Choices for PaymeTransaction "denial_reason" attribute
 PAYME_TRANSACTION_DENIAL_REASONS = (
     (1, "Один или несколько получателей не найдены или неактивны в Payme Business."),
     (2, "Ошибка при выполнении дебетовой операции в процессинговом центре."),
@@ -83,5 +86,18 @@ PAYME_TRANSACTION_DENIAL_REASONS = (
     (10, "Неизвестная ошибка."),
 )
 
+
+# Choices for receipt "state" attribute
+PAYME_RECEIPT_STATES = (
+    (0, "Чек создан. Ожидание подтверждения оплаты."),
+    (1, "Первая стадия проверок. Создание транзакции в биллинге мерчанта."),
+    (2, "Списание денег с карты."),
+    (3, "Закрытие транзакции в биллинге мерчанта."),
+    (4, "Чек оплачен."),
+    (20, "Чек стоит на паузе для ручного вмешательства."),
+    (21, "Чек в очереди на отмену."),
+    (30, "Чек в очереди на закрытие транзакции в биллинге мерчанта."),
+    (50, "Чек отменен."),
+)
 
 available_methods = ("CheckPerformTransaction", "CreateTransaction", "PerformTransaction", "CancelTransaction", "CheckTransaction", "GetStatement")
