@@ -13,10 +13,10 @@ from django.utils.html import strip_tags
 
 from bbu_academy.settings import EMAIL_HOST_USER, STAFF_MAILS
 from courses.models import Course
+from payme_billing.forms import ButtonBasePaymentInitialisationForm, QrBasePaymentInitialisationForm
 from trainings.models import Training
-from .models import Student, IndividualPayer, PurchaseRecord, STUDENT_PASSPORT
+from .models import Student, IndividualPayer, PurchaseRecord
 from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, ConfirmationForm, EntityPayerForm, PaymentForm
-from .utils import delete_session_purchase_record
 
 SUBMIT = "submit"
 EDIT = "edit"
@@ -319,12 +319,14 @@ def payment_form_view(request):
 
             result = mail.send()
 
-            if result:
-                pass
-            else:
-                pass
+            return redirect("purchase:payme-payment")
 
-    form = PaymentForm() if not record.payment_type else None
+            # if result:
+            #     return redirect("purchase:payme-payment")
+            # else:
+            #     print("Could not send mail")
+
+    form = PaymentForm() if not record.payment_type else PaymentForm(instance=record)
 
     context = {
         "record": record,
@@ -332,3 +334,16 @@ def payment_form_view(request):
     }
 
     return render(request, "purchase/payment-form.html", context)
+
+def payme_payment_view(request):
+    record = get_record(request)
+
+    button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE, style="white")
+    qr_form = QrBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE)
+
+    context = {
+        "button_form": button_form,
+        "qr_form": qr_form,
+    }
+
+    return render(request, "purchase/payme.html", context)

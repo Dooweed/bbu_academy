@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load front_tags %}
+{% load i18n %}
+
+{% block title %}
+    <title>{% translate 'Заполнение данных' %}</title>
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/shining-button.css' %}">
+{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/library.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{% translate 'Оплата Payme' %}</h2>
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div class="container">
+            <div class="about-wrap5 form-wrap w-100">
+
+                <div class="w-50 ml-auto mr-auto">
+                    <div class="row align-items-stretch">
+
+                        <form class="d-flex align-items-center justify-content-center col-12 col-md-5 order-0" id="form-payme-button" method="POST" action="https://checkout.test.paycom.uz/">
+                            {% csrf_token %}
+                            {{ button_form.render }}
+                        </form>
+                        <div class="col-12 col-md-2"></div>
+                        <form class="d-flex align-items-center justify-content-center col-12 col-md-5 order-1" id="form-payme-qr" method="POST" action="https://checkout.test.paycom.uz/">
+                            {% csrf_token %}
+                            {{ qr_form.render }}
+                        </form>
+
+                    </div>
+
+                    <div class="row mt-1 text-center">
+                        <div class="col-12 col-md-5">
+                            <p class="font-weight-bold">{% translate 'Оплатите, перейдя по ссылке' %}</p>
+                        </div>
+                        <div class="col-12 col-md-2">
+                            <p>{% translate 'или' %}</p>
+                        </div>
+                        <div class="col-12 col-md-5">
+                            <p class="font-weight-bold">{% translate 'Отсканируйте QR-код' %}</p>
+                        </div>
+                    </div>
+
+                </div>
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+
+{% block script %}
+    <script src="https://cdn.paycom.uz/integration/js/checkout.min.js"></script>
+
+    <script>$(document).ready(function () {
+        Paycom.Button('#form-payme-button', '#button-container');
+        Paycom.QR('#form-payme-qr', '#qr-container');
+    })</script>
+{% endblock %}

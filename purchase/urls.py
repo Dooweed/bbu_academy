@@ -12,4 +12,5 @@ urlpatterns = [
     path("form/entity/ajax-payer/<str:action>", views.ajax_payer, name="entity-ajax-payer"),
     path("form/confirmation/", views.confirmation_form_view, name="confirmation-form"),
     path("form/payment/", views.payment_form_view, name="payment-form"),
+    path("form/payme/", views.payme_payment_view, name="payme-payment"),
 ]
