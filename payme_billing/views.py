@@ -6,7 +6,6 @@ from .merchant_api import methods
 from .merchant_api.classes import PaymeCheckFailedException
 from payme_billing.merchant_api.checks import check_post, check_authorization, check_json_content, check_request_id, check_method, check_params
 
-
 @csrf_exempt
 def payme_billing(request):
     request_id, method, params, result = None, None, None, None

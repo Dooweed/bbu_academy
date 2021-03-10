@@ -5,7 +5,7 @@ from zipfile import ZipFile
 from urllib.parse import urlencode
 
 from django.core.mail import EmailMultiAlternatives
-from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict
+from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict, HttpResponse
 from django.template.loader import render_to_string
 
 from django.shortcuts import render, redirect
@@ -323,6 +323,8 @@ def payment_form_view(request):
             mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
             result = mail.send()
+
+            return HttpResponse(f"{result}")
 
             return redirect("purchase:payme-payment")
 
