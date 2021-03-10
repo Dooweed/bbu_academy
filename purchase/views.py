@@ -1,7 +1,7 @@
 import traceback
 from copy import deepcopy
 from pathlib import Path
-from shutil import make_archive
+from zipfile import ZipFile
 from urllib.parse import urlencode
 
 from django.core.mail import EmailMultiAlternatives
@@ -311,11 +311,15 @@ def payment_form_view(request):
 
             # Attach files
             for student in record.students.all():
-                archive = Path(make_archive(student.folder_path / student.name, "zip", record.folder_path))
-                mail.attach(archive.name, archive.read_bytes())
-                archive.unlink()
-            if record.get_individual_payer_or_none():
-                mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
+                archive_name = student.folder_path / f"{student.name}.zip"
+                with ZipFile(archive_name, "w") as archive:
+                    archive.write(student.passport_path)
+                    archive.write(student.study_document_path)
+                with open(archive_name, "rb") as archive:
+                    mail.attach(archive_name, archive.read())
+                archive_name.unlink()
+
+            mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
             result = mail.send()
 
