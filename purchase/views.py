@@ -311,7 +311,7 @@ def payment_form_view(request):
 
             # Attach files
             for student in record.students.all():
-                archive = Path(make_archive(student.folder_path / student.name, "zip", student.folder_path))
+                archive = Path(make_archive(student.folder_path / student.name, "zip", record.folder_path))
                 mail.attach(archive.name, archive.read_bytes())
                 archive.unlink()
             if record.get_individual_payer_or_none():
