@@ -254,7 +254,7 @@ PAYME_BILLING_SETTINGS = {
     "admin": True,
     "web_cash_id": "",
     "web_cash_key": "",
-    "test_web_cash_id": "60316f8573f02d9806d13daa",
+    "test_web_cash_id": "603b480725a2ffecf477012f",
     "test_web_cash_key": "G2JIkF0vAuYbgkNFjOk0PpvOwxD?BXgitqDm",
     "billing_model": "purchase.PurchaseRecord",  # Should be like "app_label.ModelName"
 }
