@@ -11,9 +11,9 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     {% block title %}<title>{{ page.title }}</title>{% endblock %}
-    <meta name="description" content="{{ page.meta_description }}">
-    <meta name="robots" content="{{ page.meta_robots }}">
-    <meta name="keywords" content="{{ page.meta_keywords }}">
+    {% if page %}<meta name="description" content="{{ page.meta_description }}">{% endif %}
+    {% if page %}<meta name="robots" content="{{ page.meta_robots }}">{% endif %}
+    {% if page %}<meta name="keywords" content="{{ page.meta_keywords }}">{% endif %}
 
 
     <!-- Favicon -->
@@ -63,7 +63,7 @@
                     <nav class="nav-wrap d-flex flex-row align-items-center justify-content-between flex-nowrap">
                         <div class="menu-wrap d-flex flex-row justify-content-start flex-nowrap w-100">
                             <div class="logo">
-                                <a class="desktop-logo" href="{% url 'index' %}" title="{{ page.title }}">
+                                <a class="desktop-logo" href="{% url 'index' %}" title="{% url 'Главная страница' %}">
                                     <img class="default-logo img-fluid" src="{% static '/images/logo-w.png' %}" alt="Logo"
                                          srcset="{% static '/images/logo-w.png' %}" width="160">
                                     <img class="sticky-logo img-fluid" src="{% static '/images/logo.png' %}" alt="Logo"
