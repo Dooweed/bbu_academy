@@ -10,3 +10,7 @@ WEB_CASH_KEY = PAYME_BILLING_SETTINGS.get("test_web_cash_key") if TEST else PAYM
 BILLING_MODEL = PAYME_BILLING_SETTINGS.get("billing_model")
 _split = BILLING_MODEL.split(".")
 MODEL: Model = apps.get_model(_split[0], _split[1])
+
+_URL = "https://checkout.paycom.uz/"
+_TEST_URL = "https://test.paycom.uz"
+URL = _TEST_URL if TEST else _URL
