@@ -323,9 +323,11 @@ def payment_form_view(request):
 
             mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
-            result = mail.send()
+            try:
+                result = mail.send()
+            except Exception as e:
+                raise ValueError(e)
 
-            raise ValueError(f"{result}, {STAFF_MAILS + [record.payer.email()]}")
 
             if result:
                 return redirect("purchase:payme-payment")
