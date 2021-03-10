@@ -303,9 +303,7 @@ def payment_form_view(request):
 
     if request.method == "POST":
         form = PaymentForm(request.POST)
-        if not form.is_valid():
-            raise ValueError(form.errors)
-            raise Http404()
+
         if form is None or form.is_valid():  # Finish purchase
             # Send mail with full information to workers and payer
             html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
@@ -325,12 +323,12 @@ def payment_form_view(request):
 
             mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
-            result = mail.send()
+            result = mail.send(fail_silently=False)
 
             if result:
                 return redirect("purchase:payme-payment")
             else:
-                print("Could not send mail")
+                raise ValueError("Could not send email")
 
     form = PaymentForm() if not record.payment_type else PaymentForm(instance=record)
 
