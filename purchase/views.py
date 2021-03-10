@@ -305,6 +305,7 @@ def payment_form_view(request):
         form = PaymentForm(request.POST)
         if not form.is_valid():
             raise ValueError(form.errors)
+            raise Http404()
         if form is None or form.is_valid():  # Finish purchase
             # Send mail with full information to workers and payer
             html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
