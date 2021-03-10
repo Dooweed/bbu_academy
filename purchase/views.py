@@ -5,7 +5,7 @@ from zipfile import ZipFile
 from urllib.parse import urlencode
 
 from django.core.mail import EmailMultiAlternatives
-from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict, HttpResponse
+from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict
 from django.template.loader import render_to_string
 
 from django.shortcuts import render, redirect
@@ -324,14 +324,10 @@ def payment_form_view(request):
 
             result = mail.send()
 
-            return HttpResponse(f"{result}")
-
-            return redirect("purchase:payme-payment")
-
-            # if result:
-            #     return redirect("purchase:payme-payment")
-            # else:
-            #     print("Could not send mail")
+            if result:
+                return redirect("purchase:payme-payment")
+            else:
+                print("Could not send mail")
 
     form = PaymentForm() if not record.payment_type else PaymentForm(instance=record)
 
