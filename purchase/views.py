@@ -336,7 +336,6 @@ def payment_form_view(request):
     context = {
         "record": record,
         "form": form,
-        "url": URL,
     }
 
     return render(request, "purchase/payment-form.html", context)
@@ -350,6 +349,7 @@ def payme_payment_view(request):
     context = {
         "button_form": button_form,
         "qr_form": qr_form,
+        "url": URL,
     }
 
     return render(request, "purchase/payme.html", context)
