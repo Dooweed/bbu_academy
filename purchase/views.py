@@ -325,6 +325,8 @@ def payment_form_view(request):
 
             result = mail.send()
 
+            raise ValueError(f"{result}, {STAFF_MAILS + [record.payer.email()]}")
+
             if result:
                 return redirect("purchase:payme-payment")
             else:
