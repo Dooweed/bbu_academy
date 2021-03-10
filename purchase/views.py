@@ -326,7 +326,7 @@ def payment_form_view(request):
 
             try:
                 result = mail.send(fail_silently=False)
-            except SMTPException as e:
+            except Exception as e:
                 raise ValueError(e)
 
             if result:
