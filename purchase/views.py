@@ -1,7 +1,6 @@
 import traceback
 from copy import deepcopy
 from pathlib import Path
-from smtplib import SMTPException
 from zipfile import ZipFile
 from urllib.parse import urlencode
 
@@ -324,10 +323,9 @@ def payment_form_view(request):
 
             mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
-            try:
-                result = mail.send(fail_silently=False)
-            except Exception as e:
-                raise ValueError(e)
+            result = mail.send()
+
+            raise ValueError(result)
 
             if result:
                 return redirect("purchase:payme-payment")
