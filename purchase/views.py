@@ -313,13 +313,13 @@ def payment_form_view(request):
 
             # Attach files
             for student in record.students.all():
-                archive_name = student.folder_path / f"{student.name}.zip"
+                archive_name = str(student.folder_path / f"{student.name}.zip")
                 with ZipFile(archive_name, "w") as archive:
                     archive.write(student.passport_path)
                     archive.write(student.study_document_path)
                 with open(archive_name, "rb") as archive:
                     mail.attach(archive_name, archive.read())
-                archive_name.unlink()
+                Path(archive_name).unlink()
 
             mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
