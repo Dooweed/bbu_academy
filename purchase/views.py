@@ -14,6 +14,7 @@ from django.utils.html import strip_tags
 from bbu_academy.settings import EMAIL_HOST_USER, STAFF_MAILS
 from courses.models import Course
 from payme_billing.forms import ButtonBasePaymentInitialisationForm, QrBasePaymentInitialisationForm
+from payme_billing.vars.settings import URL
 from trainings.models import Training
 from .models import Student, IndividualPayer, PurchaseRecord
 from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, ConfirmationForm, EntityPayerForm, PaymentForm
@@ -335,6 +336,7 @@ def payment_form_view(request):
     context = {
         "record": record,
         "form": form,
+        "url": URL,
     }
 
     return render(request, "purchase/payment-form.html", context)
