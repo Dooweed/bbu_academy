@@ -16,7 +16,7 @@ class Training(ImageMixin, DescriptionMixin):
     url = AutoSlugField(verbose_name="URL тренинга", unique=True, populate_from='title', editable=True)
     active = models.BooleanField("Активно", help_text="Неактивные тренинги не будут отображаться на сайте", default=True)
 
-    image = models.ImageField("Изображение", help_text="Возможность обрезки появится после сохранения", null=True, blank=True)
+    image = models.ImageField("Изображение", upload_to="trainings/", help_text="Возможность обрезки появится после сохранения", null=True, blank=True)
     thumbnail_size = ImageRatioField(verbose_name="Обрезка изображения для превью (список тренингов)", image_field='image', size="512x288")
     sidebar_size = ImageRatioField(verbose_name="Обрезка изображения для превью (сайдбар)", image_field='image', size="140x140")
 

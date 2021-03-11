@@ -14,7 +14,7 @@ class Course(ImageMixin, DescriptionMixin):
     url = AutoSlugField(verbose_name="URL курса", unique=True, populate_from='title', editable=True)
     active = models.BooleanField("Активно", help_text="Неактивные курсы не будут отображаться на сайте", default=True)
 
-    image = models.ImageField("Изображение", help_text="Возможность обрезки появится после сохранения", null=True, blank=True)
+    image = models.ImageField("Изображение", upload_to="courses/", help_text="Возможность обрезки появится после сохранения", null=True, blank=True)
     sidebar_size = ImageRatioField(verbose_name="Обрезка изображения для превью (сайдбар)", image_field='image', size="140x140")
     thumbnail_size = ImageRatioField(verbose_name="Обрезка изображения для превью (список курсов)", image_field='image', size="512x288")
 
