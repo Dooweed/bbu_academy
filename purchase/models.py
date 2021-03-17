@@ -235,9 +235,6 @@ class PurchaseRecord(PaymeStateMixin):
     def __str__(self):
         return f"Покупка - {self.payer_name()}"
 
-    def __del__(self):
-        self.delete_temp_files()
-
     def get_amount(self):
         return self.overall_price
 
