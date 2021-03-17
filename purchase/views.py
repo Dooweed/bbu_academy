@@ -20,6 +20,8 @@ from trainings.models import Training
 from .models import Student, IndividualPayer, PurchaseRecord
 from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, ConfirmationForm, EntityPayerForm, PaymentForm
 
+from django.utils.translation import gettext as _
+
 SUBMIT = "submit"
 EDIT = "edit"
 DELETE = "delete"
