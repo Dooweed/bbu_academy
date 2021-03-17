@@ -316,7 +316,7 @@ def payment_form_view(request):
             html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", {"payer": record.payer, "students_list": record.students.all(), "mail": True}))
             mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_HOST_USER, to=STAFF_MAILS + [record.payer.email()])
-            mail.attach_alternative(transform(html_content), 'text/html')  # Attach html version
+            mail.attach_alternative(transform(html_content, base_url=f"{request.scheme}://{request.get_host()}"), 'text/html')  # Attach html version
 
             # Attach files
             for student in record.students.all():
