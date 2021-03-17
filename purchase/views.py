@@ -5,11 +5,12 @@ from zipfile import ZipFile
 from urllib.parse import urlencode
 
 from django.core.mail import EmailMultiAlternatives
-from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict
+from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict, HttpResponseServerError
 from django.template.loader import render_to_string
 
 from django.shortcuts import render, redirect
 from django.utils.html import strip_tags
+from premailer import transform
 
 from bbu_academy.settings import EMAIL_HOST_USER, STAFF_MAILS
 from courses.models import Course
@@ -272,7 +273,7 @@ def confirmation_form_view(request):
             record.price = product.special_price if record.special_price else product.price
             record.overall_price = record.students.count() * record.price
             record.study_type = form.cleaned_data.get("study_type")
-            if record.get_entity_payer_or_none():  # Fill payment type if payer is entity (entity has only one option of payment)
+            if record.get_entity_payer_or_none():  # Fill payment type if payer is entity (entity has only ONE option of payment)
                 record.payment_type = "bank"
             record.save()
 
@@ -309,7 +310,7 @@ def payment_form_view(request):
             html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", {"payer": record.payer, "students_list": record.students.all(), "mail": True}))
             mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_HOST_USER, to=STAFF_MAILS + [record.payer.email()])
-            mail.attach_alternative(html_content, 'text/html')  # Attach html version
+            mail.attach_alternative(transform(html_content), 'text/html')  # Attach html version
 
             # Attach files
             for student in record.students.all():
@@ -323,16 +324,13 @@ def payment_form_view(request):
 
             mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
-            try:
-                result = mail.send()
-            except Exception as e:
-                raise ValueError(e)
-
+            result = mail.send()
 
             if result:
+                record.delete_temp_files()
                 return redirect("purchase:payme-payment")
             else:
-                print("Could not send mail")
+                return HttpResponseServerError(_("Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об ошибке. Приносим свои извинения"))
 
     form = PaymentForm() if not record.payment_type else PaymentForm(instance=record)
 

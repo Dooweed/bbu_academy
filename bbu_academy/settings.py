@@ -250,11 +250,10 @@ PATH_WKHTMLTOPDF = r'static\wkhtmltox\bin\wkhtmltopdf.exe' if LOCAL else r'stati
 
 # Payme Billing
 PAYME_BILLING_SETTINGS = {
-    "test": True,
-    "admin": True,
-    "web_cash_id": "",
-    "web_cash_key": "",
-    "test_web_cash_id": "603b480725a2ffecf477012f",
+    "test": False,
+    "admin": True,  # Display transactions in Django admin
+    "web_cash_id": "603b480725a2ffecf477012f",
+    "web_cash_key": "sAsEhjP?8?cG@2sI1Hrk3GJX%kQ2rE6&QRg1",
     "test_web_cash_key": "G2JIkF0vAuYbgkNFjOk0PpvOwxD?BXgitqDm",
-    "billing_model": "purchase.PurchaseRecord",  # Should be like "app_label.ModelName"
+    "billing_model": "purchase.PurchaseRecord",  # Should be in form "app_label.ModelName"
 }

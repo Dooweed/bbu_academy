@@ -7,33 +7,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
 
-    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.get_host }}{% static 'css/additional.css' %}">
-    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.get_host }}{% static 'css/bootstrap.min.css' %}">
-    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.get_host }}{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{{ request.scheme }}://{{ request.get_host }}{% static 'css/mail.css' %}">
     <title></title>
 </head>
 <body>
 
-    <h2 class="text-center mt-5">{% translate "Плательщик" %}</h2>
+    <h2 class="header">{% translate "Плательщик" %}</h2>
 
-    <div class="filled-records row justify-content-center">
-        <div class="filled-record-inner col-12 col-md-6 p-0">
-            <p class="header text-center font-weight-bold p-3 m-0">{% translate 'Плательщик' %}</p>
+    <div class="filled-records row-center">
+        <div class="filled-record-inner col">
+            <p class="header">{% translate 'Плательщик' %}</p>
 
             <div class="filled-record-fields">
                 {% for field, val in payer %}
-                <div class="value-group">
-                    <p class="fieldname">{{ field }}</p>
-                    <div class="value">{% if val == "None" %}-{% else %}{{ val }}{% endif %}</div>
-                </div>
+                    {% cycle 'odd' 'even' %}
+                    <div class="value-group{% if cycle == 'odd' %} odd{% endif %}">
+                        <p class="fieldname">{{ field }}</p>
+                        <div class="value">{% if val == "None" %}-{% else %}{{ val }}{% endif %}</div>
+                    </div>
                 {% endfor %}
             </div>
         </div>
     </div>
 
-    <div id="filled-students" class="filled-records pl-4 pr-4">
+    <div id="filled-students" class="filled-records">
         {% include 'purchase/chunks/student-display.html' %}
     </div>
-
 </body>
 </html>
