@@ -281,7 +281,11 @@ def confirmation_form_view(request):
     else:
         product_class = request.session.get('product_class')
         product_id = request.session.get('product_id')
-        initial = {"product": f"{product_class.lower()}-{product_id}"} if product_class and product_id else None
+        initial = {}
+        if product_class and product_id:
+            initial["product"] = f"{product_class.lower()}-{product_id}"
+        if record.study_type:
+            initial["study_type"] = record.study_type
 
         form = ConfirmationForm(initial=initial)
 

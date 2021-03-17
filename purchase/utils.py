@@ -10,7 +10,7 @@ def get_product_choices():
         courses = Course.objects.filter(active=True)
         trainings = Training.objects.filter(active=True)
 
-        choices = []
+        choices = [(None, '---------')]
 
         for item in courses:
             choices.append((f"course-{item.id}", _("Курс: ") + f"{item.title} ({item.f_price()} {_('сум')})"))
