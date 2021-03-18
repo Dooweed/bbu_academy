@@ -129,7 +129,12 @@ def _PerformTransaction(params):
                     return Error(RECEIPT_PAID_ERROR)
                 if purchase.update(is_paid=True, state=4) != 1:
                     return Error(RECEIPT_NOT_FOUND_ERROR)
-                purchase.complete_payment()
+                try:
+                    purchase.complete_payment()
+                except Exception as e:
+                    from logging import getLogger
+                    log = getLogger(__name__)
+                    log.warning(e)
                 transaction.perform_time = timezone.now()
                 transaction.state = 2
                 transaction.save()
