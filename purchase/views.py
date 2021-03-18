@@ -311,7 +311,9 @@ def payment_form_view(request):
     if request.method == "POST":
         form = PaymentForm(request.POST)
 
-        if form is None or form.is_valid():  # Finish purchase
+        if form.is_valid():  # Finish purchase
+            form.save()
+
             # Send mail with full information to workers and payer
             html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", {"payer": record.payer, "students_list": record.students.all(), "mail": True}))
