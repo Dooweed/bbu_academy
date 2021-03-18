@@ -376,8 +376,10 @@ def payme_payment_view(request):
     if record.finished:
         return redirect("purchase:finished")
 
-    button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE, style="white")
-    qr_form = QrBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE)
+    button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
+                                                      request.LANGUAGE_CODE, reverse("purchase:finished"), style="white")
+    qr_form = QrBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
+                                              request.LANGUAGE_CODE, reverse("purchase:finished"))
 
     context = {
         "button_form": button_form,
