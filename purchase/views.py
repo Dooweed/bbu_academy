@@ -345,12 +345,12 @@ def payment_form_view(request):
 
             # Attach files
             for student in record.students.all():
-                archive_name = str(student.folder_path / f"{student.name}.zip")
+                archive_name = student.folder_path / f"{student.name}.zip"
                 with ZipFile(archive_name, "w") as archive:
-                    archive.write(student.passport_path)
-                    archive.write(student.study_document_path)
+                    archive.write(student.passport_path, student.passport_path.name)
+                    archive.write(student.study_document_path, student.study_document_path.name)
                 with open(archive_name, "rb") as archive:
-                    mail.attach(archive_name, archive.read())
+                    mail.attach(archive_name.name, archive.read())
                 Path(archive_name).unlink()
 
             if record.get_individual_payer_or_none() is not None:
