@@ -332,7 +332,8 @@ def payment_form_view(request):
 
             # Send mail with full information to workers and payer
             if record.payment_type == "payme":
-                payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE, reverse("purchase:finished"))
+                payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE,
+                                                request.get_full_path(reverse("purchase:finished")))
             else:
                 payment_link = None
             context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
@@ -383,9 +384,9 @@ def payme_payment_view(request):
         return redirect("purchase:finished")
 
     button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
-                                                      request.LANGUAGE_CODE, reverse("purchase:finished"), style="white")
+                                                      request.LANGUAGE_CODE, request.get_full_path(reverse("purchase:finished")), style="white")
     qr_form = QrBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
-                                              request.LANGUAGE_CODE, reverse("purchase:finished"))
+                                              request.LANGUAGE_CODE, request.get_full_path(reverse("purchase:finished")))
 
     context = {
         "button_form": button_form,
