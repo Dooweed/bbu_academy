@@ -104,9 +104,12 @@ class Student(models.Model):
         default_storage.save(self.folder_path / f"{STUDY_DOCUMENT}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
 
     def delete_temp_files(self):
-        self.passport_path.unlink()
-        self.study_document_path.unlink()
-        self.folder_path.rmdir()
+        if self.passport_path.exists():
+            self.passport_path.unlink()
+        if self.study_document_path.exists():
+            self.study_document_path.unlink()
+        if self.folder_path.exists():
+            self.folder_path.rmdir()
 
     @property
     def name(self):
@@ -164,8 +167,10 @@ class IndividualPayer(models.Model):
         default_storage.save(self.folder_path / f"{PAYER_PASSPORT}{Path(file.name).suffix}", ContentFile(file.open().read()))
 
     def delete_temp_files(self):
-        self.passport_path.unlink()
-        self.folder_path.rmdir()
+        if self.passport_path.exists():
+            self.passport_path.unlink()
+        if self.folder_path.exists():
+            self.folder_path.rmdir()
 
     class Meta:
         verbose_name = "Физическое лицо"
@@ -315,7 +320,8 @@ class PurchaseRecord(PaymeMerchantMixin):
         for student in self.students.all():
             student.delete_temp_files()
         self.payer.delete_temp_files()
-        self.folder_path.rmdir()
+        if self.folder_path.exists():
+            self.folder_path.rmdir()
 
     def entity_form_is_ready(self):
         return self.students.exists() and self.get_entity_payer_or_none()
