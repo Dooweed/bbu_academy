@@ -15,6 +15,7 @@ from premailer import transform
 from bbu_academy.settings import EMAIL_HOST_USER, STAFF_MAILS
 from courses.models import Course
 from payme_billing.forms import ButtonBasePaymentInitialisationForm, QrBasePaymentInitialisationForm
+from payme_billing.utils import get_payment_link
 from payme_billing.vars.settings import URL
 from trainings.models import Training
 from .models import Student, IndividualPayer, PurchaseRecord
@@ -329,7 +330,9 @@ def payment_form_view(request):
             record.save()
 
             # Send mail with full information to workers and payer
-            html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
+            payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE)
+            context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
+            html_content = render_to_string("purchase/mail/html_mail.html", context, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", {"payer": record.payer, "students_list": record.students.all(), "mail": True}))
             mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_HOST_USER, to=STAFF_MAILS + [record.payer.email()])
             mail.attach_alternative(transform(html_content, base_url=f"{request.scheme}://{request.get_host()}"), 'text/html')  # Attach html version

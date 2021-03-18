@@ -1,13 +1,15 @@
-Плательщик
+{% load i18n %}
+
+{% translate 'Ссылка на оплату' %}: {{ payment_link }}
+
+{% translate 'Плательщик' %}
 {% for field, value in payer %}
     {{ field }}: {{ value }}
 {% endfor %}
 
-
-Список студентов ({{ students_list| length }}):
+{% translate 'Список студентов' %} ({{ students_list| length }}):
 {% for student in students_list reversed %}
     {{ student.name }}
-    {% for field, value in student %}
-        {{ field }}: {% if value == "None" %}-{% else %}{{ value }}{% endif %}
+    {% for field, value in student %}{{ field }}: {% if value == "None" %}-{% else %}{{ value }}{% endif %}
     {% endfor %}
 {% endfor %}
