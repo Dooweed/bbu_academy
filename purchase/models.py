@@ -315,11 +315,14 @@ class PurchaseRecord(PaymeMerchantMixin):
         return path
 
     def delete_temp_files(self):
-        for student in self.students.all():
-            student.delete_temp_files()
-        if self.payer:
-            self.payer.delete_temp_files()
-        self.folder_path.rmdir()
+        try:
+            for student in self.students.all():
+                student.delete_temp_files()
+            if self.payer:
+                self.payer.delete_temp_files()
+            self.folder_path.rmdir()
+        except Exception as e:
+            print(e)
 
     def entity_form_is_ready(self):
         return self.students.exists() and self.get_entity_payer_or_none()
