@@ -338,7 +338,6 @@ def payment_form_view(request):
             result = mail.send()
 
             if result:
-                # record.delete_temp_files()
                 return redirect("purchase:payme-payment")
             else:
                 return HttpResponseServerError(_("Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об ошибке. Приносим свои извинения"))
