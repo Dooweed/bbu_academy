@@ -125,7 +125,8 @@ def _PerformTransaction(params):
             else:
                 # Return error if model object was not found
                 purchase = MODEL.objects.filter(id=transaction.record_id, payment_type="payme")
-                if purchase.get().is_paid:
+                purchase = purchase.get()
+                if purchase.is_paid:
                     return Error(RECEIPT_PAID_ERROR)
                 if purchase.update(state=4) != 1:
                     return Error(RECEIPT_NOT_FOUND_ERROR)
