@@ -8,8 +8,8 @@ from .vars.settings import WEB_CASH_ID
 
 class BasePaymentInitialisationForm(forms.Form):
     merchant = forms.CharField(widget=forms.HiddenInput)
-    purchase_id = forms.IntegerField(widget=forms.HiddenInput(attrs={"name": "account[purchase_id]"}))
-    phone = forms.CharField(widget=forms.HiddenInput(attrs={"name": "account[phone]"}), max_length=9, min_length=9)
+    purchase_id = forms.IntegerField(widget=forms.HiddenInput())
+    phone = forms.CharField(widget=forms.HiddenInput(), max_length=9, min_length=9)
     amount = forms.IntegerField(widget=forms.HiddenInput)
     lang = forms.CharField(widget=forms.HiddenInput, max_length=2, min_length=2)
 

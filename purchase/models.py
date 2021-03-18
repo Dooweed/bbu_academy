@@ -104,6 +104,7 @@ class Student(models.Model):
         default_storage.save(self.folder_path / f"{STUDY_DOCUMENT}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
 
     def delete_temp_files(self):
+        print(self.passport_path)
         if self.passport_path:
             self.passport_path.unlink()
         if self.study_document_path:
@@ -317,7 +318,8 @@ class PurchaseRecord(PaymeMerchantMixin):
     def delete_temp_files(self):
         for student in self.students.all():
             student.delete_temp_files()
-        self.payer.delete_temp_files()
+        if self.payer:
+            self.payer.delete_temp_files()
         self.folder_path.rmdir()
 
     def entity_form_is_ready(self):

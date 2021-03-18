@@ -129,10 +129,10 @@ def _PerformTransaction(params):
                     return Error(RECEIPT_PAID_ERROR)
                 if purchase.update(is_paid=True, state=4) != 1:
                     return Error(RECEIPT_NOT_FOUND_ERROR)
+                purchase.complete_payment()
                 transaction.perform_time = timezone.now()
                 transaction.state = 2
                 transaction.save()
-                purchase.complete_payment()
         # Transaction is already completed
         elif transaction.state == 2:
             pass
