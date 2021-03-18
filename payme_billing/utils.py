@@ -8,5 +8,5 @@ def get_payment_link(purchase_id, phone, amount, lang, return_url=None):
     if return_url:
         params += f"c={return_url}"
     params_bytes = params.encode('utf-8')
-    url = f"{URL}/{b64encode(params_bytes)}"
+    url = f"{URL}{b64encode(params_bytes)}"
     return url
