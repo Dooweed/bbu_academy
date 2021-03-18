@@ -18,6 +18,7 @@ class CourseForm(forms.ModelForm):
             'short_text': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
             'text': CKEditorWidget(),
             'price': forms.NumberInput(),
+            'special_price': forms.NumberInput(),
             "meta_description": forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
         }
 
@@ -28,7 +29,7 @@ class CourseAdmin(SortableAdminMixin, ImageCroppingMixin, TranslationAdmin):
     search_fields = ("title", "short_text", "text")
     fieldsets = (
         ("Заголовок", {"fields": ("title",), "classes": ("visual-group",)}),
-        (None, {"fields": ("url", "active", "price")}),
+        (None, {"fields": ("url", "active", "price", "special_price")}),
         ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size"), "classes": ("visual-group", "wide",)}),
         ("Текст", {"fields": ("text",), "classes": ("visual-group", "wide",)}),
         ("Краткое описание", {"fields": ("short_text",), "classes": ("visual-group",)}),
