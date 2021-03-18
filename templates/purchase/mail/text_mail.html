@@ -1,6 +1,6 @@
 {% load i18n %}
 
-{% translate 'Ссылка на оплату' %}: {{ payment_link }}
+{% if payment_link %}{% translate 'Ссылка на оплату' %}: {{ payment_link }}{% endif %}
 
 {% translate 'Плательщик' %}
 {% for field, value in payer %}

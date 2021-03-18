@@ -330,7 +330,10 @@ def payment_form_view(request):
             record.save()
 
             # Send mail with full information to workers and payer
-            payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE)
+            if record.payment_type == "payme":
+                payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE)
+            else:
+                payment_link = None
             context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             html_content = render_to_string("purchase/mail/html_mail.html", context, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", {"payer": record.payer, "students_list": record.students.all(), "mail": True}))
