@@ -23,8 +23,8 @@ class BasePaymentInitialisationForm(forms.Form):
 
     def add_prefix(self, field_name):
         FIELD_NAME_MAPPING = {
-            "purchase_id": 'account["purchase_id"]',
-            "phone": 'account["phone"]',
+            "purchase_id": 'account[purchase_id]',
+            "phone": 'account[phone]',
         }
         field_name = FIELD_NAME_MAPPING.get(field_name, field_name)
         return super(BasePaymentInitialisationForm, self).add_prefix(field_name)
