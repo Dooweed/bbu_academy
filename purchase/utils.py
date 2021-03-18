@@ -29,9 +29,6 @@ def get_product_choices():
 def delete_session_purchase_record(request):
     try:
         if "record_id" in request.session:
-            record = PurchaseRecord.objects.filter(id=request.session["record_id"])
-            if record.exists():
-                record.delete()
             del request.session["record_id"]
             request.session.modified = True
     except ProgrammingError:

@@ -22,6 +22,8 @@ from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, Confirmati
 
 from django.utils.translation import gettext as _
 
+from .utils import delete_session_purchase_record
+
 SUBMIT = "submit"
 EDIT = "edit"
 DELETE = "delete"
@@ -51,6 +53,8 @@ def get_record(request):
 def offer_agreement_view(request):
     if request.method == "POST":
         record = get_record(request)
+        if record.finished:
+            return redirect("purchase:finished")
         record.offer_agreement = True
         record.save()
         return redirect("purchase:individual-form")
@@ -63,6 +67,8 @@ def individual_form_view(request):
 
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("purchase:offer-agreement")
+    elif record.finished:
+        return redirect("purchase:finished")
 
     if request.method == "POST":  # Post method
         self_payment_form = SelfPaymentForm(request.POST)
@@ -131,6 +137,8 @@ def entity_form_view(request):
 
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("purchase:offer-agreement")
+    elif record.finished:
+        return redirect("purchase:finished")
 
     student_missing = False
     payer_missing = False
@@ -266,6 +274,8 @@ def confirmation_form_view(request):
         return redirect("purchase:offer-agreement")
     elif not record.is_ready():  # Redirect to form if it is not valid
         return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
+    elif record.finished:
+        return redirect("purchase:finished")
 
     if request.method == "POST":
         form = ConfirmationForm(request.POST)
@@ -308,6 +318,8 @@ def payment_form_view(request):
         return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
     elif not record.is_confirmed():
         return redirect("purchase:confirmation-form")
+    elif record.finished:
+        return redirect("purchase:finished")
 
     if request.method == "POST":
         form = PaymentForm(request.POST)
@@ -354,6 +366,9 @@ def payment_form_view(request):
 def payme_payment_view(request):
     record = get_record(request)
 
+    if record.finished:
+        return redirect("purchase:finished")
+
     button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE, style="white")
     qr_form = QrBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE)
 
@@ -364,3 +379,15 @@ def payme_payment_view(request):
     }
 
     return render(request, "purchase/payme.html", context)
+
+def payment_finished_view(request):
+    record = get_record(request)
+
+    delete_session_purchase_record(request)
+
+    context = {
+        "payme_completed": record.payment_type == "payme" and record.is_paid,
+    }
+
+    return render(request, "purchase/finished.html", context)
+
