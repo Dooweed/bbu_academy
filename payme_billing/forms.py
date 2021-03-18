@@ -12,6 +12,7 @@ class BasePaymentInitialisationForm(forms.Form):
     phone = forms.CharField(widget=forms.HiddenInput(), max_length=9, min_length=9)
     amount = forms.IntegerField(widget=forms.HiddenInput)
     lang = forms.CharField(widget=forms.HiddenInput, max_length=2, min_length=2)
+    callback = forms.CharField(widget=forms.HiddenInput, max_length=1024)
 
     def __init__(self, purchase_id, phone, amount, lang, callback, *args, **kwargs):
         super().__init__(*args, **kwargs)
