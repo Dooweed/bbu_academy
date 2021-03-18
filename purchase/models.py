@@ -1,4 +1,5 @@
 from pathlib import Path
+from logging import log
 
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import ObjectDoesNotExist
@@ -104,7 +105,6 @@ class Student(models.Model):
         default_storage.save(self.folder_path / f"{STUDY_DOCUMENT}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
 
     def delete_temp_files(self):
-        print(self.passport_path)
         if self.passport_path:
             self.passport_path.unlink()
         if self.study_document_path:
@@ -245,7 +245,12 @@ class PurchaseRecord(PaymeMerchantMixin):
         self.is_paid = True
         self.finished = True
         self.save()
-        self.delete_temp_files()
+        try:
+            self.delete_temp_files()
+        except Exception as e:
+            import requests
+            requests.post("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92", data={"g": str(e)})
+            log(e)
 
     def get_9_digit_phone(self):
         return ''.join(filter(lambda x: x.isdigit(), self.phone))[-9:]
