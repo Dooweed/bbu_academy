@@ -248,9 +248,7 @@ class PurchaseRecord(PaymeMerchantMixin):
         try:
             self.delete_temp_files()
         except Exception as e:
-            import requests
-            requests.post("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92", data={"g": str(e)})
-            log(e)
+            print(e)
 
     def get_9_digit_phone(self):
         return ''.join(filter(lambda x: x.isdigit(), self.phone))[-9:]
