@@ -256,4 +256,5 @@ PAYME_BILLING_SETTINGS = {
     "web_cash_key": "sAsEhjP?8?cG@2sI1Hrk3GJX%kQ2rE6&QRg1",
     "test_web_cash_key": "G2JIkF0vAuYbgkNFjOk0PpvOwxD?BXgitqDm",
     "billing_model": "purchase.PurchaseRecord",  # Should be in form "app_label.ModelName"
+    "callback_time": 4000,  # Time to wait before redirecting to merchant page (in milliseconds)
 }

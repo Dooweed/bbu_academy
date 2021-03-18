@@ -3,7 +3,7 @@ from abc import abstractmethod
 from django import forms
 from django.template.loader import render_to_string
 
-from .vars.settings import WEB_CASH_ID
+from .vars.settings import WEB_CASH_ID, CALLBACK_TIME
 
 
 class BasePaymentInitialisationForm(forms.Form):
@@ -13,6 +13,7 @@ class BasePaymentInitialisationForm(forms.Form):
     amount = forms.IntegerField(widget=forms.HiddenInput)
     lang = forms.CharField(widget=forms.HiddenInput, max_length=2, min_length=2)
     callback = forms.CharField(widget=forms.HiddenInput, max_length=1024)
+    callback_time = forms.IntegerField(widget=forms.HiddenInput)
 
     def __init__(self, purchase_id, phone, amount, lang, callback, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -22,6 +23,7 @@ class BasePaymentInitialisationForm(forms.Form):
         self.fields["amount"].initial = amount
         self.fields["lang"].initial = lang
         self.fields["callback"].initial = callback
+        self.fields["callback_time"].initial = CALLBACK_TIME
 
     def add_prefix(self, field_name):
         FIELD_NAME_MAPPING = {
