@@ -22,9 +22,8 @@ div.records {
     overflow: hidden;
 }
 div.records > div.record.payer {
-    max-width: 26%;
     min-width: 340px;
-    margin: 24px 37%
+    max-width: 480px;
 }
 div.records > div.record {
     margin: 24px 8px 0 8px;
