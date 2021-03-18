@@ -373,7 +373,13 @@ def payment_form_view(request):
 def payme_payment_view(request):
     record = get_record(request)
 
-    if record.finished:
+    if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
+        return redirect("purchase:offer-agreement")
+    elif not record.is_ready():  # Redirect to form if it is not valid
+        return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
+    elif not record.is_confirmed():
+        return redirect("purchase:confirmation-form")
+    elif record.finished:
         return redirect("purchase:finished")
 
     button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
