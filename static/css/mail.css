@@ -3,9 +3,7 @@ h2.header {
     margin-top: 48px;
 }
 .row-center {
-    display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    float: left;
 }
 .col {
     width: 100%;
@@ -24,7 +22,8 @@ div.filled-records {
 .filled-record-inner {
     border: 1px solid #F8F8F8;
     border-bottom: 2px solid #314d8d;
-    max-width: 600px;
+    max-width: 480px;
+    margin: 0 auto;
 }
 .filled-record-inner .header{
     background-color: #314d8d;
