@@ -13,7 +13,6 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from bbu_academy.settings import BASE_DIR
-from bbu_academy.utils import remove
 from payme_billing.mixins import PaymeStateMixin
 
 EDUCATION = (
@@ -54,7 +53,7 @@ class Student(models.Model):
     student_passport_given_by = models.CharField(_("Кем выдан паспорт студента"), max_length=300)
     student_phone_number = models.CharField(_("Номер телефона"), max_length=40)
     student_email = models.EmailField(_("Адрес электронной почты"))
-    student_telegram_contact = models.CharField(_("Контакт в Telegram (если имеется)"), help_text=_("(номер телефона или ссылка)"), max_length=300, null=True, blank=True)
+    student_telegram_contact = models.CharField(_("Контакт в Telegram (если имеется)"), help_text=_("(номер телефона, ссылка или юзернейм)"), max_length=300, null=True, blank=True)
     study_type = models.CharField(_("Образование"), choices=EDUCATION, max_length=40)
     record = models.ForeignKey(verbose_name="Запись", to="PurchaseRecord", on_delete=models.CASCADE, related_name="students")
 
@@ -105,9 +104,9 @@ class Student(models.Model):
         default_storage.save(self.folder_path / f"{STUDY_DOCUMENT}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
 
     def delete_temp_files(self):
-        remove(self.passport_path)
-        remove(self.study_document_path)
-        remove(self.folder_path)
+        self.passport_path.unlink()
+        self.study_document_path.unlink()
+        self.folder_path.rmdir()
 
     @property
     def name(self):
@@ -165,8 +164,8 @@ class IndividualPayer(models.Model):
         default_storage.save(self.folder_path / f"{PAYER_PASSPORT}{Path(file.name).suffix}", ContentFile(file.open().read()))
 
     def delete_temp_files(self):
-        remove(self.passport_path)
-        remove(self.folder_path)
+        self.passport_path.unlink()
+        self.folder_path.rmdir()
 
     class Meta:
         verbose_name = "Физическое лицо"
@@ -307,7 +306,10 @@ class PurchaseRecord(PaymeStateMixin):
         return path
 
     def delete_temp_files(self):
-        remove(self.folder_path)
+        for student in self.students:
+            student.delete_temp_files()
+        self.payer.delete_temp_files()
+        self.folder_path.rmdir()
 
     def entity_form_is_ready(self):
         return self.students.exists() and self.get_entity_payer_or_none()

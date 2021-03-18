@@ -19,8 +19,7 @@
 
             <div class="filled-record-fields">
                 {% for field, val in payer %}
-                    {% cycle 'odd' 'even' %}
-                    <div class="value-group{% if cycle == 'odd' %} odd{% endif %}">
+                    <div class="value-group">
                         <p class="fieldname">{{ field }}</p>
                         <div class="value">{% if val == "None" %}-{% else %}{{ val }}{% endif %}</div>
                     </div>
