@@ -132,6 +132,7 @@ def _PerformTransaction(params):
                 transaction.perform_time = timezone.now()
                 transaction.state = 2
                 transaction.save()
+                purchase.complete_payment()
         # Transaction is already completed
         elif transaction.state == 2:
             pass

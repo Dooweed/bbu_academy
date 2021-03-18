@@ -2,52 +2,51 @@ h2.header {
     text-align: center;
     margin-top: 48px;
 }
-.col {
+.block {
     width: 100%;
-    padding: 0;
 }
 p.header {
-    padding: 1rem;
     margin: 0;
     font-weight: bold;
     text-align: center;
-}
-div.filled-records {
-    margin-top: 48px;
-    padding-left: 24px;
-    padding-right: 24px;
-}
-.filled-record-inner {
-    border: 1px solid #F8F8F8;
-    border-bottom: 2px solid #314d8d;
-}
-.filled-record-inner .header{
     background-color: #314d8d;
     color: #fff;
     font-size: 18px;
+    width: 100%;
+    padding: 20px 0;
 }
-.filled-record-inner .filled-record-fields {
+div.records {
+    overflow: hidden;
+}
+div.records > div.record.payer {
+    max-width: 26%;
+    min-width: 340px;
+    margin: 24px 37%
+}
+div.records > div.record {
+    margin: 24px 8px 0 8px;
     max-width: 480px;
-    margin: 0 auto;
     float: left;
+    border: 1px solid #F8F8F8;
+    border-bottom: 2px solid #314d8d;
 }
-.filled-record-inner .filled-record-fields .value-group {
+div.records > div.record > div.fields {
+    padding: 0 12px;
+}
+
+.value-group {
     padding: 10px 10px;
+    border-bottom: #DDDDDD solid 1px;
 }
-.filled-record-inner .filled-record-fields .value-group .fieldname {
+.value-group .fieldname {
     margin: 0;
     font-weight: bold;
     font-size: 15px;
     color: #000;
     padding-right: 20px;
 }
-.filled-record-inner .filled-record-fields .value-group .value {
-    width: calc(100% - 10px);
+.value-group .value {
+    width: 90%;
     margin: 0 5px 0 5px;
     line-height: 1.15;
-}
-@media screen and (max-width: 768px) {
-    .col {
-        width: 60%;
-    }
 }

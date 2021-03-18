@@ -13,7 +13,7 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from bbu_academy.settings import BASE_DIR
-from payme_billing.mixins import PaymeStateMixin
+from payme_billing.mixins import PaymeMerchantMixin
 
 EDUCATION = (
     ("secondary", _("Среднее")),
@@ -213,7 +213,7 @@ class EntityPayer(models.Model):
         verbose_name_plural = "Юридические лица"
 
 
-class PurchaseRecord(PaymeStateMixin):
+class PurchaseRecord(PaymeMerchantMixin):
     offer_agreement = models.BooleanField("Пользовательское соглашение", default=False)
     date_started = models.DateTimeField("Дата и время создания заказа", auto_now_add=True)
     date_finished = models.DateTimeField("Дата и время завершения заказа", null=True, blank=True)
@@ -236,6 +236,12 @@ class PurchaseRecord(PaymeStateMixin):
 
     def get_amount(self):
         return self.overall_price
+
+    def complete_payment(self):
+        self.is_paid = True
+        self.finished = True
+        self.save()
+        self.delete_temp_files()
 
     def get_9_digit_phone(self):
         return ''.join(filter(lambda x: x.isdigit(), self.phone))[-9:]

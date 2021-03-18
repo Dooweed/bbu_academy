@@ -243,6 +243,7 @@ def ajax_payer(request, action: str):
                 payer.save()
 
                 if record.get_individual_payer_or_none():  # Delete INDIVIDUAL PAYER if exists
+                    record.get_individual_payer_or_none().delete_temp_files()
                     record.get_individual_payer_or_none().delete()
         else:
             raise Http404()
@@ -330,12 +331,13 @@ def payment_form_view(request):
                     mail.attach(archive_name, archive.read())
                 Path(archive_name).unlink()
 
-            mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
+            if record.get_individual_payer_or_none() is not None:
+                mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
             result = mail.send()
 
             if result:
-                record.delete_temp_files()
+                # record.delete_temp_files()
                 return redirect("purchase:payme-payment")
             else:
                 return HttpResponseServerError(_("Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об ошибке. Приносим свои извинения"))

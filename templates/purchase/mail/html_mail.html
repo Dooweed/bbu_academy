@@ -12,29 +12,38 @@
 </head>
 <body>
 
-    <h2 class="header">{% translate "Плательщик" %}</h2>
+    <div class="block">
+        <h2 class="header">{% translate "Плательщик" %}</h2>
 
-    <div class="filled-records row-center">
-        <div class="filled-record-inner col">
-            <p class="header">{% translate 'Плательщик' %}</p>
+        <div class="records">
+            <div class="record payer">
 
-            <div class="filled-record-fields">
-                {% for field, val in payer %}
-                    <div class="value-group">
-                        <p class="fieldname">{{ field }}</p>
-                        <div class="value">{% if val == "None" %}-{% else %}{{ val }}{% endif %}</div>
-                    </div>
-                {% endfor %}
+                <p class="header">{% translate 'Плательщик' %}</p>
+
+                <div class="fields">
+                    {% for field, val in payer %}
+                        <div class="value-group">
+                            <p class="fieldname">{{ field }}</p>
+                            <div class="value">{% if val == "None" %}-{% else %}{{ val }}{% endif %}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
             </div>
         </div>
     </div>
 
-    <div id="filled-students" class="filled-records">
-        {% for student in students_list reversed %}
-            <div class="filled-record-fields">
+
+    <div class="block">
+        <h2 class="header">{% translate "Список студентов" %} ({{ students_list| length }})</h2>
+
+        <div class="records">
+
+            {% for student in students_list %}<div class="record">
+
                 <p class="header text-center font-weight-bold p-3 m-0">{{ student.student_full_name.value }}</p>
 
-                <div class="filled-record-inner">
+                <div class="fields">
                     <div class="value-group">
                         <p class="fieldname">{{ student.student_full_name.label }}</p>
                         <div class="value">{{ student.student_full_name.value }}</div>
@@ -81,8 +90,9 @@
                     </div>
                 </div>
 
-            </div>
-        {% endfor %}
+            </div>{% endfor %}
+
+        </div>
     </div>
 </body>
 </html>
