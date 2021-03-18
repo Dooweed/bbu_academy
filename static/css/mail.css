@@ -2,9 +2,6 @@ h2.header {
     text-align: center;
     margin-top: 48px;
 }
-.row-center {
-    float: left;
-}
 .col {
     width: 100%;
     padding: 0;
@@ -16,19 +13,23 @@ p.header {
     text-align: center;
 }
 div.filled-records {
+    margin-top: 48px;
     padding-left: 24px;
     padding-right: 24px;
 }
 .filled-record-inner {
     border: 1px solid #F8F8F8;
     border-bottom: 2px solid #314d8d;
-    max-width: 480px;
-    margin: 0 auto;
 }
 .filled-record-inner .header{
     background-color: #314d8d;
     color: #fff;
     font-size: 18px;
+}
+.filled-record-inner .filled-record-fields {
+    max-width: 480px;
+    margin: 0 auto;
+    float: left;
 }
 .filled-record-inner .filled-record-fields .value-group {
     padding: 10px 10px;
