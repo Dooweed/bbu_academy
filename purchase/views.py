@@ -404,8 +404,6 @@ def payment_finished_view(request):
         return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
     elif not record.is_confirmed():
         return redirect("purchase:confirmation-form")
-    elif record.finished:
-        return redirect("purchase:finished")
 
     delete_session_purchase_record(request)
 
