@@ -312,8 +312,7 @@ def payment_form_view(request):
         form = PaymentForm(request.POST)
 
         if form.is_valid():  # Finish purchase
-            record.payment_type = form.payment_type
-            record.save()
+            form.save()
 
             # Send mail with full information to workers and payer
             html_content = render_to_string("purchase/mail/html_mail.html", {"payer": record.payer, "students_list": get_students_list(record), "mail": True}, request=request)
@@ -341,7 +340,7 @@ def payment_form_view(request):
             else:
                 return HttpResponseServerError(_("Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об ошибке. Приносим свои извинения"))
 
-    form = PaymentForm() if not record.payment_type else PaymentForm(instance=record)
+    form = PaymentForm(instance=record)
 
     context = {
         "record": record,
