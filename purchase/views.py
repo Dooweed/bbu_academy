@@ -398,6 +398,15 @@ def payme_payment_view(request):
 def payment_finished_view(request):
     record = get_record(request)
 
+    if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
+        return redirect("purchase:offer-agreement")
+    elif not record.is_ready():  # Redirect to form if it is not valid
+        return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
+    elif not record.is_confirmed():
+        return redirect("purchase:confirmation-form")
+    elif record.finished:
+        return redirect("purchase:finished")
+
     delete_session_purchase_record(request)
 
     context = {
