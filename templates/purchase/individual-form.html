@@ -49,7 +49,7 @@
                         <div class="tab-pane fade show active individual" id="individual">
                             <form class="form" enctype="multipart/form-data" method="POST">
                                 {% csrf_token %}
-                                <h2 class="text-center mt-2">Физическое лицо</h2>
+                                <h2 class="text-center mt-2">{% translate 'Физическое лицо' %}</h2>
 
                                 <div class="self_paying form-group d-flex justify-content-center mt-5">
                                     {{ self_payment.self_payment.label_tag }}
@@ -58,7 +58,7 @@
 
                                 <div class="mt-4 row justify-content-center">
                                     <div id="payer" class="col-12 col-md-6 form-column payer">
-                                        <div class="mt-5 d-flex justify-content-end"><span style="min-height: 24px" class="text-success mr-4">{% if payer_correct %}Сохранено{% endif %}</span></div>
+                                        <div class="mt-5 d-flex justify-content-end"><span style="min-height: 24px" class="text-success mr-4">{% if payer_correct %}✓ {% translate 'Сохранено' %}{% endif %}</span></div>
                                         <h3 class="text-center mt-2 mb-3">{% translate 'Плательщик' %}</h3>
                                         {% for field in payer_fields  %}
                                             <div class="form-group">
@@ -71,7 +71,7 @@
                                     </div>
 
                                     <div id="student" class="col-12 col-md-6 form-column student">
-                                        <div class="mt-5 d-flex justify-content-end"><span style="min-height: 24px" class="text-success mr-4">{% if student_correct %}Сохранено{% endif %}</span></div>
+                                        <div class="mt-5 d-flex justify-content-end"><span style="min-height: 24px" class="text-success mr-4">{% if student_correct %}✓ {% translate 'Сохранено' %}{% endif %}</span></div>
                                         <h3 class="text-center mt-2 mb-3">{% translate 'Студент' %}<span class="auto-fill-label"> ({% translate 'заполняется автоматически' %})</span></h3>
                                         {% for field in student_fields  %}
                                             <div class="form-group">

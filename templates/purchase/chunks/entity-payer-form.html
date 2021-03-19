@@ -13,6 +13,6 @@
 {% endfor %}
 
 <div class="submit-button d-flex align-items-center justify-content-end">
-    {% if payer_is_valid %}<span class="text-success mr-4">Сохранено</span>{% endif %}
+    {% if payer_is_valid %}<span class="text-success mr-4">✓ {% translate 'Сохранено' %}</span>{% endif %}
     <button type="submit" class="sheen no-sheen">{% translate 'Отправить' %}</button>
 </div>

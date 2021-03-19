@@ -1,4 +1,4 @@
-let $edit_form = $(".edit-student"), $delete_form = $(".delete-student"), $reload = $(".reload-student"), $main_form = $("#student"), $payer_form = $("#payer");
+let $edit_form = $(".edit-student"), $delete_form = $(".delete-student"), $reload = $(".reload-student"), $student_form = $("#student"), $payer_form = $("#payer");
 
 const $filled_students = $("div#filled-students");
 
@@ -14,7 +14,12 @@ function ajax(event) {
         cache: false,
         contentType: false,
         processData: false,
-        success: function (data) { populate_blocks(data); },
+        success: function (data) {
+            populate_blocks(data);
+
+            if(event.data != null && event.data.hasOwnProperty("callback_function"))
+                event.data.callback_function();
+        },
         error: function(data){ console.log("Something went wrong"); console.log(data); }
     });
 }
@@ -33,14 +38,20 @@ function reattach_event_listeners() {
     $reload.on("click", load_page);
 }
 
+function scroll_to_students() {
+    $('html, body').animate({
+        scrollTop: $filled_students.offset().top
+    }, 100);
+}
+
 $edit_form.submit(ajax);
 $delete_form.submit(ajax);
-$main_form.submit(ajax);
 $payer_form.submit(ajax);
+$student_form.submit({callback_function: scroll_to_students},ajax);
 
 function populate_blocks(data) {
     if(data["student_form"])
-        $main_form.html(jQuery.parseHTML(data["student_form"]));
+        $student_form.html(jQuery.parseHTML(data["student_form"]));
     if(data["students_list"])
         $filled_students.html(jQuery.parseHTML(data["students_list"]));
     if(data["payer_form"])
@@ -64,7 +75,4 @@ function load_page() {
 
 $( document ).ready(function() {
     load_page();
-    if(PerformanceNavigationTiming.type === 'back_forward'){
-        $(window).on('popstate', function() {load_page();});
-    }
 });

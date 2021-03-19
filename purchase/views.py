@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.utils.html import strip_tags
 from premailer import transform
 
-from bbu_academy.settings import EMAIL_HOST_USER, STAFF_MAILS
+from bbu_academy.settings import EMAIL_PAYMENT_NOTIFICATION_USER, STAFF_MAILS
 from courses.models import Course
 from payme_billing.forms import ButtonBasePaymentInitialisationForm, QrBasePaymentInitialisationForm
 from payme_billing.utils import get_payment_link
@@ -340,12 +340,12 @@ def payment_form_view(request):
                                                 request.build_absolute_uri(reverse("purchase:finished")))
             else:
                 payment_link = None
-            build_invoice(record)
+            build_invoice(record, request)
             html_context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             plain_context = {"payer": record.payer, "students_list": record.students.all(), "mail": True}
             html_content = render_to_string("purchase/mail/html_mail.html", html_context, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", plain_context))
-            mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_HOST_USER, to=STAFF_MAILS + [record.payer.email()])
+            mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_PAYMENT_NOTIFICATION_USER, to=STAFF_MAILS + [record.payer.email()])
             mail.attach_alternative(transform(html_content, base_url=f"{request.scheme}://{request.get_host()}"), 'text/html')  # Attach html version
 
             # Attach files
@@ -407,6 +407,9 @@ def payme_payment_view(request):
     return render(request, "purchase/payme.html", context)
 
 def payment_finished_view(request):
+    if "record_id" not in request.session:  # Return to index page if record was deleted
+        return redirect("index")
+
     record = get_record(request)
 
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
@@ -416,8 +419,8 @@ def payment_finished_view(request):
     elif not record.is_confirmed():
         return redirect("purchase:confirmation-form")
 
-    # request.session["allow_media"] = record.id
-    # delete_session_purchase_record(request)
+    request.session["allow_media"] = record.id
+    delete_session_purchase_record(request)
 
     context = {
         "payme_completed": record.payment_type == "payme" and record.is_paid,

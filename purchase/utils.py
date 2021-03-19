@@ -44,22 +44,18 @@ def delete_session_purchase_record(request):
         print("delete_session_purchase_record() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
         return []
 
-def build_invoice(record):
+def build_invoice(record, request):
     config = pdfkit.configuration(wkhtmltopdf=PATH_WKHTMLTOPDF)
 
     context = {
         "record": record,
         "FILE_BASE_DIR": BASE_DIR,
     }
-    html = render_to_string('purchase/invoice/invoice.html', context)
+    html = render_to_string('purchase/invoice/invoice.html', context, request=request)
 
     # Define pdf options
     options = {
-        'images': '',
-        'enable-local-file-access': '',
         'enable-external-links': '',
-        'enable-internal-links': '',
-        'resolve-relative-links': '',
         'load-media-error-handling': 'skip',
     }
 

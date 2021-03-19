@@ -63,11 +63,11 @@
 
     {% if not mail %}<div class="value-group">
         <p class="fieldname">{{ student.study_document.label }}</p>
-        <div class="value"><a class="image-link" href="{{ student.study_document_link }}">{% translate 'Посмотреть' %}</a></div>
+        <div class="value"><a class="image-link" target="_blank" href="{{ student.study_document_link }}">{% translate 'Посмотреть' %}</a></div>
     </div>
 
     <div class="value-group">
         <p class="fieldname">{{ student.student_passport.label }}</p>
-        <div class="value"><a class="image-link" href="{{ student.student_passport_link }}">{% translate 'Посмотреть' %}</a></div>
+        <div class="value"><a class="image-link" target="_blank" href="{{ student.student_passport_link }}">{% translate 'Посмотреть' %}</a></div>
     </div>{% endif %}
 </div>
