@@ -1,3 +1,8 @@
+.text-underline {
+    text-decoration: underline;
+}
+
+
 .blurred-background .fixed-bg{
   filter: brightness(40%);
   -webkit-filter: brightness(40%);
@@ -480,6 +485,7 @@ html {
 .form-wrap .form-tab-content .form .form-group {
     min-height: 78px;
     padding: 8px 10px 0 10px;
+    margin-bottom: 0;
 }
 .form-wrap .form-tab-content .form-column {
     padding-bottom: 10px;

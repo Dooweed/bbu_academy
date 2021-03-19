@@ -35,9 +35,11 @@
                 {% if payme_completed %}
                     <p class="text-center">{% translate 'Оплата через Payme успешно выполнена' %}</p>
                 {% endif %}
+                <p class="warn text-center mt-5 mb-0">{% translate 'Введенные вами данные и счет-фактура были отправлены на указанную почту плательщика' %}</p>
+                <p class="warn text-center">{% translate 'Так-же вы можете скачать счет-фактуру' %} <a class="text-underline" href="{{ invoice_link }}">{% translate 'по этой ссылке' %}</a></p>
 
-                <p class="text-center"><a style="text-decoration: underline" href="{% url 'purchase:offer-agreement' %}">{% translate 'Желаете оформить ещё один заказ?' %}</a></p>
-                <p class="text-center mt-3"><a style="text-decoration: underline" href="{% url 'index' %}">{% translate 'Перейти на главную страницу' %}</a></p>
+                <p class="text-center"><a class="text-underline" href="{% url 'purchase:offer-agreement' %}">{% translate 'Желаете оформить ещё один заказ?' %}</a></p>
+                <p class="text-center mt-3"><a class="text-underline" href="{% url 'index' %}">{% translate 'Перейти на главную страницу' %}</a></p>
             </div><!-- About Wrap 5 -->
         </div>
     </div>

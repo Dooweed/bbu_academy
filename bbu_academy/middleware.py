@@ -47,10 +47,13 @@ class ProtectPersonalFilesMiddleware:
 
     def __call__(self, request):
         if "/media/temp/purchase_docs/" in request.path:
-            if "record_id" in request.session and f"record_{request.session['record_id']}" in request.path:
+            record_id = f"record_{request.session.get('record_id')}"
+            allow_media = f"record_{request.session.get('allow_media')}"
+            if record_id in request.path or allow_media in request.path:
                 response = self.get_response(request)
             else:
                 response = HttpResponseForbidden(_("У вас нет доступа к просмотру данного файла"))
+
         else:
             response = self.get_response(request)
 

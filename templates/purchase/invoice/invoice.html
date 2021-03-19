@@ -41,7 +41,7 @@
         <div class="data row wkhtmltopdf-flex">
             <div class="supplier col-6 row wkhtmltopdf-flex">
                 <div class="label col-5">  <p>Поставщик:</p>  </div>
-                <div class="value col-7">  <p>OOO "BOJXONA BROKERLARI UYUSHMASI QOSHIDAGI BOJXONA RASMIYLA</p>  </div>
+                <div class="value col-7">  <p>"BBU QOSHIDAGI BRMT va QT MARKAZI" M.Ch.J.</p>  </div>
 
                 <div class="label col-5">  <p>Адрес:</p>  </div>
                 <div class="value col-7">  <p>{{ address }}</p>  </div>
@@ -61,22 +61,13 @@
 
             <div class="customer col-6 row wkhtmltopdf-flex">
                 <div class="label col-5">  <p>Покупатель:</p>  </div>
-                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_org_name }}</p>  </div>
+                <div class="value col-7">  <p>{{ record.invoice_payer_name }}</p>  </div>
 
-                <div class="label col-5">  <p>Адрес:</p>  </div>
-                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_address }}</p>  </div>
+                {% if record.invoice_address %}<div class="label col-5">  <p>Адрес:</p>  </div>
+                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_address }}</p>  </div>{% endif %}
 
                 <div class="label col-5">  <p>Идентификационный номер поставщика (ИНН):</p>  </div>
-                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_org_inn }}</p>  </div>
-
-                <div class="label col-5">  <p>Регистрационный код плательщика НДС:</p>  </div>
-                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_registration_code }}</p>  </div>
-
-                <div class="label col-5">  <p>Р/С:</p>  </div>
-                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_payment_account }}</p>  </div>
-
-                <div class="label col-5">  <p>МФО:</p>  </div>
-                <div class="value col-7">  <p>{{ record.get_entity_payer_or_none.entity_payer_bank_code }}</p>  </div>
+                <div class="value col-7">  <p>{{ record.invoice_inn }}</p>  </div>
             </div>
         </div>
 

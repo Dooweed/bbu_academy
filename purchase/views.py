@@ -10,6 +10,7 @@ from django.template.loader import render_to_string
 
 from django.shortcuts import render, redirect
 from django.urls import reverse
+from django.utils import timezone
 from django.utils.html import strip_tags
 from premailer import transform
 
@@ -24,7 +25,7 @@ from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, Confirmati
 
 from django.utils.translation import gettext as _
 
-from .utils import delete_session_purchase_record
+from .utils import delete_session_purchase_record, build_invoice
 
 SUBMIT = "submit"
 EDIT = "edit"
@@ -327,15 +328,19 @@ def payment_form_view(request):
         form = PaymentForm(request.POST)
 
         if form.is_valid():  # Finish purchase
-            record.payment_type = form.cleaned_data.get("payment_type")
+            payment_type = form.cleaned_data.get("payment_type")
+
+            record.payment_type = payment_type
+            record.date_finished = timezone.now()
             record.save()
 
             # Send mail with full information to workers and payer
-            if record.payment_type == "payme":
+            if payment_type == "payme":
                 payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE,
                                                 request.build_absolute_uri(reverse("purchase:finished")))
             else:
                 payment_link = None
+            build_invoice(record)
             html_context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             plain_context = {"payer": record.payer, "students_list": record.students.all(), "mail": True}
             html_content = render_to_string("purchase/mail/html_mail.html", html_context, request=request)
@@ -353,13 +358,17 @@ def payment_form_view(request):
                     mail.attach(archive_name.name, archive.read())
                 Path(archive_name).unlink()
 
+            mail.attach(record.invoice_path.name, record.invoice_path.read_bytes())
             if record.get_individual_payer_or_none() is not None:
                 mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
 
             result = mail.send()
 
             if result:
-                return redirect("purchase:payme-payment")
+                if payment_type == "payme":
+                    return redirect("purchase:payme-payment")
+                else:
+                    return redirect("purchase:finished")
             else:
                 return HttpResponseServerError(_("Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об ошибке. Приносим свои извинения"))
 
@@ -407,10 +416,12 @@ def payment_finished_view(request):
     elif not record.is_confirmed():
         return redirect("purchase:confirmation-form")
 
-    delete_session_purchase_record(request)
+    # request.session["allow_media"] = record.id
+    # delete_session_purchase_record(request)
 
     context = {
         "payme_completed": record.payment_type == "payme" and record.is_paid,
+        "invoice_link": request.build_absolute_uri(record.invoice_link),
     }
 
     return render(request, "purchase/finished.html", context)

@@ -80,7 +80,6 @@ def download_pdf_certificate(request, inn: int):
         qr.save(BASE_DIR / qr_path / qr_name, "JPEG")
 
         # Render template
-        print(f"{reverse('registry:certificate')}?inn={inn}")
         context = {
             "certificate": certificate.first(),
             "pdf": True,

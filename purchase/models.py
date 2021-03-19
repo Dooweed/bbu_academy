@@ -40,6 +40,7 @@ PAYMENT_TYPE_CHOICES = (
 STUDENT_PASSPORT = "Паспорт_студента"
 STUDY_DOCUMENT = "Документ_об_образовании"
 PAYER_PASSPORT = "Паспорт_плательщика"
+INVOICE = "Счёт-фактура"
 
 PURCHASE_DOCS_FOLDER = BASE_DIR / "media" / "temp" / "purchase_docs"
 PURCHASE_DOCS_BASE_LINK = "/media/temp/purchase_docs/"
@@ -149,6 +150,10 @@ class IndividualPayer(models.Model):
         return self.individual_payer_full_name
 
     @property
+    def inn(self):
+        return self.individual_payer_inn
+
+    @property
     def folder_path(self) -> Path:
         path = self.record.folder_path / f"payer"
         path.mkdir(exist_ok=True, parents=True)
@@ -207,6 +212,10 @@ class EntityPayer(models.Model):
     @property
     def name(self):
         return self.entity_payer_org_name
+
+    @property
+    def inn(self):
+        return self.entity_payer_org_inn
 
     def delete_temp_files(self):
         pass
@@ -314,13 +323,20 @@ class PurchaseRecord(PaymeMerchantMixin):
         path.mkdir(exist_ok=True, parents=True)
         return path
 
+    @property
+    def invoice_path(self) -> Path:
+        return self.folder_path / f"{INVOICE}.pdf"
+
+    @property
+    def invoice_link(self) -> str:
+        return PURCHASE_DOCS_BASE_LINK + f"record_{self.id}/{INVOICE}.pdf" if self.invoice_path.exists() else ""
+
     def delete_temp_files(self):
         try:
             for student in self.students.all():
                 student.delete_temp_files()
             if self.payer:
                 self.payer.delete_temp_files()
-            self.folder_path.rmdir()
         except Exception as e:
             print(e)
 
@@ -341,6 +357,15 @@ class PurchaseRecord(PaymeMerchantMixin):
 
     def dotted_date_finished(self):
         return self.date_finished.strftime("%d.%m.%Y")
+
+    def invoice_payer_name(self):
+        return self.payer.name
+
+    def invoice_address(self):
+        return self.get_entity_payer_or_none().entity_payer_address if self.get_entity_payer_or_none() else None
+
+    def invoice_inn(self):
+        return self.payer.inn
 
     class Meta:
         verbose_name = "Покупка"
