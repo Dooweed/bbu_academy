@@ -37,10 +37,10 @@ PAYMENT_TYPE_CHOICES = (
 )
 
 
-STUDENT_PASSPORT = "Паспорт_студента"
-STUDY_DOCUMENT = "Документ_об_образовании"
-PAYER_PASSPORT = "Паспорт_плательщика"
-INVOICE = "Счёт-фактура"
+STUDENT_PASSPORT_SLUG = "student_passport"
+STUDY_DOCUMENT_SLUG = "study_document"
+PAYER_PASSPORT_SLUG = "payer_passport"
+INVOICE_SLUG = "invoice"
 
 PURCHASE_DOCS_FOLDER = BASE_DIR / "media" / "temp" / "purchase_docs"
 PURCHASE_DOCS_BASE_LINK = "/media/temp/purchase_docs/"
@@ -78,31 +78,31 @@ class Student(models.Model):
 
     @property
     def passport_path(self) -> Path:
-        name = self._name_of(STUDENT_PASSPORT)
+        name = self._name_of(STUDENT_PASSPORT_SLUG)
         return self.folder_path / name if name else None
 
     @property
     def study_document_path(self) -> Path:
-        name = self._name_of(STUDY_DOCUMENT)
+        name = self._name_of(STUDY_DOCUMENT_SLUG)
         return self.folder_path / name if name else None
 
     def passport_link(self) -> str:
-        name = self._name_of(STUDENT_PASSPORT)
+        name = self._name_of(STUDENT_PASSPORT_SLUG)
         return PURCHASE_DOCS_BASE_LINK + f"record_{self.record.id}/student_{self.id}/" + name if name else ""
 
     def study_document_link(self) -> str:
-        name = self._name_of(STUDY_DOCUMENT)
+        name = self._name_of(STUDY_DOCUMENT_SLUG)
         return PURCHASE_DOCS_BASE_LINK + f"record_{self.record.id}/student_{self.id}/" + name if name else ""
 
     def save_passport(self, file: InMemoryUploadedFile):
         if self.passport_path:
             self.passport_path.unlink()
-        default_storage.save(self.folder_path / f"{STUDENT_PASSPORT}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
+        default_storage.save(self.folder_path / f"{STUDENT_PASSPORT_SLUG}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
 
     def save_study_document(self, file: InMemoryUploadedFile):
         if self.study_document_path:
             self.study_document_path.unlink()
-        default_storage.save(self.folder_path / f"{STUDY_DOCUMENT}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
+        default_storage.save(self.folder_path / f"{STUDY_DOCUMENT_SLUG}{Path(file.name).suffix}".replace(" ", "_"), ContentFile(file.open().read()))
 
     def delete_temp_files(self):
         if self.passport_path:
@@ -162,13 +162,13 @@ class IndividualPayer(models.Model):
     @property
     def passport_path(self) -> Path:
         for item in self.folder_path.iterdir():
-            if PAYER_PASSPORT in item.name:
+            if PAYER_PASSPORT_SLUG in item.name:
                 return self.folder_path / item.name
 
     def save_passport(self, file: InMemoryUploadedFile):
         if self.passport_path:
             self.passport_path.unlink()
-        default_storage.save(self.folder_path / f"{PAYER_PASSPORT}{Path(file.name).suffix}", ContentFile(file.open().read()))
+        default_storage.save(self.folder_path / f"{PAYER_PASSPORT_SLUG}{Path(file.name).suffix}", ContentFile(file.open().read()))
 
     def delete_temp_files(self):
         if self.passport_path:
@@ -325,11 +325,11 @@ class PurchaseRecord(PaymeMerchantMixin):
 
     @property
     def invoice_path(self) -> Path:
-        return self.folder_path / f"{INVOICE}.pdf"
+        return self.folder_path / f"{INVOICE_SLUG}.pdf"
 
     @property
     def invoice_link(self) -> str:
-        return PURCHASE_DOCS_BASE_LINK + f"record_{self.id}/{INVOICE}.pdf" if self.invoice_path.exists() else ""
+        return PURCHASE_DOCS_BASE_LINK + f"record_{self.id}/{INVOICE_SLUG}.pdf" if self.invoice_path.exists() else ""
 
     def delete_temp_files(self):
         try:

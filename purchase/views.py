@@ -31,6 +31,11 @@ SUBMIT = "submit"
 EDIT = "edit"
 DELETE = "delete"
 
+STUDENT_PASSPORT = "Паспорт_студента"
+STUDY_DOCUMENT = "Документ_об_образовании"
+PAYER_PASSPORT = "Паспорт_плательщика"
+INVOICE = "Счёт-фактура"
+
 
 # Utility functions
 def get_students_list(record):
@@ -352,15 +357,15 @@ def payment_form_view(request):
             for student in record.students.all():
                 archive_name = student.folder_path / f"{student.name}.zip"
                 with ZipFile(archive_name, "w") as archive:
-                    archive.write(student.passport_path, student.passport_path.name)
-                    archive.write(student.study_document_path, student.study_document_path.name)
+                    archive.write(student.passport_path, STUDENT_PASSPORT)
+                    archive.write(student.study_document_path, STUDY_DOCUMENT)
                 with open(archive_name, "rb") as archive:
                     mail.attach(archive_name.name, archive.read())
                 Path(archive_name).unlink()
 
-            mail.attach(record.invoice_path.name, record.invoice_path.read_bytes())
+            mail.attach(INVOICE, record.invoice_path.read_bytes())
             if record.get_individual_payer_or_none() is not None:
-                mail.attach(record.payer.passport_path.name, record.payer.passport_path.read_bytes())
+                mail.attach(PAYER_PASSPORT, record.payer.passport_path.read_bytes())
 
             result = mail.send()
 
