@@ -14,7 +14,7 @@ from django.utils import timezone
 from django.utils.html import strip_tags
 from premailer import transform
 
-from bbu_academy.settings import EMAIL_PAYMENT_NOTIFICATION_USER, STAFF_MAILS
+from bbu_academy.settings import EMAIL_PAYMENT_NOTIFICATION_USER, STAFF_MAILS, BASE_DIR
 from courses.models import Course
 from payme_billing.forms import ButtonBasePaymentInitialisationForm, QrBasePaymentInitialisationForm
 from payme_billing.utils import get_payment_link
@@ -353,7 +353,9 @@ def payment_form_view(request):
             html_content = render_to_string("purchase/mail/html_mail.html", html_context, request=request)
             text_content = strip_tags(render_to_string("purchase/mail/text_mail.html", plain_context))
             mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_PAYMENT_NOTIFICATION_USER, to=STAFF_MAILS + [record.payer.email()])
-            mail.attach_alternative(transform(html_content, base_url=f"{request.scheme}://{request.get_host()}"), 'text/html')  # Attach html version
+            with open(BASE_DIR / "static" / "css" / "mail.css", 'r') as css:
+                css = css.read().replace('\n', '')
+                mail.attach_alternative(transform(html_content, css_text=css), 'text/html')  # Attach html version
 
             requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=1")
             # Attach files
