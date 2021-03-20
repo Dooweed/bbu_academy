@@ -361,7 +361,6 @@ def payment_form_view(request):
                     archive.write(student.study_document_path, STUDY_DOCUMENT)
                 with open(archive_name, "rb") as archive:
                     mail.attach(archive_name.name, archive.read())
-                Path(archive_name).unlink()
 
             mail.attach(INVOICE, record.invoice_path.read_bytes())
             if record.get_individual_payer_or_none() is not None:
@@ -370,6 +369,9 @@ def payment_form_view(request):
             result = mail.send()
 
             if result:
+                for student in record.students.all():
+                    archive_name = student.folder_path / f"{student.name}.zip"
+                    archive_name.unlink()
                 if payment_type == "payme":
                     return redirect("purchase:payme-payment")
                 else:
