@@ -362,16 +362,16 @@ def payment_form_view(request):
             for student in record.students.all():
                 archive_name = student.folder_path / f"{student.name}.zip"
                 with ZipFile(archive_name, "w") as archive:
-                    archive.write(student.passport_path, STUDENT_PASSPORT)
-                    archive.write(student.study_document_path, STUDY_DOCUMENT)
+                    archive.write(student.passport_path, STUDENT_PASSPORT + student.passport_path.suffix)
+                    archive.write(student.study_document_path, STUDY_DOCUMENT + student.study_document_path.suffix)
                 with open(archive_name, "rb") as archive:
                     mail.attach(archive_name.name, archive.read())
                 archive_name.unlink()
             requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=2")
 
-            mail.attach(INVOICE, record.invoice_path.read_bytes())
+            mail.attach(INVOICE + record.invoice_path.suffix, record.invoice_path.read_bytes())
             if record.get_individual_payer_or_none() is not None:
-                mail.attach(PAYER_PASSPORT, record.payer.passport_path.read_bytes())
+                mail.attach(PAYER_PASSPORT + record.invoice_path.suffix, record.payer.passport_path.read_bytes())
             requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=3")
 
             result = mail.send()
