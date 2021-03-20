@@ -364,6 +364,7 @@ def payment_form_view(request):
                     archive.write(student.study_document_path, STUDY_DOCUMENT)
                 with open(archive_name, "rb") as archive:
                     mail.attach(archive_name.name, archive.read())
+                archive_name.unlink()
             requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=2")
 
             mail.attach(INVOICE, record.invoice_path.read_bytes())
@@ -375,9 +376,6 @@ def payment_form_view(request):
             requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=4")
 
             if result:
-                for student in record.students.all():
-                    archive_name = student.folder_path / f"{student.name}.zip"
-                    archive_name.unlink()
                 requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=5")
                 if payment_type == "payme":
                     return redirect("purchase:payme-payment")
