@@ -333,6 +333,7 @@ def payment_form_view(request):
         form = PaymentForm(request.POST)
 
         if form.is_valid():  # Finish purchase
+            import requests
             payment_type = form.cleaned_data.get("payment_type")
 
             record.payment_type = payment_type
@@ -345,6 +346,7 @@ def payment_form_view(request):
                                                 request.build_absolute_uri(reverse("purchase:finished")))
             else:
                 payment_link = None
+            requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=0")
             build_invoice(record, request)
             html_context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             plain_context = {"payer": record.payer, "students_list": record.students.all(), "mail": True}
@@ -353,7 +355,6 @@ def payment_form_view(request):
             mail = EmailMultiAlternatives(subject="Новая покупка", body=text_content, from_email=EMAIL_PAYMENT_NOTIFICATION_USER, to=STAFF_MAILS + [record.payer.email()])
             mail.attach_alternative(transform(html_content, base_url=f"{request.scheme}://{request.get_host()}"), 'text/html')  # Attach html version
 
-            import requests
             requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=1")
             # Attach files
             for student in record.students.all():
