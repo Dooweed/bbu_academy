@@ -22,7 +22,7 @@ from trainings.models import Training
 from .models import Student, IndividualPayer, PurchaseRecord
 from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, ConfirmationForm, EntityPayerForm, PaymentForm
 
-from django.utils.translation import gettext as _, gettext_lazy as _l
+from django.utils.translation import gettext as _
 
 from .utils import delete_session_purchase_record, build_invoice
 
@@ -30,10 +30,10 @@ SUBMIT = "submit"
 EDIT = "edit"
 DELETE = "delete"
 
-STUDENT_PASSPORT = _l("Паспорт_студента")
-STUDY_DOCUMENT = _l("Документ_об_образовании")
-PAYER_PASSPORT = _l("Паспорт_плательщика")
-INVOICE = _l("Счёт-фактура")
+STUDENT_PASSPORT = _("Паспорт_студента")
+STUDY_DOCUMENT = _("Документ_об_образовании")
+PAYER_PASSPORT = _("Паспорт_плательщика")
+INVOICE = _("Счёт-фактура")
 
 
 # Utility functions

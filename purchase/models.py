@@ -10,20 +10,20 @@ from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils.safestring import mark_safe
 
-from django.utils.translation import gettext as _, gettext_lazy as _l
+from django.utils.translation import gettext as _
 
 from bbu_academy.settings import BASE_DIR
 from payme_billing.mixins import PaymeMerchantMixin
 
 EDUCATION = (
-    ("secondary", _l("Среднее")),
-    ("secondary_special", _l("Средне-специальное")),
-    ("higher", _l("Высшее образование"))
+    ("secondary", _("Среднее")),
+    ("secondary_special", _("Средне-специальное")),
+    ("higher", _("Высшее образование"))
 )
 
 STUDY_TYPE_CHOICES = (
-    ("intramural", _l("Очное обучение")),
-    ("remote", _l("Дистанционное обучение"))
+    ("intramural", _("Очное обучение")),
+    ("remote", _("Дистанционное обучение"))
 )
 
 STUDY_TYPE_ABBREVIATIONS = {
@@ -33,7 +33,7 @@ STUDY_TYPE_ABBREVIATIONS = {
 
 PAYMENT_TYPE_CHOICES = (
     ("payme", "PayMe"),
-    ("bank", _l("Оплата через банк"))
+    ("bank", _("Оплата через банк"))
 )
 
 
@@ -265,11 +265,11 @@ class PurchaseRecord(PaymeMerchantMixin):
 
     def f_price(self):
         line = str(self.price)[::-1]
-        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + _(" сум")
+        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + _("сум")
 
     def f_overall_price(self):
         line = str(self.overall_price)[::-1]
-        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + _(" сум")
+        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + _("сум")
 
     def textual_overall_price(self):
         from num2words import num2words
