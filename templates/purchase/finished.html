@@ -33,7 +33,7 @@
                 {% endif %}
                 <p class="warn text-center mt-5 mb-0">{% translate 'Введенные вами данные и счет-фактура были отправлены на указанную почту плательщика.' %}</p>
                 <p class="text-center"><span class="warn">{% translate 'Так-же вы можете скачать счет-фактуру' %} </span>
-                    <a class="text-underline" href="{{ invoice_link }}" download>{% translate 'по этой ссылке' %}</a></p>
+                    <a class="text-underline" href="{{ invoice_link }}" download="{{ INVOICE }}">{% translate 'по этой ссылке' %}</a></p>
 
                 <p class="text-center"><a class="text-underline" href="{% url 'purchase:offer-agreement' %}">{% translate 'Желаете оформить ещё один заказ?' %}</a></p>
                 <p class="text-center mt-3"><a class="text-underline" href="{% url 'index' %}">{% translate 'Перейти на главную страницу' %}</a></p>

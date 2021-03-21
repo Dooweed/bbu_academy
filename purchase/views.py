@@ -1,6 +1,5 @@
 import traceback
 from copy import deepcopy
-from pathlib import Path
 from zipfile import ZipFile
 from urllib.parse import urlencode
 
@@ -23,7 +22,7 @@ from trainings.models import Training
 from .models import Student, IndividualPayer, PurchaseRecord
 from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, ConfirmationForm, EntityPayerForm, PaymentForm
 
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext as _, gettext_lazy as _l
 
 from .utils import delete_session_purchase_record, build_invoice
 
@@ -31,10 +30,10 @@ SUBMIT = "submit"
 EDIT = "edit"
 DELETE = "delete"
 
-STUDENT_PASSPORT = "Паспорт_студента"
-STUDY_DOCUMENT = "Документ_об_образовании"
-PAYER_PASSPORT = "Паспорт_плательщика"
-INVOICE = "Счёт-фактура"
+STUDENT_PASSPORT = _l("Паспорт_студента")
+STUDY_DOCUMENT = _l("Документ_об_образовании")
+PAYER_PASSPORT = _l("Паспорт_плательщика")
+INVOICE = _l("Счёт-фактура")
 
 
 # Utility functions
@@ -333,7 +332,6 @@ def payment_form_view(request):
         form = PaymentForm(request.POST)
 
         if form.is_valid():  # Finish purchase
-            import requests
             payment_type = form.cleaned_data.get("payment_type")
 
             record.payment_type = payment_type
@@ -346,7 +344,6 @@ def payment_form_view(request):
                                                 request.build_absolute_uri(reverse("purchase:finished")))
             else:
                 payment_link = None
-            requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=0")
             build_invoice(record, request)
             html_context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             plain_context = {"payer": record.payer, "students_list": record.students.all(), "mail": True}
@@ -357,7 +354,6 @@ def payment_form_view(request):
                 css = css.read().replace('\n', '')
                 mail.attach_alternative(transform(html_content, css_text=css), 'text/html')  # Attach html version
 
-            requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=1")
             # Attach files
             for student in record.students.all():
                 archive_name = student.folder_path / f"{student.name}.zip"
@@ -367,18 +363,14 @@ def payment_form_view(request):
                 with open(archive_name, "rb") as archive:
                     mail.attach(archive_name.name, archive.read())
                 archive_name.unlink()
-            requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=2")
 
             mail.attach(INVOICE + record.invoice_path.suffix, record.invoice_path.read_bytes())
             if record.get_individual_payer_or_none() is not None:
                 mail.attach(PAYER_PASSPORT + record.invoice_path.suffix, record.payer.passport_path.read_bytes())
-            requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=3")
 
             result = mail.send()
-            requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=4")
 
             if result:
-                requests.get("https://webhook.site/2c47e134-5e34-4c14-a20f-d13ad3c3bd92?g=5")
                 if payment_type == "payme":
                     return redirect("purchase:payme-payment")
                 else:
@@ -425,6 +417,8 @@ def payment_finished_view(request):
         return redirect("index")
 
     record = get_record(request)
+    if not record.finished:
+        record.finish()
 
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("purchase:offer-agreement")
