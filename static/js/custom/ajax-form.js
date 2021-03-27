@@ -62,6 +62,13 @@ function populate_blocks(data) {
     $("#id_student_passport_received_date_year").selectpicker();
     $("#id_study_type").selectpicker();
 
+    $(".form-group").each(function () {
+        console.log(this);
+        if($(this).find("input[required], select[required]").length !== 0) {
+            $(this).find("label").addClass("required");
+        }
+    });
+
     reattach_event_listeners();
 }
 

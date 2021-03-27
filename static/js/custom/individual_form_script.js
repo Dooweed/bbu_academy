@@ -1,12 +1,8 @@
 $(document).ready(function (){
 
 $(".form-group").each(function () {
-    if($(this).children("input[type=text], input[type=email], input[type=file]").length !== 0) {
-        if($(this).children("input").is("[required]")) {
-            $(this).children("label").addClass("required");
-        }
-    } else {
-        $(this).children("label").addClass("required");
+    if($(this).find("input[required]").length !== 0) {
+        $(this).find("label").addClass("required");
     }
 });
 
