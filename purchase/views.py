@@ -366,7 +366,7 @@ def payment_form_view(request):
 
             mail.attach(INVOICE + record.invoice_path.suffix, record.invoice_path.read_bytes())
             if record.get_individual_payer_or_none() is not None:
-                mail.attach(PAYER_PASSPORT + record.passport_path.suffix, record.payer.passport_path.read_bytes())
+                mail.attach(PAYER_PASSPORT + record.payer.passport_path.suffix, record.payer.passport_path.read_bytes())
 
             result = mail.send()
 
