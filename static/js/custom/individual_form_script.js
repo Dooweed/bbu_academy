@@ -1,7 +1,7 @@
 $(document).ready(function (){
 
 $(".form-group").each(function () {
-    if($(this).find("input[required]").length !== 0) {
+    if($(this).find("input[required], select[required]").length !== 0) {
         $(this).find("label").addClass("required");
     }
 });
