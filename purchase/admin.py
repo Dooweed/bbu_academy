@@ -1,6 +1,5 @@
 from django.contrib import admin
 
-# from .forms import ProductForm
 from .models import *
 
 # Register your models here.
@@ -52,7 +51,3 @@ class PaymentRecordAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
-
-@admin.register(AtbMembers)
-class AtbMembersAdmin(admin.ModelAdmin):
-    list_display = ("__str__", "was_used")

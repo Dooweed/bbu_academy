@@ -33,7 +33,7 @@ DELETE = "delete"
 STUDENT_PASSPORT = _("Паспорт_студента")
 STUDY_DOCUMENT = _("Документ_об_образовании")
 PAYER_PASSPORT = _("Паспорт_плательщика")
-INVOICE = _("Счёт-фактура")
+INVOICE = _("Счёт")
 
 
 # Utility functions
@@ -311,6 +311,7 @@ def confirmation_form_view(request):
 
     context = {
         "form": form,
+        "is_entity": bool(record.get_entity_payer_or_none())
     }
 
     return render(request, "purchase/confirmation-form.html", context)

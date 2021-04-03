@@ -1,13 +1,11 @@
-from base64 import b64decode
-
 import pdfkit
-from django.core.files.storage import default_storage
+import requests
+from bs4 import BeautifulSoup
 from django.db import ProgrammingError, OperationalError
 from django.template.loader import render_to_string
 from django.utils.translation import gettext as _
 
 from bbu_academy.settings import PATH_WKHTMLTOPDF, BASE_DIR
-from purchase.models import PurchaseRecord
 from trainings.models import Training
 from courses.models import Course
 
@@ -69,3 +67,15 @@ def build_invoice(record, request):
 
     with open(record.invoice_path, "wb") as invoice:
         invoice.write(pdf)
+
+def get_atb_members_list():
+    ATBUZ_LINK = "http://atb.uz/chleny-atb/"
+    html = requests.get(ATBUZ_LINK).content
+    soup = BeautifulSoup(html, "lxml")
+    table_rows = soup.find("table", {"class": "all-members"}).find("tbody").find_all("tr")
+    inn_list = []
+    for row in table_rows:
+        inn = row.find_all("td")[-1].text
+        if inn:
+            inn_list.append(inn)
+    return inn_list

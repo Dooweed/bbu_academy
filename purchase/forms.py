@@ -4,8 +4,8 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from courses.models import Course
-from purchase.models import Student, IndividualPayer, PurchaseRecord, EntityPayer, AtbMembers
-from purchase.utils import get_product_choices
+from purchase.models import Student, IndividualPayer, PurchaseRecord, EntityPayer
+from purchase.utils import get_product_choices, get_atb_members_list
 from trainings.models import Training
 
 YEARS = tuple([i for i in range(1900, timezone.now().year)])
@@ -94,11 +94,10 @@ class ConfirmationForm(forms.ModelForm):
     def clean(self):
         # Validate special_price
         if self.cleaned_data.get("special_price"):
-            member = AtbMembers.objects.filter(inn=self.cleaned_data.get("inn"))
-            if self.cleaned_data.get("inn") and member.exists():
-                member.first().increment()
-            else:
-                raise ValidationError({"inn": [_("Указанный ИНН не найден среди членов АТБ"), ]})
+            if self.cleaned_data.get("inn"):
+                members = get_atb_members_list()
+                if self.cleaned_data.get("inn") not in members:
+                    raise ValidationError({"inn": [_("Указанный ИНН не найден среди членов АТБ"), ]})
         return self.cleaned_data
 
     class Meta:

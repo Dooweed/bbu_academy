@@ -189,7 +189,7 @@ class EntityPayer(models.Model):
     entity_payer_bank_code = models.CharField(_("Код банка"), max_length=100)
     entity_payer_bank_location = models.CharField(_("Город местанахождения банка"), max_length=200)
     entity_payer_org_inn = models.CharField(_("ИНН организации"), validators=[validate_integer], max_length=30)
-    entity_payer_registration_code = models.CharField(_("Регистрационный код плательщика НДС"), max_length=100)
+    entity_payer_registration_code = models.CharField(_("Регистрационный код плательщика НДС"), max_length=100, null=True, blank=True)
     entity_payer_org_class = models.CharField(_("ОКЭД организации"), max_length=100)
     entity_payer_email = models.EmailField(_("Адрес электронной почты"))
     entity_payer_head_name = models.CharField(_("ФИО и должность руководителя"), max_length=300)
@@ -273,8 +273,7 @@ class PurchaseRecord(PaymeMerchantMixin):
 
     def textual_overall_price(self):
         from num2words import num2words
-        print(num2words(self.overall_price, lang="ru"))
-        return num2words(self.overall_price, lang="ru")
+        return num2words(self.overall_price, lang="ru").capitalize()
 
     def payer_type(self):
         return self.payer._meta.verbose_name if self.payer else "(не заполнено)"
@@ -375,19 +374,3 @@ class PurchaseRecord(PaymeMerchantMixin):
     class Meta:
         verbose_name = "Покупка"
         verbose_name_plural = "Покупки"
-
-
-class AtbMembers(models.Model):
-    full_name = models.CharField("Имя", help_text="(необязательно)", max_length=200, null=True, blank=True)
-    inn = models.CharField("ИНН", validators=[validate_integer], max_length=30, unique=True)
-    was_used = models.PositiveIntegerField("Было использовано", default=0)
-
-    def __str__(self):
-        return self.full_name if self.full_name else self.inn
-
-    def increment(self):
-        self.was_used = self.was_used + 1
-
-    class Meta:
-        verbose_name = "Член АТБ"
-        verbose_name_plural = "Члены АТБ"
