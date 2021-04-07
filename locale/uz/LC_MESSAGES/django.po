@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-21 17:45+0500\n"
+"POT-Creation-Date: 2021-04-06 18:39+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -20,7 +20,13 @@ msgstr ""
 
 #: .\bbu_academy\middleware.py:55
 msgid "У вас нет доступа к просмотру данного файла"
-msgstr ""
+msgstr "Ushbu faylni ko'rish huquqiga ega emassiz"
+
+#: .\courses\models.py:35 .\courses\models.py:40
+#: .\templates\purchase\invoice\invoice.html:145 .\trainings\models.py:35
+#: .\trainings\models.py:40
+msgid "сум"
+msgstr "sum"
 
 #: .\courses\templatetags\courses.py:26
 msgid "У нас есть и другие курсы"
@@ -34,7 +40,7 @@ msgstr "Bizning kurslarimizni sinab ko'ring"
 msgid "Позвонить"
 msgstr "Qo'ng'iroq qiling"
 
-#: .\main_page\models.py:94 .\templates\main_page\index.html:125
+#: .\main_page\models.py:94 .\templates\main_page\index.html:80
 msgid "Написать"
 msgstr "Xabar yozing"
 
@@ -72,241 +78,210 @@ msgstr "Yangi habarlar"
 msgid "Ещё новости из категории \"{category}\""
 msgstr "Toifadagi boshqa yangiliklar \"{category}\""
 
-#: .\purchase\forms.py:15
-msgid "Скан-копия паспорта студента"
-msgstr ""
-
 #: .\purchase\forms.py:16
+msgid "Скан-копия паспорта студента"
+msgstr "Talaba pasportining skanerlangan nusxasi"
+
+#: .\purchase\forms.py:17
 msgid "Документы об образовании"
+msgstr "Ta'lim to'g'risidagi hujjatlar"
+
+#: .\purchase\forms.py:33 .\purchase\forms.py:51 .\purchase\forms.py:67
+msgid "ИНН должен состоять из 9 цифр"
 msgstr ""
 
-#: .\purchase\forms.py:37
+#: .\purchase\forms.py:45
 msgid "Скан-копия паспорта плательщика"
-msgstr ""
+msgstr "To'lovchining pasportining skanerlangan nusxasi"
 
-#: .\purchase\forms.py:56
+#: .\purchase\forms.py:78
 msgid "Обучаюсь сам"
-msgstr ""
+msgstr "Men o'zim o'qimoqdaman"
 
-#: .\purchase\forms.py:72
+#: .\purchase\forms.py:82
 msgid "Выбор продукта"
-msgstr ""
+msgstr "Mahsulot tanlovi"
 
-#: .\purchase\forms.py:73
-msgid "Я являюсь членом АТБ"
-msgstr ""
-
-#: .\purchase\forms.py:74
-msgid "ИНН"
-msgstr ""
-
-#: .\purchase\forms.py:85 .\purchase\forms.py:90
-#, fuzzy
-#| msgid "Страница не найдена"
+#: .\purchase\forms.py:93 .\purchase\forms.py:98
 msgid "Продукт не найден"
-msgstr "Sahifa topilmadi"
+msgstr "Mahsulot topilmadi"
 
-#: .\purchase\forms.py:101
-msgid "Указанный ИНН не найден среди членов АТБ"
-msgstr ""
+#: .\purchase\models.py:18
+msgid "Среднее"
+msgstr "O'rta"
 
 #: .\purchase\models.py:19
-msgid "Среднее"
-msgstr ""
+msgid "Средне-специальное"
+msgstr "O'rta maxsus"
 
 #: .\purchase\models.py:20
-msgid "Средне-специальное"
-msgstr ""
-
-#: .\purchase\models.py:21
 msgid "Высшее образование"
+msgstr "Oliy ma'lumot"
+
+#: .\purchase\models.py:24
+msgid "Очное обучение"
 msgstr ""
 
 #: .\purchase\models.py:25
-#, fuzzy
-#| msgid "Начало обучения"
-msgid "Очное обучение"
-msgstr "Oqish boshlanish vaqti"
-
-#: .\purchase\models.py:26
-#, fuzzy
-#| msgid "Начало обучения"
 msgid "Дистанционное обучение"
-msgstr "Oqish boshlanish vaqti"
+msgstr "Masofaviy ta'lim"
 
-#: .\purchase\models.py:36
-#, fuzzy
-#| msgid "Номер телефона"
+#: .\purchase\models.py:35
 msgid "Оплата через банк"
-msgstr "Telefon raqami"
+msgstr "Bank orqali to'lov"
+
+#: .\purchase\models.py:49
+msgid "ФИО студента"
+msgstr "Talabani ismi, otasini ismi, familiyasi"
+
+#: .\purchase\models.py:49 .\purchase\models.py:123
+msgid "(полностью, как в паспорте)"
+msgstr "(pasportdagi kabi to'liq)"
 
 #: .\purchase\models.py:50
-msgid "ФИО студента"
-msgstr ""
-
-#: .\purchase\models.py:50 .\purchase\models.py:124
-msgid "(полностью, как в паспорте)"
-msgstr ""
+msgid "ИНН студента"
+msgstr "Talaba STIR"
 
 #: .\purchase\models.py:51
-msgid "ИНН студента"
-msgstr ""
+msgid "Номер паспорта студента"
+msgstr "Talabani pasport raqami"
 
 #: .\purchase\models.py:52
-msgid "Номер паспорта студента"
-msgstr ""
+msgid "Дата выдачи паспорта студента"
+msgstr "Talaba pasporti berilgan sana"
 
 #: .\purchase\models.py:53
-msgid "Дата выдачи паспорта студента"
-msgstr ""
-
-#: .\purchase\models.py:54
 msgid "Кем выдан паспорт студента"
-msgstr ""
+msgstr "Kim tomonidan berilgan"
 
-#: .\purchase\models.py:55 .\purchase\models.py:129 .\purchase\models.py:186
-#: .\templates\main_page\index.html:164
-#: .\templates\purchase\payment-form.html:56
+#: .\purchase\models.py:54 .\purchase\models.py:128 .\purchase\models.py:185
+#: .\templates\main_page\index.html:119
+#: .\templates\purchase\payment-form.html:65
 msgid "Номер телефона"
 msgstr "Telefon raqami"
 
-#: .\purchase\models.py:56 .\purchase\models.py:130 .\purchase\models.py:194
+#: .\purchase\models.py:55 .\purchase\models.py:129 .\purchase\models.py:193
 msgid "Адрес электронной почты"
-msgstr ""
+msgstr "E-mail manzili"
 
-#: .\purchase\models.py:57 .\purchase\models.py:131
+#: .\purchase\models.py:56 .\purchase\models.py:130
 msgid "Контакт в Telegram (если имеется)"
-msgstr ""
+msgstr "Telegram aloqasi (agar mavjud bo'lsa)"
+
+#: .\purchase\models.py:56
+msgid "(номер телефона, ссылка или юзернейм)"
+msgstr "(telefon raqami, havola yoki foydalanuvchi nomi)"
 
 #: .\purchase\models.py:57
-#, fuzzy
-#| msgid "Номер телефона"
-msgid "(номер телефона, ссылка или юзернейм)"
-msgstr "Telefon raqami"
-
-#: .\purchase\models.py:58
 msgid "Образование"
-msgstr ""
+msgstr "Ma`lumoti"
+
+#: .\purchase\models.py:123
+msgid "ФИО плательщика"
+msgstr "To'lovchining to'liq ismi"
 
 #: .\purchase\models.py:124
-msgid "ФИО плательщика"
-msgstr ""
+msgid "ИНН плательщика"
+msgstr "To'lovchining STIR raqami"
 
 #: .\purchase\models.py:125
-msgid "ИНН плательщика"
-msgstr ""
+msgid "Номер паспорта плательщика"
+msgstr "To'lovchining pasport raqami"
 
 #: .\purchase\models.py:126
-msgid "Номер паспорта плательщика"
-msgstr ""
+msgid "Дата выдачи паспорта плательщика"
+msgstr "To'lovchining pasporti berilgan sana"
 
 #: .\purchase\models.py:127
-msgid "Дата выдачи паспорта плательщика"
-msgstr ""
-
-#: .\purchase\models.py:128
 msgid "Кем выдан паспорт плательщика"
-msgstr ""
+msgstr "To'lovchining pasportini kim tomonidan bergan"
 
-#: .\purchase\models.py:131
-#, fuzzy
-#| msgid "Номер телефона"
+#: .\purchase\models.py:130
 msgid "(номер телефона или ссылка)"
-msgstr "Telefon raqami"
+msgstr "(telefon raqami yoki havola)"
 
-#: .\purchase\models.py:184
+#: .\purchase\models.py:183
 msgid "Наименование организации"
-msgstr ""
+msgstr "Kompaniyaning nomi"
 
-#: .\purchase\models.py:185 .\templates\purchase\invoice\invoice.html:71
+#: .\purchase\models.py:184 .\templates\purchase\invoice\invoice.html:71
 #: .\templates\purchase\invoice\invoice.html:87
 msgid "Адрес"
-msgstr ""
+msgstr "Manzil"
+
+#: .\purchase\models.py:186
+msgid "Расчётный счёт"
+msgstr "Hisob raqami"
 
 #: .\purchase\models.py:187
-msgid "Расчётный счёт"
-msgstr ""
+msgid "Наименование банка"
+msgstr "Bank nomi"
 
 #: .\purchase\models.py:188
-#, fuzzy
-#| msgid "Применение навыков"
-msgid "Наименование банка"
-msgstr "Ko'nikmalarni qullash"
+msgid "Код банка"
+msgstr "Bank kodi"
 
 #: .\purchase\models.py:189
-msgid "Код банка"
-msgstr ""
+msgid "Город местанахождения банка"
+msgstr "Bank joylashgan shahar"
 
 #: .\purchase\models.py:190
-msgid "Город местанахождения банка"
-msgstr ""
-
-#: .\purchase\models.py:191
 msgid "ИНН организации"
-msgstr ""
+msgstr "Tashkilotning STIR raqami"
 
-#: .\purchase\models.py:192 .\templates\purchase\invoice\invoice.html:95
+#: .\purchase\models.py:191 .\templates\purchase\invoice\invoice.html:95
 msgid "Регистрационный код плательщика НДС"
-msgstr ""
+msgstr "QQS to'lovchisini ro'yxatdan o'tkazish raqami"
 
-#: .\purchase\models.py:193
+#: .\purchase\models.py:192
 msgid "ОКЭД организации"
-msgstr ""
+msgstr "Tashkilotning  faoliyat sanoat turi klassifikatori buyicha raqami"
 
-#: .\purchase\models.py:195
+#: .\purchase\models.py:194
 msgid "ФИО и должность руководителя"
-msgstr ""
+msgstr "Boshning to'liq ismi va lavozimi"
 
-#: .\purchase\models.py:232
-#, fuzzy
-#| msgid "Начало обучения"
+#: .\purchase\models.py:231
 msgid "Тип обучения"
-msgstr "Oqish boshlanish vaqti"
+msgstr "O'qitish turi"
 
-#: .\purchase\models.py:268 .\purchase\models.py:272
-#: .\templates\courses\course.html:64
-#: .\templates\purchase\invoice\invoice.html:145
-#: .\templates\trainings\training.html:72
-msgid "сум"
-msgstr "sum"
+#: .\purchase\models.py:238
+msgid "Я являюсь членом АТБ"
+msgstr "Men BBU a'zosiman"
 
-#: .\purchase\utils.py:22
-#, fuzzy
-#| msgid "Курсы"
-msgid "Курс: "
-msgstr "Kurslar"
+#: .\purchase\models.py:241
+msgid "Тип оплаты"
+msgstr ""
 
 #: .\purchase\utils.py:25
-#, fuzzy
-#| msgid "Тренинги"
 msgid "Тренинг: "
-msgstr "Treninglar"
+msgstr "Trening: "
 
 #: .\purchase\views.py:33
 msgid "Паспорт_студента"
-msgstr ""
+msgstr "Talabaning_pasporti"
 
 #: .\purchase\views.py:34
 msgid "Документ_об_образовании"
-msgstr ""
+msgstr "Talim_togrisidagi_hujjat"
 
 #: .\purchase\views.py:35
 msgid "Паспорт_плательщика"
-msgstr ""
+msgstr "Tolovchining_pasporti"
 
 #: .\purchase\views.py:36
-msgid "Счёт-фактура"
+msgid "Счёт"
 msgstr ""
 
-#: .\purchase\views.py:379
+#: .\purchase\views.py:389
 msgid ""
 "Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об "
 "ошибке. Приносим свои извинения"
-msgstr ""
+msgstr "Kechirasiz xatolik yuz berdi. Ishlab chiquvchiga xabar berilgan"
 
 #: .\templates\base.html:66
 msgid "Главная страница"
-msgstr ""
+msgstr "Bosh sahifa"
 
 #: .\templates\base.html:148 .\templates\base.html:154
 #: .\templates\base.html:156
@@ -341,10 +316,8 @@ msgstr "Xabar mavzusi"
 msgid "Текст сообщения"
 msgstr "Xabar matni"
 
-#: .\templates\contacts\contacts.html:108 .\templates\main_page\index.html:167
-#: .\templates\purchase\chunks\entity-payer-form.html:17
-#: .\templates\purchase\chunks\student-form.html:23
-#: .\templates\purchase\confirmation-form.html:59
+#: .\templates\contacts\contacts.html:108 .\templates\main_page\index.html:122
+#: .\templates\purchase\confirmation-form.html:57
 #: .\templates\purchase\individual-form.html:102
 msgid "Отправить"
 msgstr "Yuborish"
@@ -353,14 +326,22 @@ msgstr "Yuborish"
 msgid "Стоимость курса"
 msgstr "Kurs narxi"
 
-#: .\templates\courses\course.html:66 .\templates\trainings\training.html:74
+#: .\templates\courses\course.html:65 .\templates\trainings\training.html:66
+msgid "Онлайн:"
+msgstr ""
+
+#: .\templates\courses\course.html:66 .\templates\trainings\training.html:67
+msgid "Оффлайн:"
+msgstr ""
+
+#: .\templates\courses\course.html:68 .\templates\trainings\training.html:69
 msgid "Записаться"
 msgstr "Ro'yxatdan o'tish"
 
 #: .\templates\courses\course_preview.html:20
 #: .\templates\courses\course_preview.html:33
 #: .\templates\courses\courses_sidebar.html:23
-#: .\templates\main_page\index.html:38 .\templates\main_page\index.html:73
+#: .\templates\main_page\index.html:18
 #: .\templates\main_page\secondary_slider\service-box-wrap.html:17
 #: .\templates\trainings\training_preview.html:20
 #: .\templates\trainings\training_preview.html:33
@@ -393,37 +374,36 @@ msgstr ""
 "Kechirasiz, serverda so'rovni qayta ishlash paytida xatolik yuz berdi. "
 "Iltimos keyinroq qayta urinib ko'ring."
 
-#: .\templates\main_page\index.html:124
-#: .\templates\news\article_preview.html:20
+#: .\templates\main_page\index.html:79 .\templates\news\article_preview.html:20
 #: .\templates\news\article_preview.html:33
 msgid "Читать дальше"
 msgstr "Qo'shimcha o'qish"
 
-#: .\templates\main_page\index.html:124
+#: .\templates\main_page\index.html:79
 msgid "Читать"
 msgstr "O'qish"
 
-#: .\templates\main_page\index.html:125
+#: .\templates\main_page\index.html:80
 msgid "Связаться с нами"
 msgstr "Biz bilan bog'lanish"
 
-#: .\templates\main_page\index.html:154
+#: .\templates\main_page\index.html:109
 msgid "Позвоните"
 msgstr "Qo'ng'iroq qiling"
 
-#: .\templates\main_page\index.html:158 .\templates\purchase\payme.html:54
+#: .\templates\main_page\index.html:113 .\templates\purchase\payme.html:54
 msgid "или"
 msgstr "yoki"
 
-#: .\templates\main_page\index.html:161
+#: .\templates\main_page\index.html:116
 msgid "Мы сами вам позвоним"
 msgstr "Biz sizga qungiroq qilamiz"
 
-#: .\templates\main_page\index.html:182
+#: .\templates\main_page\index.html:137
 msgid "<span>этапы</span>Обучения"
-msgstr ""
+msgstr "<span>qadamlar</span>O'rganish"
 
-#: .\templates\main_page\index.html:183
+#: .\templates\main_page\index.html:138
 msgid ""
 "Мы разделили тренинги на несколько этапов, <br> чтобы материал усваивался "
 "легче."
@@ -431,19 +411,19 @@ msgstr ""
 "Materiallarni osono'zlashtirish  uchun biz treninglarni bir necha "
 "bosqichlarga ajratdik"
 
-#: .\templates\main_page\index.html:192
+#: .\templates\main_page\index.html:147
 msgid "Определние навыков"
 msgstr "Ko'nikmalarni aniqlash"
 
-#: .\templates\main_page\index.html:197
+#: .\templates\main_page\index.html:152
 msgid "Подбор группы"
-msgstr ""
+msgstr "Guruh tanlovi"
 
-#: .\templates\main_page\index.html:203
+#: .\templates\main_page\index.html:158
 msgid "Начало обучения"
 msgstr "Oqish boshlanish vaqti"
 
-#: .\templates\main_page\index.html:208
+#: .\templates\main_page\index.html:163
 msgid "Применение навыков"
 msgstr "Ko'nikmalarni qullash"
 
@@ -460,55 +440,56 @@ msgstr "Keyingi maqola"
 #: .\templates\purchase\mail\html_mail.html:15
 #: .\templates\purchase\mail\html_mail.html:20
 #: .\templates\purchase\mail\text_mail.html:5
-#: .\templates\purchase\payment-form.html:52
+#: .\templates\purchase\payment-form.html:61
 msgid "Плательщик"
-msgstr ""
+msgstr "To'lovchi"
 
 #: .\templates\purchase\chunks\entity-payer-form.html:16
 #: .\templates\purchase\individual-form.html:61
 #: .\templates\purchase\individual-form.html:74
 msgid "Сохранено"
+msgstr "Saqlangan"
+
+#: .\templates\purchase\chunks\entity-payer-form.html:17
+#: .\templates\purchase\chunks\student-form.html:23
+msgid "Сохранить"
 msgstr ""
 
 #: .\templates\purchase\chunks\filled-student.html:11
-#, fuzzy
-#| msgid "Позвонить"
 msgid "Изменить"
-msgstr "Qo'ng'iroq qiling"
+msgstr "Tahrirlash"
 
 #: .\templates\purchase\chunks\filled-student.html:15
 msgid "Удалить"
-msgstr ""
+msgstr "O'chirish"
 
 #: .\templates\purchase\chunks\filled-student.html:66
 #: .\templates\purchase\chunks\filled-student.html:71
 msgid "Посмотреть"
-msgstr ""
+msgstr "Ko'rib chiqish"
 
 #: .\templates\purchase\chunks\student-display.html:3
 #: .\templates\purchase\mail\html_mail.html:37
 #: .\templates\purchase\mail\text_mail.html:10
 msgid "Список студентов"
-msgstr ""
+msgstr "Talabalar ro'yxati"
 
 #: .\templates\purchase\chunks\student-display.html:17
-#, fuzzy
-#| msgid "Страница не найдена"
 msgid "Студентов не добавлено"
-msgstr "Sahifa topilmadi"
+msgstr "Тalaba qo'shilmagan"
 
 #: .\templates\purchase\chunks\student-form.html:7
 #: .\templates\purchase\individual-form.html:75
 msgid "Студент"
-msgstr ""
+msgstr "Talaba"
 
 #: .\templates\purchase\chunks\student-form.html:20
 msgid "Редактирование"
-msgstr ""
+msgstr "Tahrirlash"
 
 #: .\templates\purchase\chunks\student-form.html:21
 msgid "Отмена"
-msgstr ""
+msgstr "Bekor qilish"
 
 #: .\templates\purchase\confirmation-form.html:8
 #: .\templates\purchase\confirmation-form.html:23
@@ -518,17 +499,15 @@ msgstr ""
 #: .\templates\purchase\individual-form.html:23
 #: .\templates\purchase\payme.html:8 .\templates\purchase\payment-form.html:8
 #: .\templates\purchase\payment-form.html:23
-#, fuzzy
-#| msgid "Применение навыков"
 msgid "Заполнение данных"
-msgstr "Ko'nikmalarni qullash"
+msgstr "Ma'lumotlarni to'ldirish"
 
 #: .\templates\purchase\confirmation-form.html:35
 #: .\templates\purchase\entity-form.html:37
 #: .\templates\purchase\individual-form.html:35
 #: .\templates\purchase\payment-form.html:35
 msgid "Внимание!"
-msgstr ""
+msgstr "Diqqat!"
 
 #: .\templates\purchase\confirmation-form.html:35
 #: .\templates\purchase\entity-form.html:37
@@ -539,157 +518,156 @@ msgid ""
 "последующих документах Исполнителя, выдаваемых заказчику (сертификатах, "
 "счетах-фактурах и т.п.)"
 msgstr ""
+"Ma'lumotlarni diqqat bilan kiriting,xatolar noaniqliklarga olib kelishi "
+"mumkinBuyurtmachiga berilgan pudratchining keyingi hujjatlari (sertifikatlar,"
+"hisob-fakturalar va boshqalar) mazmuniga ta'sir etishi mumkin"
 
 #: .\templates\purchase\entity-form.html:42
 #: .\templates\purchase\individual-form.html:40
 #: .\templates\purchase\individual-form.html:52
-#: .\templates\purchase\payment-form.html:53
+#: .\templates\purchase\payment-form.html:62
 msgid "Физическое лицо"
-msgstr ""
+msgstr "Jismoniy shaxs"
 
 #: .\templates\purchase\entity-form.html:45
 #: .\templates\purchase\entity-form.html:53
 #: .\templates\purchase\individual-form.html:43
-#: .\templates\purchase\payment-form.html:53
+#: .\templates\purchase\payment-form.html:62
 msgid "Юридическое лицо"
-msgstr ""
+msgstr "Yuridik shaxs"
 
 #: .\templates\purchase\entity-form.html:70
 msgid "Пожалуйста добавьте информацию о плательщике"
-msgstr ""
+msgstr "Iltimos, to'lovchi haqida ma'lumot qo'shing"
 
 #: .\templates\purchase\entity-form.html:71
 msgid "Пожалуйста добавьте как минимум одного студента"
-msgstr ""
+msgstr "Iltimos, kamida bitta talabani qo'shib qo'ying"
 
 #: .\templates\purchase\entity-form.html:72
-msgid "Завершить"
+msgid "Продолжить"
 msgstr ""
 
 #: .\templates\purchase\finish.html:8
 msgid "Операция успешно завершена"
-msgstr ""
+msgstr "Amaliyot muvaffaqiyatli yakunlandi"
 
 #: .\templates\purchase\finished.html:8 .\templates\purchase\finished.html:19
 msgid "Заказ выполнен"
-msgstr ""
+msgstr "Buyurtma bajarildi"
 
 #: .\templates\purchase\finished.html:30
 msgid "Благодарим за покупку!"
-msgstr ""
+msgstr "Xaridingiz uchun tashakkur!"
 
 #: .\templates\purchase\finished.html:32
 msgid "Оплата через Payme успешно выполнена"
-msgstr ""
+msgstr "Payme to'lovi muvaffaqiyatli yakunlandi"
 
 #: .\templates\purchase\finished.html:34
 msgid ""
 "Введенные вами данные и счет-фактура были отправлены на указанную почту "
 "плательщика."
 msgstr ""
+"Siz kiritgan ma'lumotlar va hisob-faktura to'lovchining ko'rsatilgan pochta "
+"manziliga yuborilgan."
 
 #: .\templates\purchase\finished.html:35
 msgid "Так-же вы можете скачать счет-фактуру"
-msgstr ""
+msgstr "Shuningdek, siz hisob-fakturani yuklab olishingiz mumkin"
 
 #: .\templates\purchase\finished.html:36
 msgid "по этой ссылке"
-msgstr ""
+msgstr "ushbu havola orqali"
 
 #: .\templates\purchase\finished.html:38
 msgid "Желаете оформить ещё один заказ?"
-msgstr ""
+msgstr "Boshqa buyurtma bermoqchimisiz?"
 
 #: .\templates\purchase\finished.html:39
 msgid "Перейти на главную страницу"
-msgstr ""
+msgstr "Bosh sahifaga o'tish"
 
 #: .\templates\purchase\individual-form.html:75
 msgid "заполняется автоматически"
-msgstr ""
+msgstr "avtomatik ravishda to'ldiriladi"
 
 #: .\templates\purchase\individual-form.html:78
 msgid "используется паспорт плательщика"
-msgstr ""
+msgstr "to'lovchining pasportidan foydalaniladi"
 
 #: .\templates\purchase\invoice\invoice.html:50
 msgid "Счет"
+msgstr "Hisob"
+
+#: .\templates\purchase\invoice\invoice.html:51
+msgid "от"
 msgstr ""
 
 #: .\templates\purchase\invoice\invoice.html:52
 msgid "к договору-оферте"
-msgstr ""
+msgstr "taklif shartnomasiga"
 
 #: .\templates\purchase\invoice\invoice.html:60
 msgid "Поставщик"
-msgstr ""
+msgstr "Yetkazib beruvchi"
 
 #: .\templates\purchase\invoice\invoice.html:64
 msgid "Покупатель"
-msgstr ""
+msgstr "Sotib oluvchi"
 
 #: .\templates\purchase\invoice\invoice.html:75
 msgid "Идентификационный номер покупателя (ИНН)"
-msgstr ""
+msgstr "Sotib oluvchining identifikatsiya raqami (STIR)"
 
 #: .\templates\purchase\invoice\invoice.html:82
 msgid "Идентификационный номер поставщика (ИНН)"
-msgstr ""
+msgstr "Yetkazib beruvchining identifikatsiya raqami (STIR)"
 
 #: .\templates\purchase\invoice\invoice.html:102
 msgid "Р/С"
-msgstr ""
+msgstr "H/R"
 
 #: .\templates\purchase\invoice\invoice.html:109
 msgid "МФО"
-msgstr ""
+msgstr "Bank kodi"
 
 #: .\templates\purchase\invoice\invoice.html:119
-#, fuzzy
-#| msgid "Применение навыков"
 msgid "Наименование товаров (услуг)"
-msgstr "Ko'nikmalarni qullash"
+msgstr "Tovarlar (xizmatlar) ning nomi"
 
 #: .\templates\purchase\invoice\invoice.html:120
-#, fuzzy
-#| msgid "Тема сообщения"
 msgid "Единица измерения"
-msgstr "Xabar mavzusi"
+msgstr "О'lchov birligi"
 
 #: .\templates\purchase\invoice\invoice.html:121
 msgid "Количество"
-msgstr ""
+msgstr "Miqdori"
 
 #: .\templates\purchase\invoice\invoice.html:122
 msgid "Цена"
-msgstr ""
+msgstr "Narx"
 
 #: .\templates\purchase\invoice\invoice.html:123
-#, fuzzy
-#| msgid "Стоимость курса"
 msgid "Стоимость поставки"
-msgstr "Kurs narxi"
+msgstr "Yetkazib berish narxi"
 
 #: .\templates\purchase\invoice\invoice.html:124
 #: .\templates\purchase\invoice\invoice.html:150
-#, fuzzy
-#| msgid "мая"
 msgid "НДС"
-msgstr "may"
+msgstr "QQS"
 
 #: .\templates\purchase\invoice\invoice.html:125
-#, fuzzy
-#| msgid "Стоимость тренинга"
 msgid "Стоимость поставки с учётом НДС"
-msgstr "O'qitish narxi"
+msgstr "Yetkazib berish narxi QQS bilan"
 
 #: .\templates\purchase\invoice\invoice.html:128
 msgid "Ставка"
-msgstr ""
+msgstr "Stavka"
 
 #: .\templates\purchase\invoice\invoice.html:129
 msgid "Сумма"
-msgstr ""
+msgstr "Jami"
 
 #: .\templates\purchase\invoice\invoice.html:144
 #, python-format
@@ -702,109 +680,122 @@ msgstr ""
 
 #: .\templates\purchase\invoice\invoice.html:154
 msgid "Итого"
-msgstr ""
+msgstr "Jami"
 
 #: .\templates\purchase\invoice\invoice.html:164
 msgid "Всего к оплате"
-msgstr ""
+msgstr "To'lanadigan umumiy"
 
 #: .\templates\purchase\invoice\invoice.html:164
 msgid "сум 00 тийин"
-msgstr ""
+msgstr "so'm 00 tiyin"
 
 #: .\templates\purchase\invoice\invoice.html:164
 msgid "Без НДС"
-msgstr ""
+msgstr "QQSsiz"
 
 #: .\templates\purchase\invoice\invoice.html:169
 msgid "Руководитель"
-msgstr ""
+msgstr "Rahbar"
 
 #: .\templates\purchase\invoice\invoice.html:173
 msgid "Главный бухгалтер"
-msgstr ""
+msgstr "Bosh hisobchi"
 
 #: .\templates\purchase\mail\html_mail.html:12
 #: .\templates\purchase\mail\text_mail.html:3
 msgid "Ссылка на оплату"
-msgstr ""
+msgstr "To'lovga havola"
 
 #: .\templates\purchase\mail\html_mail.html:12
 msgid "Оплатить"
-msgstr ""
+msgstr "To'lash"
 
 #: .\templates\purchase\offer-agreement.html:12
 #: .\templates\purchase\offer-agreement.html:24
 msgid "Договор-оферта"
-msgstr ""
+msgstr "Taklif shartnomasi"
 
 #: .\templates\purchase\offer-agreement.html:43
 msgid "Отказываюсь"
-msgstr ""
+msgstr "Men rad qilaman"
 
 #: .\templates\purchase\offer-agreement.html:46
 msgid "Соглашаюсь"
-msgstr ""
+msgstr "Qabul qilaman"
 
 #: .\templates\purchase\payme.html:23
 msgid "Оплата Payme"
-msgstr ""
+msgstr "Payme to'lovi"
 
 #: .\templates\purchase\payme.html:51
-#, fuzzy
-#| msgid "Номер телефона"
 msgid "Оплатите, перейдя по ссылке"
-msgstr "Telefon raqami"
+msgstr "Havola  orqali o'tib to'lovni amalga oshiring"
 
 #: .\templates\purchase\payme.html:57
 msgid "Отсканируйте QR-код"
-msgstr ""
+msgstr "QR kodini skanerlang"
 
 #: .\templates\purchase\payme.html:63
 msgid "Данные покупки были отправлены на указанную почту плательщика"
 msgstr ""
+"Sotib olish to'g'risida ma'lumotlar ko'rsatilgan to'lovchining pochtasiga "
+"yuborildi"
 
 #: .\templates\purchase\payme.html:64
 msgid "Дупликат ссылки на оплату так-же был отправлен на почту плательщика"
 msgstr ""
 
 #: .\templates\purchase\payment-form.html:48
+msgid "Для участников АТБ применяется специальная цена."
+msgstr ""
+
+#: .\templates\purchase\payment-form.html:51
+msgid ""
+"Вы не являетесь участником АТБ, поэтому специальная цена не применяется."
+msgstr ""
+
+#: .\templates\purchase\payment-form.html:52
+msgid ""
+"По вопросам вступления в АТБ и информации о скидках для участников АТБ - "
+"обращайтесь по телефону"
+msgstr ""
+
+#: .\templates\purchase\payment-form.html:53
+msgid "или в telegram:"
+msgstr ""
+
+#: .\templates\purchase\payment-form.html:57
 msgid "Название продукта"
-msgstr ""
+msgstr "To'lov havolasining dublikati ham to'lovchining pochtasiga yuborildi"
 
-#: .\templates\purchase\payment-form.html:58
+#: .\templates\purchase\payment-form.html:67
 msgid "будет использоваться при оплате через Payme"
-msgstr ""
-
-#: .\templates\purchase\payment-form.html:61
-msgid "Количество студентов"
-msgstr ""
-
-#: .\templates\purchase\payment-form.html:65
-msgid "Специальная цена"
-msgstr ""
-
-#: .\templates\purchase\payment-form.html:66
-#, fuzzy
-#| msgid "мая"
-msgid "Да"
-msgstr "may"
-
-#: .\templates\purchase\payment-form.html:69
-msgid "Цена за единицу продукта"
-msgstr ""
+msgstr "Payme orqali to'lashda foydalaniladi"
 
 #: .\templates\purchase\payment-form.html:70
-msgid "(специальная цена)"
-msgstr ""
+msgid "Количество студентов"
+msgstr "Talabalar soni"
 
-#: .\templates\purchase\payment-form.html:73
-msgid "Общая цена"
-msgstr ""
+#: .\templates\purchase\payment-form.html:74
+msgid "Специальная цена"
+msgstr "Maxsus narx"
+
+#: .\templates\purchase\payment-form.html:78
+msgid "Цена за единицу продукта"
+msgstr "Donasining narxi"
 
 #: .\templates\purchase\payment-form.html:79
+msgid "(специальная цена)"
+msgstr "(maxsus narx)"
+
+#: .\templates\purchase\payment-form.html:82
+msgid "Общая цена"
+msgstr "Umumiy narx"
+
+#: .\templates\purchase\payment-form.html:88
 msgid "Подтвердить"
-msgstr ""
+msgstr "Tasdiqlang"
 
 #: .\templates\registry\certificate.html:9
 msgid "Скачать PDF сертификат"
@@ -812,11 +803,11 @@ msgstr "PDF sertifikatini yuklab oling"
 
 #: .\templates\registry\certificate.html:80
 msgid "Просмотр сертификата на сайте"
-msgstr ""
+msgstr "Veb-saytda sertifikatni ko'rish"
 
 #: .\templates\registry\certificate_wrap.html:7
 msgid "Сертификат"
-msgstr ""
+msgstr "Sertifikat"
 
 #: .\templates\registry\registry.html:47
 msgid "Поиск специалистов по ИНН"
@@ -824,13 +815,13 @@ msgstr "STIR kodi bo'yicha mutaxassislarni izlash"
 
 #: .\templates\registry\registry.html:55
 msgid "Сертификата по данному ИНН не найдено"
-msgstr ""
+msgstr "Ushbu STIR buyicha  sertifikat topilmadi"
 
 #: .\templates\registry\registry.html:59
 msgid "поиск"
 msgstr "Qidirish"
 
-#: .\templates\trainings\training.html:72
+#: .\templates\trainings\training.html:65
 msgid "Стоимость тренинга"
 msgstr "O'qitish narxi"
 
@@ -905,6 +896,24 @@ msgstr "soat oldin"
 #: .\tools\date_mixin.py:26
 msgid "менее часа назад"
 msgstr "bir soatdan kamroq vaqt oldin"
+
+#~ msgid "Курс: "
+#~ msgstr "Kurs: "
+
+#~ msgid "ИНН"
+#~ msgstr "STIR"
+
+#~ msgid "Указанный ИНН не найден среди членов АТБ"
+#~ msgstr "Ko'rsatilgan STIR BBU a'zolari orasida topilmadi."
+
+#~ msgid "Счёт-фактура"
+#~ msgstr "Hisob-faktura"
+
+#~ msgid "Завершить"
+#~ msgstr "Tugatish"
+
+#~ msgid "Да"
+#~ msgstr "Ha"
 
 #, fuzzy
 #~| msgid "Начало обучения"

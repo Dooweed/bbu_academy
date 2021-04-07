@@ -1,11 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
+from django.utils.functional import lazy
 
 from courses.models import Course
 from purchase.models import Student, IndividualPayer, PurchaseRecord, EntityPayer
-from purchase.utils import get_product_choices, get_atb_members_list
+from purchase.utils import get_product_choices
 from trainings.models import Training
 
 YEARS = tuple([i for i in range(1900, timezone.now().year)])
@@ -25,6 +26,13 @@ class StudentForm(forms.ModelForm):
         self.full_clean()
         return self.cleaned_data and 'id' in self.cleaned_data and self.cleaned_data['id'] is not None
 
+    def clean(self):
+        # Validate inn
+        inn = self.cleaned_data.get("student_inn")
+        if not inn or len(inn) != 9:
+            raise ValidationError({"student_inn": [_("ИНН должен состоять из 9 цифр"), ]})
+        return self.cleaned_data
+
     class Meta:
         fields = ("student_full_name", "student_inn", "student_passport_n", "student_passport_received_date", "student_passport_given_by", "student_phone_number", "student_email",
                   "student_telegram_contact", "study_type", "study_document", "student_passport")
@@ -36,6 +44,13 @@ class StudentForm(forms.ModelForm):
 class IndividualPayerForm(forms.ModelForm):
     individual_payer_passport = forms.ImageField(label=_("Скан-копия паспорта плательщика"))
 
+    def clean(self):
+        # Validate inn
+        inn = self.cleaned_data.get("individual_payer_inn")
+        if not inn or len(inn) != 9:
+            raise ValidationError({"individual_payer_inn": [_("ИНН должен состоять из 9 цифр"), ]})
+        return self.cleaned_data
+
     class Meta:
         fields = ("individual_payer_full_name", "individual_payer_inn", "individual_payer_passport_n", "individual_payer_passport_received_date",
                   "individual_payer_passport_given_by", "individual_payer_phone_number", "individual_payer_email", "individual_payer_telegram_contact")
@@ -45,6 +60,13 @@ class IndividualPayerForm(forms.ModelForm):
 
 
 class EntityPayerForm(forms.ModelForm):
+    def clean(self):
+        # Validate inn
+        inn = self.cleaned_data.get("entity_payer_org_inn")
+        if not inn or len(inn) != 9:
+            raise ValidationError({"entity_payer_org_inn": [_("ИНН должен состоять из 9 цифр"), ]})
+        return self.cleaned_data
+
     class Meta:
         fields = ("entity_payer_org_name", "entity_payer_address", "entity_payer_phone_number", "entity_payer_payment_account", "entity_payer_bank_name", "entity_payer_bank_code",
                   "entity_payer_bank_location", "entity_payer_org_inn", "entity_payer_registration_code", "entity_payer_org_class", "entity_payer_email", "entity_payer_head_name",)
@@ -55,23 +77,9 @@ class EntityPayerForm(forms.ModelForm):
 class SelfPaymentForm(forms.Form):
     self_payment = forms.BooleanField(label=_("Обучаюсь сам"), initial=False, required=False)
 
-# class ProductForm(forms.ModelForm):
-#     product = forms.ChoiceField(label=_("Выбор продукта"), choices=get_product_choices())
-#
-#     class Meta:
-#         widgets = {"object_id": forms.HiddenInput()}
-#
-#     class Media:
-#         js = (
-#             '//ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js',  # jquery
-#             "js/admin/generic_foreign_key.js",
-#         )
-
 
 class ConfirmationForm(forms.ModelForm):
-    product = forms.ChoiceField(label=_("Выбор продукта"), choices=get_product_choices())
-    special_price = forms.BooleanField(label=_("Я являюсь членом АТБ"), initial=False, required=False)
-    inn = forms.CharField(label=_("ИНН"), widget=forms.NumberInput(attrs={"class": "hide-arrows"}), required=False)
+    product = forms.ChoiceField(label=_("Выбор продукта"), choices=lazy(get_product_choices, tuple))
 
     def clean_product(self):
         p_class, p_id = self.cleaned_data.get("product").split("-")
@@ -91,18 +99,9 @@ class ConfirmationForm(forms.ModelForm):
 
         return self.cleaned_data
 
-    def clean(self):
-        # Validate special_price
-        if self.cleaned_data.get("special_price"):
-            if self.cleaned_data.get("inn"):
-                members = get_atb_members_list()
-                if self.cleaned_data.get("inn") not in members:
-                    raise ValidationError({"inn": [_("Указанный ИНН не найден среди членов АТБ"), ]})
-        return self.cleaned_data
-
     class Meta:
         model = PurchaseRecord
-        fields = ("product", "study_type", "special_price", "inn")
+        fields = ("product", "study_type", "special_price")
 
 class PaymentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

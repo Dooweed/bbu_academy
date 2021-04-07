@@ -32,7 +32,7 @@
             <div class="about-wrap5 form-wrap w-100">
                 <div class="row justify-content-center form-tab-content">
 
-                    <p class="warn text-center mt-3 mb-60 w-75 ml-auto mr-auto"><b>{% translate 'Внимание!' %}</b> {% translate 'Вводите данные корректно. Ошибка при вводе данных может привести к ошибкам в последующих документах Исполнителя, выдаваемых заказчику (сертификатах, счетах-фактурах и т.п.)' %}</p>
+                    <p class="warning-message text-center mt-3 mb-60 w-75 ml-auto mr-auto"><b>{% translate 'Внимание!' %}</b> {% translate 'Вводите данные корректно. Ошибка при вводе данных может привести к ошибкам в последующих документах Исполнителя, выдаваемых заказчику (сертификатах, счетах-фактурах и т.п.)' %}</p>
 
                     <form class="form w-75 row justify-content-center" method="POST">
                         {% csrf_token %}
@@ -49,10 +49,6 @@
                                 <div class="form-group d-flex justify-content-center">
                                     {{ form.special_price.label_tag }}<span class="warn">{% for error in form.special_price.errors %}{{ error }}{% endfor %}</span>
                                     {{ form.special_price }}{% if form.special_price.help_text %}<small>{{ form.special_price.help_text }}</small>{% endif %}
-                                </div>
-                                <div class="form-group">
-                                    {{ form.inn.label_tag }}<span class="warn">{% for error in form.inn.errors %}{{ error }}{% endfor %}</span>
-                                    {{ form.inn }}{% if form.inn.help_text %}<small>{{ form.inn.help_text }}</small>{% endif %}
                                 </div>
                             {% endif %}
                         </div>

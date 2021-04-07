@@ -48,7 +48,7 @@
 
     <div class="header text-center mb-5">
         <h3>{% translate 'Счет' %}</h3>
-        <p class="mb-0">№ {{ record.id }} {{ record.study_type_abbreviation }} от {{ record.dotted_date_finished }}</p>
+        <p class="mb-0">№ {{ record.id }} {{ name_modifier }} {% translate 'от' %} {{ record.dotted_date_finished }}</p>
         <p>{% translate 'к договору-оферте' %}</p>
     </div>
 

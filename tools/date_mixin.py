@@ -28,10 +28,10 @@ class DateMixin(models.Model):
                     return get_ending(hours, (HOUR_BEFORE, HOURS_BEFORE, HOURS_BEFORE_2))
             else:
                 date_string = self.date.strftime("%d {}")
-                return date_string.format(MONTHS[self.date.month-1])
+                return date_string.format(_(MONTHS[self.date.month-1]))
         else:
             date_string = self.date.strftime("%d {} %Y")
-            return date_string.format(MONTHS[self.date.month-1])
+            return date_string.format(_(MONTHS[self.date.month-1]))
 
     class Meta:
         abstract = True

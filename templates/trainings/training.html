@@ -57,19 +57,14 @@
 
                         <div class="about-desc5 w-100 mt-40">
 
-                            <div class="training-info">
-{#                                {% if not training.passed %}#}
-{#                                    <p class="property">Место проведения: <span class="value">{{ training.location }}</span></p>#}
-{#                                {% endif %}#}
-{#                                <p class="property">Дата проведения: <span class="value">{{ training.date_string }}</span></p>#}
-                            </div>
-
 
                             {{ training.text | safe }}
 
 
                         </div>
-                        <p class="course-price-text text-center mt-40 w-100">{% translate "Стоимость тренинга" %}: <span class="ml-2 course-price">{{ training.f_price }} {% translate "сум" %}</span></p>
+                        <p class="course-price-text text-center mt-40 w-100">{% translate "Стоимость тренинга" %}: <br><br>
+                            <span class="pt-1">{% translate "Онлайн:" %}<span class="ml-2 course-price"> {{ training.online_beautified_price }}</span></span> <br>
+                            <span class="pt-1">{% translate "Оффлайн:" %}<span class="ml-2 course-price"> {{ training.offline_beautified_price }}</span></span></p>
                         <div class="sign-up-container d-flex justify-content-center">
                             <button class="sign-up-button sheen" onclick="location.href = '{% url 'purchase:offer-agreement' %}'">{% translate "Записаться" %}</button>
                         </div>

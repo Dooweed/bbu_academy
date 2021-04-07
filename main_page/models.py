@@ -213,65 +213,6 @@ class SingleBlock(models.Model):
         verbose_name_plural = "Блок #3 (Одиночный блок)"
 
 
-class StaticBlock(models.Model):
-    title = models.CharField("Заголовок", help_text="Оставьте поле пустым, чтобы использовать заголовок выбранной записи", max_length=100, null=True, blank=True)
-    text = models.CharField("Текст", help_text="Оставьте поле пустым, чтобы использовать текст выбранной записи", max_length=150, null=True, blank=True)
-    active = models.BooleanField("Активно", help_text="Неактивные слайды не будут отображены в слайдере", default=True)
-
-    reference = models.CharField("Привязка к разделу", choices=REFERENCE_CHOICES, help_text="Выберите раздел, к которому будет привязан данный блок", max_length=30,
-                                 default="news_reference")
-    news_reference = models.ForeignKey(verbose_name="Выберите новость", help_text="Выберите статью, на которую будет ссылаться данный блок", to=Article,
-                                       on_delete=models.RESTRICT, null=True, blank=True)
-    training_reference = models.ForeignKey(verbose_name="Выберите тренинг", help_text="Выберите тренинг, на который будет ссылаться данный блок", to=Training,
-                                           on_delete=models.RESTRICT, null=True, blank=True)
-    course_reference = models.ForeignKey(verbose_name="Выберите курс", help_text="Выберите курс, на который будет ссылаться данный блок", to=Course,
-                                         on_delete=models.RESTRICT, null=True, blank=True)
-
-    def __str__(self):
-        return self.get_title()
-
-    def get_key(self):
-        if self.reference == "news_reference":
-            return self.news_reference
-        elif self.reference == "training_reference":
-            return self.training_reference
-        elif self.reference == "course_reference":
-            return self.course_reference
-
-    def has_image(self):
-        if self.get_key() is None:
-            return None
-        else:
-            return self.get_key().has_image()
-
-    def get_title(self):
-        if self.title:
-            return self.title
-        elif self.get_key():
-            return self.get_key().short_title()
-        else:
-            return super().__str__()
-    get_title.short_description = "Заголовок"
-
-    def get_text(self):
-        if self.text:
-            return self.text
-        elif self.get_key():
-            return self.get_key().short_description()
-
-    def get_link(self):
-        if self.reference == "news_reference":
-            return reverse("news:article", args=[self.news_reference.url])
-        elif self.reference == "training_reference":
-            return reverse("trainings:training", args=[self.training_reference.url])
-        elif self.reference == "course_reference":
-            return reverse("courses:course", args=[self.course_reference.url])
-
-    class Meta:
-        verbose_name = "Статичный блок"
-        verbose_name_plural = "Блок #4 (Статичные блоки)"
-
-
 class Review(ImageMixin):
     name = models.CharField("Имя", max_length=200)
     status = models.CharField("Статус (ученик, сотрудник, ...)", max_length=70)

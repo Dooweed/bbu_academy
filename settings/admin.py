@@ -42,6 +42,7 @@ class PageAdmin(SortableAdminMixin, TranslationAdmin):
 @admin.register(StaticInformation)
 class StaticInformationAdmin(admin.ModelAdmin):
     list_display = ("name", "value", "key")
+    list_editable = ("value", )
 
     readonly_fields = ("name", "key")
 

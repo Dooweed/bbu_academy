@@ -8,9 +8,11 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import validate_integer
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
-from django.utils.safestring import mark_safe
 
-from django.utils.translation import gettext as _
+from num2words import num2words
+from django.utils.translation import to_locale, get_language
+
+from django.utils.translation import gettext_lazy as _, gettext as gt
 
 from bbu_academy.settings import BASE_DIR
 from payme_billing.mixins import PaymeMerchantMixin
@@ -27,8 +29,8 @@ STUDY_TYPE_CHOICES = (
 )
 
 STUDY_TYPE_ABBREVIATIONS = {
-    "intramural": "FTE",
-    "remote": "DL"
+    "intramural": "",
+    "remote": "D"
 }
 
 PAYMENT_TYPE_CHOICES = (
@@ -236,10 +238,10 @@ class PurchaseRecord(PaymeMerchantMixin):
     object_id = models.PositiveIntegerField(null=True, blank=True)
     product = GenericForeignKey()
 
-    special_price = models.BooleanField("Специальная цена", null=True, blank=True)
+    special_price = models.BooleanField(_("Я являюсь членом АТБ"), default=False)
     price = models.BigIntegerField("Цена на курс/тренинг", null=True, blank=True)
     overall_price = models.BigIntegerField("Общая цена", null=True, blank=True)
-    payment_type = models.CharField("Тип оплаты", max_length=30, choices=PAYMENT_TYPE_CHOICES, null=True, blank=True)
+    payment_type = models.CharField(_("Тип оплаты"), max_length=30, choices=PAYMENT_TYPE_CHOICES, null=True, blank=True)
     finished = models.BooleanField("Завершено", default=False)
     is_paid = models.BooleanField("Оплачено", default=False, help_text="В случае с оплатой через банк, галочка должна быть поставлена вручную")
 
@@ -265,14 +267,13 @@ class PurchaseRecord(PaymeMerchantMixin):
 
     def f_price(self):
         line = str(self.price)[::-1]
-        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + _("сум")
+        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + gt("сум")
 
     def f_overall_price(self):
         line = str(self.overall_price)[::-1]
-        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + _("сум")
+        return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + gt("сум")
 
     def textual_overall_price(self):
-        from num2words import num2words
         return num2words(self.overall_price, lang="ru").capitalize()
 
     def payer_type(self):
@@ -316,10 +317,6 @@ class PurchaseRecord(PaymeMerchantMixin):
             return self.entity_payer
         except ObjectDoesNotExist:
             return None
-
-    def get_price(self):
-        return mark_safe(f"{self.price} {'<i>(текущая цена за курс/тренинг отличается от цены на момент сделки)</i>' if self.price != self.product.price else ''}")
-    get_price.short_description = "Цена"
 
     @property
     def folder_path(self) -> Path:

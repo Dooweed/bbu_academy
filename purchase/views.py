@@ -24,7 +24,7 @@ from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, Confirmati
 
 from django.utils.translation import gettext as _
 
-from .utils import delete_session_purchase_record, build_invoice
+from .utils import delete_session_purchase_record, build_invoice, get_atb_members_list
 
 SUBMIT = "submit"
 EDIT = "edit"
@@ -289,10 +289,14 @@ def confirmation_form_view(request):
         if form.is_valid():
             product = Course.objects.get(id=form.cleaned_data.get("p_id")) if form.cleaned_data.get("is_course") else Training.objects.get(id=form.cleaned_data.get("p_id"))
             record.product = product
-            record.special_price = form.cleaned_data.get("special_price")
-            record.price = product.special_price if record.special_price else product.price
-            record.overall_price = record.students.count() * record.price
+            member_list = get_atb_members_list()
+            record.special_price = record.payer.inn in member_list
             record.study_type = form.cleaned_data.get("study_type")
+            if record.study_type == "intramural":
+                record.price = product.offline_special_price if record.special_price else product.offline_price
+            else:
+                record.price = product.online_special_price if record.special_price else product.online_price
+            record.overall_price = record.students.count() * record.price
             if record.get_entity_payer_or_none():  # Fill payment type if payer is entity (entity has only ONE option of payment)
                 record.payment_type = "bank"
             record.save()
@@ -311,7 +315,7 @@ def confirmation_form_view(request):
 
     context = {
         "form": form,
-        "is_entity": bool(record.get_entity_payer_or_none())
+        "is_entity": bool(record.get_entity_payer_or_none()),
     }
 
     return render(request, "purchase/confirmation-form.html", context)
@@ -371,6 +375,11 @@ def payment_form_view(request):
 
             result = mail.send()
 
+            request.session["allow_media"] = record.id
+            delete_session_purchase_record(request)
+            if not record.finished:
+                record.finish()
+
             if result:
                 if payment_type == "payme":
                     return redirect("purchase:payme-payment")
@@ -389,7 +398,10 @@ def payment_form_view(request):
     return render(request, "purchase/payment-form.html", context)
 
 def payme_payment_view(request):
-    record = get_record(request)
+    if not request.session["allow_media"]:  # Redirect to offer-agreement if session has no record
+        return redirect("index")
+    else:
+        record = PurchaseRecord.objects.get(id=request.session["allow_media"])
 
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("purchase:offer-agreement")
@@ -397,8 +409,9 @@ def payme_payment_view(request):
         return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
     elif not record.is_confirmed():
         return redirect("purchase:confirmation-form")
-    elif record.finished:
-        return redirect("purchase:finished")
+
+    payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE,
+                                    request.build_absolute_uri(reverse("purchase:finished")))
 
     button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
                                                       request.LANGUAGE_CODE, request.build_absolute_uri(reverse("purchase:finished")), style="white")
@@ -409,17 +422,16 @@ def payme_payment_view(request):
         "button_form": button_form,
         "qr_form": qr_form,
         "url": URL,
+        "payment_link": payment_link,
     }
 
     return render(request, "purchase/payme.html", context)
 
 def payment_finished_view(request):
-    if "record_id" not in request.session:  # Return to index page if record was deleted
+    if not request.session["allow_media"]:  # Redirect to offer-agreement if session has no record
         return redirect("index")
-
-    record = get_record(request)
-    if not record.finished:
-        record.finish()
+    else:
+        record = PurchaseRecord.objects.get(id=request.session["allow_media"])
 
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("purchase:offer-agreement")
@@ -427,9 +439,6 @@ def payment_finished_view(request):
         return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
     elif not record.is_confirmed():
         return redirect("purchase:confirmation-form")
-
-    request.session["allow_media"] = record.id
-    delete_session_purchase_record(request)
 
     context = {
         "payme_completed": record.payment_type == "payme" and record.is_paid,
