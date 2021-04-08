@@ -16,7 +16,7 @@ def get_product_choices():
         choices = [(None, '---------')]
 
         for item in courses:
-            choices.append((f"course-{item.id}", f"{_('Курс: ')}{item.title} ({_('Онлайн')}: {item.online_beautified_price()}/{_('Оффлайн')}: {item.offline_beautified_price()})"))
+            choices.append((f"course-{item.id}", _('Курс: ') + f"{item.title} ({_('Онлайн')}: {item.online_beautified_price()}/{_('Оффлайн')}: {item.offline_beautified_price()})"))
 
         for item in trainings:
             choices.append((f"training-{item.id}", _("Тренинг: ") + f"{item.title} ({_('Онлайн ')}: {item.online_beautified_price()}/{_('Оффлайн')}: {item.offline_beautified_price()})"))

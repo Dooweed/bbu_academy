@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-06 18:39+0500\n"
+"POT-Creation-Date: 2021-04-08 14:13+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -253,7 +253,11 @@ msgstr "Men BBU a'zosiman"
 msgid "Тип оплаты"
 msgstr ""
 
-#: .\purchase\utils.py:25
+#: .\purchase\utils.py:19
+msgid "Курс: "
+msgstr "Kurs: "
+
+#: .\purchase\utils.py:22
 msgid "Тренинг: "
 msgstr "Trening: "
 
@@ -896,9 +900,6 @@ msgstr "soat oldin"
 #: .\tools\date_mixin.py:26
 msgid "менее часа назад"
 msgstr "bir soatdan kamroq vaqt oldin"
-
-#~ msgid "Курс: "
-#~ msgstr "Kurs: "
 
 #~ msgid "ИНН"
 #~ msgstr "STIR"
