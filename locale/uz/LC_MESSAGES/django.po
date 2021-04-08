@@ -687,8 +687,8 @@ msgid "Всего к оплате"
 msgstr "To'lanadigan umumiy"
 
 #: .\templates\purchase\invoice\invoice.html:164
-msgid "сум 00 тийин"
-msgstr "so'm 00 tiyin"
+msgid "00 тийин"
+msgstr "00 tiyin"
 
 #: .\templates\purchase\invoice\invoice.html:164
 msgid "Без НДС"

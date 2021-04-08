@@ -9,9 +9,6 @@ from django.core.validators import validate_integer
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 
-from num2words import num2words
-from django.utils.translation import to_locale, get_language
-
 from django.utils.translation import gettext_lazy as _, gettext as gt
 
 from bbu_academy.settings import BASE_DIR
@@ -272,9 +269,6 @@ class PurchaseRecord(PaymeMerchantMixin):
     def f_overall_price(self):
         line = str(self.overall_price)[::-1]
         return " ".join([line[i:i+3] for i in range(0, len(line), 3)])[::-1] + " " + gt("сум")
-
-    def textual_overall_price(self):
-        return num2words(self.overall_price, lang="ru").capitalize()
 
     def payer_type(self):
         return self.payer._meta.verbose_name if self.payer else "(не заполнено)"
