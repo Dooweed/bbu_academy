@@ -108,6 +108,8 @@ class PaymentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields["payment_type"].required = True
+        if kwargs.get("instance"):
+            self.fields["payment_type"].choices = kwargs.get("instance").get_payment_type_choices()
 
     class Meta:
         model = PurchaseRecord

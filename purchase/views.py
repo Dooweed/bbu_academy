@@ -335,6 +335,7 @@ def payment_form_view(request):
 
     if request.method == "POST":
         form = PaymentForm(request.POST)
+        print(form.errors)
 
         if form.is_valid():  # Finish purchase
             payment_type = form.cleaned_data.get("payment_type")

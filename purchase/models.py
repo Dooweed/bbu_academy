@@ -248,6 +248,12 @@ class PurchaseRecord(PaymeMerchantMixin):
     def get_amount(self):
         return self.overall_price
 
+    def get_payment_type_choices(self):
+        if self.get_entity_payer_or_none():
+            return (PAYMENT_TYPE_CHOICES[1],)
+        else:
+            return PAYMENT_TYPE_CHOICES
+
     def complete_payment(self):
         self.is_paid = True
         self.finished = True
