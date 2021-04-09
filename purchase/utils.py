@@ -4,30 +4,11 @@ from bs4 import BeautifulSoup
 from django.db import ProgrammingError, OperationalError
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
+
 from bbu_academy.settings import PATH_WKHTMLTOPDF, BASE_DIR
-from trainings.models import Training
 from courses.models import Course
+from trainings.models import Training
 
-def get_product_choices():
-    try:
-        courses = Course.objects.filter(active=True)
-        trainings = Training.objects.filter(active=True)
-
-        choices = [(None, '---------')]
-
-        for item in courses:
-            choices.append((f"course-{item.id}", _('Курс: ') + f"{item.title} ({_('Онлайн')}: {item.online_beautified_price()}/{_('Оффлайн')}: {item.offline_beautified_price()})"))
-
-        for item in trainings:
-            choices.append((f"training-{item.id}", _("Тренинг: ") + f"{item.title} ({_('Онлайн ')}: {item.online_beautified_price()}/{_('Оффлайн')}: {item.offline_beautified_price()})"))
-
-        return tuple(choices)
-    except ProgrammingError:
-        print("get_product_choices() from purchase.utils produced ProgrammingError. Skip this message if it happened during running 'makemigrations' command")
-        return []
-    except OperationalError:  # SQLite error
-        print("get_product_choices() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
-        return []
 
 def delete_session_purchase_record(request):
     try:
@@ -82,3 +63,25 @@ def get_atb_members_list():
         if inn:
             inn_list.append(inn)
     return inn_list
+
+
+def get_product_choices():
+    try:
+        courses = Course.objects.filter(active=True)
+        trainings = Training.objects.filter(active=True)
+
+        choices = [(None, '---------')]
+        appendix = "(" + str(_('Онлайн: ')) + "{online}" + "/" + str(_('Оффлайн: ')) + "{offline}" + ")"
+        for item in courses:
+            choices.append((f"course-{item.id}", _('Курс: ') + item.title + appendix.format(online=item.online_beautified_price(), offline=item.offline_beautified_price())))
+
+        for item in trainings:
+            choices.append((f"training-{item.id}", _("Тренинг: ") + item.title + appendix.format(online=item.online_beautified_price(), offline=item.offline_beautified_price())))
+
+        return tuple(choices)
+    except ProgrammingError:
+        print("get_product_choices() from purchase.utils produced ProgrammingError. Skip this message if it happened during running 'makemigrations' command")
+        return []
+    except OperationalError:  # SQLite error
+        print("get_product_choices() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
+        return []

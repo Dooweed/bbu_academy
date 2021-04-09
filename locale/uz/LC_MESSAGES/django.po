@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-08 14:13+0500\n"
+"POT-Creation-Date: 2021-04-09 12:22+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgstr "Ta'lim to'g'risidagi hujjatlar"
 
 #: .\purchase\forms.py:33 .\purchase\forms.py:51 .\purchase\forms.py:67
 msgid "ИНН должен состоять из 9 цифр"
-msgstr ""
+msgstr "Soliq identifikatsiya raqami 9 ta raqamdan iborat bo'lishi kerak"
 
 #: .\purchase\forms.py:45
 msgid "Скан-копия паспорта плательщика"
@@ -119,8 +119,8 @@ msgid "Высшее образование"
 msgstr "Oliy ma'lumot"
 
 #: .\purchase\models.py:24
-msgid "Очное обучение"
-msgstr ""
+msgid "Оффлайн обучение"
+msgstr "Offlayn ta'lim"
 
 #: .\purchase\models.py:25
 msgid "Дистанционное обучение"
@@ -251,7 +251,15 @@ msgstr "Men BBU a'zosiman"
 
 #: .\purchase\models.py:241
 msgid "Тип оплаты"
-msgstr ""
+msgstr "To'lov turi"
+
+#: .\purchase\utils.py:17
+msgid "Онлайн: "
+msgstr "Onlayn: "
+
+#: .\purchase\utils.py:17
+msgid "Оффлайн: "
+msgstr "Offlayn: "
 
 #: .\purchase\utils.py:19
 msgid "Курс: "
@@ -275,7 +283,7 @@ msgstr "Tolovchining_pasporti"
 
 #: .\purchase\views.py:36
 msgid "Счёт"
-msgstr ""
+msgstr "Hisob"
 
 #: .\purchase\views.py:389
 msgid ""
@@ -332,11 +340,11 @@ msgstr "Kurs narxi"
 
 #: .\templates\courses\course.html:65 .\templates\trainings\training.html:66
 msgid "Онлайн:"
-msgstr ""
+msgstr "Onlayn: "
 
 #: .\templates\courses\course.html:66 .\templates\trainings\training.html:67
 msgid "Оффлайн:"
-msgstr ""
+msgstr "Offlayn: "
 
 #: .\templates\courses\course.html:68 .\templates\trainings\training.html:69
 msgid "Записаться"
@@ -457,7 +465,7 @@ msgstr "Saqlangan"
 #: .\templates\purchase\chunks\entity-payer-form.html:17
 #: .\templates\purchase\chunks\student-form.html:23
 msgid "Сохранить"
-msgstr ""
+msgstr "Saqlash"
 
 #: .\templates\purchase\chunks\filled-student.html:11
 msgid "Изменить"
@@ -550,7 +558,7 @@ msgstr "Iltimos, kamida bitta talabani qo'shib qo'ying"
 
 #: .\templates\purchase\entity-form.html:72
 msgid "Продолжить"
-msgstr ""
+msgstr "Davom eting"
 
 #: .\templates\purchase\finish.html:8
 msgid "Операция успешно завершена"
@@ -606,7 +614,7 @@ msgstr "Hisob"
 
 #: .\templates\purchase\invoice\invoice.html:51
 msgid "от"
-msgstr ""
+msgstr "dan"
 
 #: .\templates\purchase\invoice\invoice.html:52
 msgid "к договору-оферте"
@@ -657,7 +665,6 @@ msgid "Стоимость поставки"
 msgstr "Yetkazib berish narxi"
 
 #: .\templates\purchase\invoice\invoice.html:124
-#: .\templates\purchase\invoice\invoice.html:150
 msgid "НДС"
 msgstr "QQS"
 
@@ -676,33 +683,30 @@ msgstr "Jami"
 #: .\templates\purchase\invoice\invoice.html:144
 #, python-format
 msgid "предоплата 100%%"
-msgstr ""
+msgstr "oldindan to'lash 100%%"
 
 #: .\templates\purchase\invoice\invoice.html:149
-msgid "Без"
-msgstr ""
-
-#: .\templates\purchase\invoice\invoice.html:154
-msgid "Итого"
-msgstr "Jami"
-
-#: .\templates\purchase\invoice\invoice.html:164
-msgid "Всего к оплате"
-msgstr "To'lanadigan umumiy"
-
-#: .\templates\purchase\invoice\invoice.html:164
-msgid "00 тийин"
-msgstr "00 tiyin"
-
-#: .\templates\purchase\invoice\invoice.html:164
+#: .\templates\purchase\invoice\invoice.html:163
 msgid "Без НДС"
 msgstr "QQSsiz"
 
-#: .\templates\purchase\invoice\invoice.html:169
+#: .\templates\purchase\invoice\invoice.html:153
+msgid "Итого"
+msgstr "Jami"
+
+#: .\templates\purchase\invoice\invoice.html:163
+msgid "Всего к оплате"
+msgstr "To'lanadigan umumiy"
+
+#: .\templates\purchase\invoice\invoice.html:163
+msgid "00 тийин"
+msgstr "00 tiyin"
+
+#: .\templates\purchase\invoice\invoice.html:168
 msgid "Руководитель"
 msgstr "Rahbar"
 
-#: .\templates\purchase\invoice\invoice.html:173
+#: .\templates\purchase\invoice\invoice.html:172
 msgid "Главный бухгалтер"
 msgstr "Bosh hisobchi"
 
@@ -748,26 +752,28 @@ msgstr ""
 
 #: .\templates\purchase\payme.html:64
 msgid "Дупликат ссылки на оплату так-же был отправлен на почту плательщика"
-msgstr ""
+msgstr "To'lov havolasining dublikati ham to'lovchining pochtasiga yuborildi"
 
 #: .\templates\purchase\payment-form.html:48
 msgid "Для участников АТБ применяется специальная цена."
-msgstr ""
+msgstr "BBU ishtirokchilari uchun maxsus narx qo'llaniladi."
 
 #: .\templates\purchase\payment-form.html:51
 msgid ""
 "Вы не являетесь участником АТБ, поэтому специальная цена не применяется."
-msgstr ""
+msgstr "Siz BBU a'zosi emassiz, shuning uchun maxsus narx amal qilmaydi."
 
 #: .\templates\purchase\payment-form.html:52
 msgid ""
 "По вопросам вступления в АТБ и информации о скидках для участников АТБ - "
 "обращайтесь по телефону"
 msgstr ""
+"BBUga qo'shilish bo'yicha savollar va BBU a'zolari uchun chegirmalar haqida "
+"ma'lumot uchun - iltimos, qo'ng'iroq qiling"
 
 #: .\templates\purchase\payment-form.html:53
 msgid "или в telegram:"
-msgstr ""
+msgstr "yoki ichida:"
 
 #: .\templates\purchase\payment-form.html:57
 msgid "Название продукта"

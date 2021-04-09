@@ -11,6 +11,7 @@ from trainings.models import Training
 
 YEARS = tuple([i for i in range(1900, timezone.now().year)])
 
+
 class StudentForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)
     student_passport = forms.ImageField(label=_("Скан-копия паспорта студента"))
@@ -111,7 +112,3 @@ class PaymentForm(forms.ModelForm):
     class Meta:
         model = PurchaseRecord
         fields = ("payment_type", )
-
-
-
-
