@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-09 12:22+0500\n"
+"POT-Creation-Date: 2021-04-09 17:29+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,31 +78,31 @@ msgstr "Yangi habarlar"
 msgid "Ещё новости из категории \"{category}\""
 msgstr "Toifadagi boshqa yangiliklar \"{category}\""
 
-#: .\purchase\forms.py:16
+#: .\purchase\forms.py:17
 msgid "Скан-копия паспорта студента"
 msgstr "Talaba pasportining skanerlangan nusxasi"
 
-#: .\purchase\forms.py:17
+#: .\purchase\forms.py:18
 msgid "Документы об образовании"
 msgstr "Ta'lim to'g'risidagi hujjatlar"
 
-#: .\purchase\forms.py:33 .\purchase\forms.py:51 .\purchase\forms.py:67
+#: .\purchase\forms.py:34 .\purchase\forms.py:52 .\purchase\forms.py:68
 msgid "ИНН должен состоять из 9 цифр"
 msgstr "Soliq identifikatsiya raqami 9 ta raqamdan iborat bo'lishi kerak"
 
-#: .\purchase\forms.py:45
+#: .\purchase\forms.py:46
 msgid "Скан-копия паспорта плательщика"
 msgstr "To'lovchining pasportining skanerlangan nusxasi"
 
-#: .\purchase\forms.py:78
+#: .\purchase\forms.py:79
 msgid "Обучаюсь сам"
 msgstr "Men o'zim o'qimoqdaman"
 
-#: .\purchase\forms.py:82
+#: .\purchase\forms.py:83
 msgid "Выбор продукта"
 msgstr "Mahsulot tanlovi"
 
-#: .\purchase\forms.py:93 .\purchase\forms.py:98
+#: .\purchase\forms.py:94 .\purchase\forms.py:99
 msgid "Продукт не найден"
 msgstr "Mahsulot topilmadi"
 
@@ -253,19 +253,19 @@ msgstr "Men BBU a'zosiman"
 msgid "Тип оплаты"
 msgstr "To'lov turi"
 
-#: .\purchase\utils.py:17
+#: .\purchase\utils.py:74
 msgid "Онлайн: "
 msgstr "Onlayn: "
 
-#: .\purchase\utils.py:17
+#: .\purchase\utils.py:74
 msgid "Оффлайн: "
 msgstr "Offlayn: "
 
-#: .\purchase\utils.py:19
+#: .\purchase\utils.py:76
 msgid "Курс: "
 msgstr "Kurs: "
 
-#: .\purchase\utils.py:22
+#: .\purchase\utils.py:79
 msgid "Тренинг: "
 msgstr "Trening: "
 
@@ -285,7 +285,7 @@ msgstr "Tolovchining_pasporti"
 msgid "Счёт"
 msgstr "Hisob"
 
-#: .\purchase\views.py:389
+#: .\purchase\views.py:390
 msgid ""
 "Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об "
 "ошибке. Приносим свои извинения"
@@ -593,10 +593,16 @@ msgid "по этой ссылке"
 msgstr "ushbu havola orqali"
 
 #: .\templates\purchase\finished.html:38
+msgid ""
+"Если Вы не обнаружили наше сообщение в папке Входящих сообщений, то "
+"проверьте папку Спам (Нежелательная почта)"
+msgstr "Agar siz bizning xatimizni elektron pochtada topmagan bo'lsangiz, Spam (keraksiz pochta) papkasini tekshiring"
+
+#: .\templates\purchase\finished.html:40
 msgid "Желаете оформить ещё один заказ?"
 msgstr "Boshqa buyurtma bermoqchimisiz?"
 
-#: .\templates\purchase\finished.html:39
+#: .\templates\purchase\finished.html:41
 msgid "Перейти на главную страницу"
 msgstr "Bosh sahifaga o'tish"
 

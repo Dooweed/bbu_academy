@@ -35,6 +35,8 @@
                 <p class="text-center"><span class="warn">{% translate 'Так-же вы можете скачать счет-фактуру' %} </span>
                     <a class="text-underline" href="{{ invoice_link }}" download="{{ INVOICE }}">{% translate 'по этой ссылке' %}</a></p>
 
+                <p class="warn text-center">{% translate 'Если Вы не обнаружили наше сообщение в папке Входящих сообщений, то проверьте папку Спам (Нежелательная почта)' %}</p>
+
                 <p class="text-center"><a class="text-underline" href="{% url 'purchase:offer-agreement' %}">{% translate 'Желаете оформить ещё один заказ?' %}</a></p>
                 <p class="text-center mt-3"><a class="text-underline" href="{% url 'index' %}">{% translate 'Перейти на главную страницу' %}</a></p>
             </div><!-- About Wrap 5 -->
