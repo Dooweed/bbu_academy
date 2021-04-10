@@ -134,28 +134,29 @@ if LOCAL:
     }
 else:
     # MySQL
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': str(environ.get("DB_NAME")),
-            'USER': str(environ.get("DB_USER")),
-            'PASSWORD': str(environ.get("DB_PASSWORD")),
-            'HOST': 'localhost',
-            'PORT': '',
-            'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
-        }
-    }
-    # PostgreSQL
     # DATABASES = {
     #     'default': {
-    #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #         'ENGINE': 'django.db.backends.mysql',
     #         'NAME': str(environ.get("DB_NAME")),
     #         'USER': str(environ.get("DB_USER")),
     #         'PASSWORD': str(environ.get("DB_PASSWORD")),
     #         'HOST': 'localhost',
-    #         'PORT': '5432',
+    #         'PORT': '',
+    #         'OPTIONS': {'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"},
     #     }
     # }
+    # PostgreSQL
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': str(environ.get("DB_NAME")),
+            'USER': str(environ.get("DB_USER")),
+            'PASSWORD': str(environ.get("DB_PASSWORD")),
+            'HOST': 'localhost',
+            'PORT': '5432',
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -227,7 +228,7 @@ EMAIL_PAYMENT_NOTIFICATION_USER = str(environ.get("EMAIL_PAYMENT_NOTIFICATION_US
 # EMAIL_PAYMENT_NOTIFICATION_PASSWORD = str(environ.get("EMAIL_PAYMENT_NOTIFICATION_PASSWORD"))
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 ADMIN_EMAIL = str(environ.get("ADMIN_EMAIL"))
-STAFF_MAILS = ["bydev2001@gmail.com", ]
+STAFF_MAILS = ["bydev2001@gmail.com", "atb_staff_notifications@tcatb.uz"]
 
 
 # Packages' settings

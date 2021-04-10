@@ -11,11 +11,10 @@ from .models import Training
 
 class TrainingForm(forms.ModelForm):
     class Meta:
-        fields = ("title", "url", "active", "image", "sidebar_size", "thumbnail_size", "price", "short_text", "meta_description", "text")
+        fields = ("title", "url", "active", "image", "sidebar_size", "thumbnail_size", "offline_price", "online_price", "short_text", "meta_description", "text")
         widgets = {
             'title': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
             'url': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
-            # 'location': forms.Textarea(attrs={"style": "width: 400px; height: 34px;"}),
             'short_text': forms.Textarea(attrs={"style": "width: 400px; height: 68px;"}),
             'text': CKEditorWidget(),
             'price': forms.NumberInput(),
@@ -26,11 +25,11 @@ class TrainingForm(forms.ModelForm):
 
 @admin.register(Training)
 class TrainingAdmin(SortableAdminMixin, ImageCroppingMixin, TranslationAdmin):
-    list_display = ("title", "url", "short_text", "sorting")
-    search_fields = ("title", "short_text", "location", "text")
+    list_display = ("title", "url", "has_image", "short_text", "offline_price", "online_price", "sorting")
+    search_fields = ("title", "short_text", "text")
     fieldsets = (
         ("Заголовок", {"fields": ("title",), "classes": ("visual-group",)}),
-        (None, {"fields": ("url", "active", "price", "special_price")}),
+        (None, {"fields": ("url", "active", ("offline_price", "offline_special_price"), ("online_price", "online_special_price"))}),
         ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size"), "classes": ("visual-group", "wide",)}),
         ("Текст", {"fields": ("text",), "classes": ("visual-group", "wide",)}),
         ("Краткое описание", {"fields": ("short_text",), "classes": ("visual-group",)}),

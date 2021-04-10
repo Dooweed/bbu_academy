@@ -13,7 +13,7 @@
                         <h2 class="header header-normal">{{ item.get_title }}</h2>
                     </div>
                     <div>
-                        <p class="text pt-3">{{ item.get_text| safe }}</p>
+                        <div class="text pt-3">{{ item.get_text| safe }}</div>
                         <div class="buttons pt-2">
                             <a href="{{ item.get_link }}" class="tp-caption theme-btn fill-btn2 tp-withaction">{% translate 'Подробнее' %}</a>
                             {% if item.has_button %}

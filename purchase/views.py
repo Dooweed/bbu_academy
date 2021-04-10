@@ -335,7 +335,6 @@ def payment_form_view(request):
 
     if request.method == "POST":
         form = PaymentForm(request.POST)
-        print(form.errors)
 
         if form.is_valid():  # Finish purchase
             payment_type = form.cleaned_data.get("payment_type")
@@ -404,7 +403,9 @@ def payme_payment_view(request):
     else:
         record = PurchaseRecord.objects.get(id=request.session["allow_media"])
 
-    if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
+    if record.is_paid:
+        return redirect("purchase:finished")
+    elif not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("purchase:offer-agreement")
     elif not record.is_ready():  # Redirect to form if it is not valid
         return redirect("purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
@@ -415,13 +416,10 @@ def payme_payment_view(request):
                                     request.build_absolute_uri(reverse("purchase:finished")))
 
     button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
-                                                      request.LANGUAGE_CODE, request.build_absolute_uri(reverse("purchase:finished")), style="white")
-    qr_form = QrBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
-                                              request.LANGUAGE_CODE, request.build_absolute_uri(reverse("purchase:finished")))
+                                                      request.LANGUAGE_CODE, request.build_absolute_uri(reverse("purchase:finished")), style="white", width=300)
 
     context = {
         "button_form": button_form,
-        "qr_form": qr_form,
         "url": URL,
         "payment_link": payment_link,
     }
