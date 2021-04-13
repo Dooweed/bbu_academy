@@ -2,11 +2,14 @@ let $edit_form = $(".edit-student"), $delete_form = $(".delete-student"), $reloa
 
 const $filled_students = $("div#filled-students");
 
+const loader_html = "<div id=\"loader-div\"><ul><li></li>\<li></li>\<li></li>\<li></li>\<li></li>\<li></li></ul></div>"
+
 function ajax(event) {
     event.preventDefault();
     let method = $(this).attr("method");
     let url = $(this).attr("data-url");
     let form_data = method.toUpperCase() === "POST" ? new FormData(this) : $(this).serialize();
+    $(this).html(loader_html);
     $.ajax({
         url: url,
         type: method,
@@ -16,9 +19,10 @@ function ajax(event) {
         processData: false,
         success: function (data) {
             populate_blocks(data);
+            console.log(data);
 
             if(event.data != null && event.data.hasOwnProperty("callback_function"))
-                event.data.callback_function();
+                event.data.callback_function(data);
         },
         error: function(data){ console.log("Something went wrong"); console.log(data); }
     });
@@ -38,10 +42,16 @@ function reattach_event_listeners() {
     $reload.on("click", load_page);
 }
 
-function scroll_to_students() {
-    $('html, body').animate({
-        scrollTop: $filled_students.offset().top
-    }, 100);
+function scroll_to_students(data) {
+    if(data.valid) {
+        $('html, body').animate({
+            scrollTop: $filled_students.offset().top
+        }, 100);
+    } else {
+        $('html, body').animate({
+            scrollTop: $student_form.offset().top
+        }, 100);
+    }
 }
 
 $edit_form.submit(ajax);
@@ -63,7 +73,6 @@ function populate_blocks(data) {
     $("#id_study_type").selectpicker();
 
     $(".form-group").each(function () {
-        console.log(this);
         if($(this).find("input[required], select[required]").length !== 0) {
             $(this).find("label").addClass("required");
         }

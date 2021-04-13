@@ -180,6 +180,7 @@ def entity_form_load_data(request):
 
 def ajax_student(request, action: str):
     try:
+        valid = False
         if request.is_ajax():
             record = get_record(request)
 
@@ -199,6 +200,7 @@ def ajax_student(request, action: str):
                     student.save_study_document(student_form.cleaned_data.get("study_document"))
 
                     student_form = StudentForm()
+                    valid = True
             elif action == EDIT:
                 student_form = StudentForm(request.GET)
                 if student_form.id_is_valid():
@@ -218,6 +220,7 @@ def ajax_student(request, action: str):
                     if record.students.filter(id=id).exists():
                         student_form = None
                         record.students.get(id=id).delete()
+                        valid = True
                     else:  # Raise an error if the user is not owner of requested student object
                         return HttpResponseForbidden()
                 else:
@@ -233,6 +236,7 @@ def ajax_student(request, action: str):
             data = {
                 "student_form": render_to_string("purchase/chunks/student-form.html", student_form_context, request=request) if student_form else None,
                 "students_list": render_to_string("purchase/chunks/student-display.html", students_list_context, request=request),
+                "valid": valid,
             }
 
             return JsonResponse(data=data)
