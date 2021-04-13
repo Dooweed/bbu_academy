@@ -19,8 +19,8 @@ class Course(ImageMixin, DescriptionMixin):
     sidebar_size = ImageRatioField(verbose_name="Обрезка изображения для превью (сайдбар)", image_field='image', size="140x140")
     thumbnail_size = ImageRatioField(verbose_name="Обрезка изображения для превью (список курсов)", image_field='image', size="512x288")
 
-    offline_price = models.IntegerField("Цена на курс (Оффлайн)")
-    offline_special_price = models.IntegerField("Специальная цена на курс (Оффлайн)")
+    offline_price = models.IntegerField("Цена на курс (Офлайн)")
+    offline_special_price = models.IntegerField("Специальная цена на курс (Офлайн)")
     online_price = models.IntegerField("Цена на курс (Онлайн)")
     online_special_price = models.IntegerField("Специальная цена на курс (Онлайн)")
 

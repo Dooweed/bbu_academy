@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center justify-content-sm-end order-1 order-sm-0 wkhtmltopdf-flex wkhtmltopdf-justify-content-end">
                     <div>
-                        <img style="max-height: 220px; margin: 10px;" src="{% if pdf %}{{ FILE_BASE_DIR }}{% static qr_name %}{% else %}{% url 'registry:qr_code' certificate.inn %}{% endif %}" alt="">
+                        <img style="max-height: 220px; margin: 10px;" src="{% if pdf %}{{ qr_path }}{% else %}{% url 'registry:qr_code' certificate.inn %}{% endif %}" alt="">
                         {% if pdf %}<a class="wkhtmltopdf-link" href="{{ link }}">{% translate "Просмотр сертификата на сайте" %}</a>{% endif %}
                     </div>
                 </div>

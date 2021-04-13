@@ -84,7 +84,8 @@ def download_pdf_certificate(request, inn: int):
             "certificate": certificate.first(),
             "pdf": True,
             "qr_name": qr_name,
-            "FILE_BASE_DIR": settings.BASE_DIR,
+            "qr_path": f"{BASE_DIR / qr_path / qr_name}",
+            "FILE_BASE_DIR": BASE_DIR,
             "link": f"{request.build_absolute_uri(reverse('registry:certificate'))}?inn={inn}",
             "request": request,
         }

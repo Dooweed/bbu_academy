@@ -19,8 +19,8 @@ class Training(ImageMixin, DescriptionMixin):
     thumbnail_size = ImageRatioField(verbose_name="Обрезка изображения для превью (список тренингов)", image_field='image', size="512x288")
     sidebar_size = ImageRatioField(verbose_name="Обрезка изображения для превью (сайдбар)", image_field='image', size="140x140")
 
-    offline_price = models.IntegerField("Цена на тренинг (Оффлайн)")
-    offline_special_price = models.IntegerField("Специальная цена на тренинг (Оффлайн)")
+    offline_price = models.IntegerField("Цена на тренинг (Офлайн)")
+    offline_special_price = models.IntegerField("Специальная цена на тренинг (Офлайн)")
     online_price = models.IntegerField("Цена на тренинг (Онлайн)")
     online_special_price = models.IntegerField("Специальная цена на тренинг (Онлайн)")
 

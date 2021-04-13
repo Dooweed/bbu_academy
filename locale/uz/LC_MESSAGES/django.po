@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-04-09 17:29+0500\n"
+"POT-Creation-Date: 2021-04-10 16:29+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -119,8 +119,8 @@ msgid "Высшее образование"
 msgstr "Oliy ma'lumot"
 
 #: .\purchase\models.py:24
-msgid "Оффлайн обучение"
-msgstr "Offlayn ta'lim"
+msgid "Офлайн обучение"
+msgstr "Oflayn ta'lim"
 
 #: .\purchase\models.py:25
 msgid "Дистанционное обучение"
@@ -258,8 +258,8 @@ msgid "Онлайн: "
 msgstr "Onlayn: "
 
 #: .\purchase\utils.py:74
-msgid "Оффлайн: "
-msgstr "Offlayn: "
+msgid "Офлайн: "
+msgstr "Oflayn: "
 
 #: .\purchase\utils.py:76
 msgid "Курс: "
@@ -285,7 +285,7 @@ msgstr "Tolovchining_pasporti"
 msgid "Счёт"
 msgstr "Hisob"
 
-#: .\purchase\views.py:390
+#: .\purchase\views.py:389
 msgid ""
 "Что-то пошло не так при оформлении заказа. Разработчик был уведомлён об "
 "ошибке. Приносим свои извинения"
@@ -343,8 +343,8 @@ msgid "Онлайн:"
 msgstr "Onlayn: "
 
 #: .\templates\courses\course.html:66 .\templates\trainings\training.html:67
-msgid "Оффлайн:"
-msgstr "Offlayn: "
+msgid "Офлайн:"
+msgstr "Oflayn: "
 
 #: .\templates\courses\course.html:68 .\templates\trainings\training.html:69
 msgid "Записаться"
@@ -403,7 +403,7 @@ msgstr "Biz bilan bog'lanish"
 msgid "Позвоните"
 msgstr "Qo'ng'iroq qiling"
 
-#: .\templates\main_page\index.html:113 .\templates\purchase\payme.html:54
+#: .\templates\main_page\index.html:113
 msgid "или"
 msgstr "yoki"
 
@@ -596,7 +596,9 @@ msgstr "ushbu havola orqali"
 msgid ""
 "Если Вы не обнаружили наше сообщение в папке Входящих сообщений, то "
 "проверьте папку Спам (Нежелательная почта)"
-msgstr "Agar siz bizning xatimizni elektron pochtada topmagan bo'lsangiz, Spam (keraksiz pochta) papkasini tekshiring"
+msgstr ""
+"Agar siz bizning xatimizni elektron pochtada topmagan bo'lsangiz, Spam "
+"(keraksiz pochta) papkasini tekshiring"
 
 #: .\templates\purchase\finished.html:40
 msgid "Желаете оформить ещё один заказ?"
@@ -742,21 +744,17 @@ msgstr "Qabul qilaman"
 msgid "Оплата Payme"
 msgstr "Payme to'lovi"
 
-#: .\templates\purchase\payme.html:51
+#: .\templates\purchase\payme.html:43
 msgid "Оплатите, перейдя по ссылке"
 msgstr "Havola  orqali o'tib to'lovni amalga oshiring"
 
-#: .\templates\purchase\payme.html:57
-msgid "Отсканируйте QR-код"
-msgstr "QR kodini skanerlang"
-
-#: .\templates\purchase\payme.html:63
+#: .\templates\purchase\payme.html:48
 msgid "Данные покупки были отправлены на указанную почту плательщика"
 msgstr ""
 "Sotib olish to'g'risida ma'lumotlar ko'rsatilgan to'lovchining pochtasiga "
 "yuborildi"
 
-#: .\templates\purchase\payme.html:64
+#: .\templates\purchase\payme.html:49
 msgid "Дупликат ссылки на оплату так-же был отправлен на почту плательщика"
 msgstr "To'lov havolasining dublikati ham to'lovchining pochtasiga yuborildi"
 
@@ -912,6 +910,12 @@ msgstr "soat oldin"
 #: .\tools\date_mixin.py:26
 msgid "менее часа назад"
 msgstr "bir soatdan kamroq vaqt oldin"
+
+#~ msgid "Оффлайн:"
+#~ msgstr "Offlayn: "
+
+#~ msgid "Отсканируйте QR-код"
+#~ msgstr "QR kodini skanerlang"
 
 #~ msgid "ИНН"
 #~ msgstr "STIR"

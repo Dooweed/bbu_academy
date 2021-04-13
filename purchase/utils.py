@@ -71,7 +71,7 @@ def get_product_choices():
         trainings = Training.objects.filter(active=True)
 
         choices = [(None, '---------')]
-        appendix = "(" + str(_('Онлайн: ')) + "{online}" + "/" + str(_('Оффлайн: ')) + "{offline}" + ")"
+        appendix = "(" + str(_('Онлайн: ')) + "{online}" + "/" + str(_('Офлайн: ')) + "{offline}" + ")"
         for item in courses:
             choices.append((f"course-{item.id}", _('Курс: ') + item.title + appendix.format(online=item.online_beautified_price(), offline=item.offline_beautified_price())))
 

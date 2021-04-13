@@ -21,7 +21,7 @@ EDUCATION = (
 )
 
 STUDY_TYPE_CHOICES = (
-    ("intramural", _("Оффлайн обучение")),
+    ("intramural", _("Офлайн обучение")),
     ("remote", _("Дистанционное обучение"))
 )
 
