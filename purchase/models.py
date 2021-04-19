@@ -8,6 +8,7 @@ from django.core.files.uploadedfile import InMemoryUploadedFile
 from django.core.validators import validate_integer
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
+from django.utils.safestring import mark_safe
 
 from django.utils.translation import gettext_lazy as _, gettext as gt
 
@@ -327,6 +328,13 @@ class PurchaseRecord(PaymeMerchantMixin):
     @property
     def invoice_path(self) -> Path:
         return self.folder_path / f"{INVOICE_SLUG}.pdf"
+
+    def admin_invoice_link(self):
+        if self.invoice_path.exists():
+            return mark_safe(f"""<b><a target="_blank" href="{self.invoice_link}">Посмотреть счёт</a></b>""")
+        else:
+            return mark_safe("<b>Ещё не создан</b>")
+    admin_invoice_link.short_description = "Счёт"
 
     @property
     def invoice_link(self) -> str:

@@ -1,4 +1,5 @@
 from django.conf.global_settings import LANGUAGE_COOKIE_NAME
+from django.core.handlers.wsgi import WSGIRequest
 from django.http import HttpResponseForbidden
 
 from django.utils import translation
@@ -23,6 +24,7 @@ class LanguageBasedOnUrlMiddleware:
 
         return response
 
+
 class DeleteUnusedPersonalFilesMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
@@ -41,15 +43,17 @@ class DeleteUnusedPersonalFilesMiddleware:
 
         return response
 
+
 class ProtectPersonalFilesMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
-    def __call__(self, request):
+    def __call__(self, request: WSGIRequest):
         if "/media/temp/purchase_docs/" in request.path:
             record_id = f"record_{request.session.get('record_id')}"
             allow_media = f"record_{request.session.get('allow_media')}"
-            if record_id in request.path or allow_media in request.path:
+            if record_id in request.path or allow_media in request.path or \
+                    request.user.is_authenticated and request.user.is_staff:
                 response = self.get_response(request)
             else:
                 response = HttpResponseForbidden(_("У вас нет доступа к просмотру данного файла"))

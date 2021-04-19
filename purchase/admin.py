@@ -35,8 +35,8 @@ class PaymentRecordAdmin(admin.ModelAdmin):
     list_display = ("payer_name", "payer_type", "student_name", "overall_price", "payment_type", "study_type", "date_started", "finished")
 
     # "id", "finished", "study_type", "payment_type", "get_price", "overall_price", "date_started", "date_finished"
-    fields = ("id", "state", "offer_agreement", "is_paid", "finished", "study_type", "special_price", "payment_type", "price", "overall_price", "date_started", "date_finished")
-    readonly_fields = ("id", "price", "date_started", "date_finished", "overall_price")
+    fields = ("id", "admin_invoice_link", "state", "offer_agreement", "is_paid", "finished", "study_type", "special_price", "payment_type", "price", "overall_price", "date_started", "date_finished")
+    readonly_fields = ("id", "admin_invoice_link", "price", "date_started", "date_finished", "overall_price")
     inlines = (StudentInline, IndividualPayerInline, EntityPayerInline)
 
     save_on_top = True
