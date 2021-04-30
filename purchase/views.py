@@ -445,7 +445,7 @@ def payment_finished_view(request):
 
     context = {
         "payme_completed": record.payment_type == "payme" and record.is_paid,
-        "invoice_link": request.build_absolute_uri(record.invoice_link),
+        "invoice_link": request.build_absolute_uri(record.invoice_link()),
     }
 
     return render(request, "purchase/finished.html", context)

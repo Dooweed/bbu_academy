@@ -300,6 +300,10 @@ class PurchaseRecord(PaymeMerchantMixin):
             except ObjectDoesNotExist:
                 return None
 
+    def invoice_n(self):
+        return f"№ {self.id}"
+    invoice_n.short_description = "Номер счёта"
+
     @property
     def phone(self):
         if not self.payer:
@@ -331,12 +335,11 @@ class PurchaseRecord(PaymeMerchantMixin):
 
     def admin_invoice_link(self):
         if self.invoice_path.exists():
-            return mark_safe(f"""<b><a target="_blank" href="{self.invoice_link}">Посмотреть счёт</a></b>""")
+            return mark_safe(f"""<b><a target="_blank" href="{self.invoice_link()}">Посмотреть счёт</a></b>""")
         else:
             return mark_safe("<b>Ещё не создан</b>")
     admin_invoice_link.short_description = "Счёт"
 
-    @property
     def invoice_link(self) -> str:
         return PURCHASE_DOCS_BASE_LINK + f"record_{self.id}/{INVOICE_SLUG}.pdf" if self.invoice_path.exists() else ""
 

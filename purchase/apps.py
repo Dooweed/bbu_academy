@@ -3,6 +3,7 @@ from django.apps import AppConfig
 
 class PurchaseConfig(AppConfig):
     name = 'purchase'
+    verbose_name = "Покупки"
 
     def ready(self):
         from purchase.models import PurchaseRecord, Student, IndividualPayer
