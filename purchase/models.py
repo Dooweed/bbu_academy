@@ -36,6 +36,11 @@ PAYMENT_TYPE_CHOICES = (
     ("bank", _("Оплата через банк"))
 )
 
+LANGUAGE_CHOICES = (
+    ("ru", _("Русский")),
+    ("uz", _("Узбекский"))
+)
+
 
 STUDENT_PASSPORT_SLUG = "student_passport"
 STUDY_DOCUMENT_SLUG = "study_document"
@@ -45,9 +50,8 @@ INVOICE_SLUG = "invoice"
 PURCHASE_DOCS_FOLDER = BASE_DIR / "media" / "temp" / "purchase_docs"
 PURCHASE_DOCS_BASE_LINK = "/media/temp/purchase_docs/"
 
-
 class Student(models.Model):
-    student_full_name = models.CharField(_("ФИО студента"), help_text=_("(полностью, как в паспорте)"), max_length=300)
+    student_full_name = models.CharField(_("ФИО студента"), help_text=mark_safe(_('<span class="text-danger font-weight-bold">(полностью, как в паспорте, латиницей)</span>')), max_length=300)
     student_inn = models.CharField(_("ИНН студента"), validators=[validate_integer], max_length=30)
     student_passport_n = models.CharField(_("Номер паспорта студента"), max_length=30)
     student_passport_received_date = models.DateField(_("Дата выдачи паспорта студента"))
@@ -121,7 +125,7 @@ class Student(models.Model):
 
 
 class IndividualPayer(models.Model):
-    individual_payer_full_name = models.CharField(_("ФИО плательщика"), help_text=_("(полностью, как в паспорте)"), max_length=300)
+    individual_payer_full_name = models.CharField(_("ФИО плательщика"), help_text=mark_safe(f'<span class="text-danger font-weight-bold">{_("(полностью, как в паспорте, латиницей)")}</span>'), max_length=300)
     individual_payer_inn = models.CharField(_("ИНН плательщика"), validators=[validate_integer], max_length=30)
     individual_payer_passport_n = models.CharField(_("Номер паспорта плательщика"), max_length=30)
     individual_payer_passport_received_date = models.DateField(_("Дата выдачи паспорта плательщика"))
@@ -235,6 +239,7 @@ class PurchaseRecord(PaymeMerchantMixin):
                                      limit_choices_to=models.Q(app_label='trainings', model='training', active=True) | models.Q(app_label='courses', model='course'))
     object_id = models.PositiveIntegerField(null=True, blank=True)
     product = GenericForeignKey()
+    language = models.CharField(_("Язык обучения"), max_length=10, choices=LANGUAGE_CHOICES, null=True, blank=True)
 
     special_price = models.BooleanField(_("Я являюсь членом АТБ"), default=False)
     price = models.BigIntegerField("Цена на курс/тренинг", null=True, blank=True)

@@ -102,7 +102,7 @@ class ConfirmationForm(forms.ModelForm):
 
     class Meta:
         model = PurchaseRecord
-        fields = ("product", "study_type", "special_price")
+        fields = ("product", "language", "study_type", "special_price")
 
 class PaymentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):

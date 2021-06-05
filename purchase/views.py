@@ -296,6 +296,7 @@ def confirmation_form_view(request):
             member_list = get_atb_members_list()
             record.special_price = record.payer.inn in member_list
             record.study_type = form.cleaned_data.get("study_type")
+            record.language = form.cleaned_data.get("language")
             if record.study_type == "intramural":
                 record.price = product.offline_special_price if record.special_price else product.offline_price
             else:
@@ -353,7 +354,7 @@ def payment_form_view(request):
                                                 request.build_absolute_uri(reverse("purchase:finished")))
             else:
                 payment_link = None
-            build_invoice(record, request)
+            build_invoice(record)
             html_context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             plain_context = {"payer": record.payer, "students_list": record.students.all(), "mail": True}
             html_content = render_to_string("purchase/mail/html_mail.html", html_context, request=request)

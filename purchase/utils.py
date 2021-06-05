@@ -22,18 +22,18 @@ def delete_session_purchase_record(request):
         print("delete_session_purchase_record() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
         return []
 
-def build_invoice(record, request):
+def build_invoice(record):
     config = pdfkit.configuration(wkhtmltopdf=PATH_WKHTMLTOPDF)
     name_modifier = record.study_type_abbreviation()
-    if request.LANGUAGE_CODE.lower() != "ru":
-        name_modifier = request.LANGUAGE_CODE.upper() + " " + name_modifier
+    if record.language.lower() != "ru":
+        name_modifier = record.language.upper() + " " + name_modifier
 
     context = {
         "record": record,
         "name_modifier": name_modifier,
         "FILE_BASE_DIR": BASE_DIR,
     }
-    html = render_to_string('purchase/invoice/invoice.html', context, request=request)
+    html = render_to_string('purchase/invoice/invoice.html', context)
 
     # Define pdf options
     options = {
