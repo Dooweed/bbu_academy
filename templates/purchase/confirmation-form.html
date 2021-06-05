@@ -45,6 +45,10 @@
                                 {{ form.study_type.label_tag }}<span class="warn">{% for error in form.study_type.errors %}{{ error }}{% endfor %}</span>
                                 {{ form.study_type }}{% if form.study_type.help_text %}<small>{{ form.study_type.help_text }}</small>{% endif %}
                             </div>
+                            <div class="form-group">
+                                {{ form.language.label_tag }}<span class="warn">{% for error in form.language.errors %}{{ error }}{% endfor %}</span>
+                                {{ form.language }}{% if form.language.help_text %}<small>{{ form.language.help_text }}</small>{% endif %}
+                            </div>
                             {% if is_entity %}
                                 <div class="form-group d-flex justify-content-center">
                                     {{ form.special_price.label_tag }}<span class="warn">{% for error in form.special_price.errors %}{{ error }}{% endfor %}</span>

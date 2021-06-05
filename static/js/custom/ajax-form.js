@@ -6,6 +6,10 @@ const loader_html = "<div id=\"loader-div\"><ul><li></li>\<li></li>\<li></li>\<l
 
 function ajax(event) {
     event.preventDefault();
+    let valid = $(this).valid();
+    if(!valid) { // Prevent submitting invalid data
+        return false;
+    }
     let method = $(this).attr("method");
     let url = $(this).attr("data-url");
     let form_data = method.toUpperCase() === "POST" ? new FormData(this) : $(this).serialize();
@@ -84,7 +88,7 @@ function populate_blocks(data) {
 function load_page() {
     $.ajax({
         url: $("#data-load-url").attr("data-load"),
-        success: function (data) { populate_blocks(data); },
+        success: function (data) { populate_blocks(data); attach_validators(); },
         error: function(data){ console.log("Something went wrong"); console.log(data); }
     });
 }

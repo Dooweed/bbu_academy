@@ -166,30 +166,30 @@
         </div>
     </div>
 </section>
-<section>
-    <div class="w-100 pt-100 pb-100 position-relative">
-        <div id="particles3" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
-             data-count="8" data-speed="2" data-hide="770" data-image="static"></div>
-        <div class="container">
-            <div class="testi-mckp-wrap w-100">
-                <div class="row align-items-center">
-                    <div class="col-md-12 col-sm-12 col-lg-6 order-1 d-none d-lg-block">
-                        <img class="img-fluid" src="{% static 'images/resources/testi-mckp.jpg' %}" alt="Testimonials Mockup">
-                    </div>
-                    <div class="col-md-12 col-sm-12 col-lg-6">
-                        <div class="testi-wrap w-100">
-                            <div class="testi-caro simple-arrows">
-                                {% for item in reviews %}
-                                    {% include 'main_page/reviews/review.html' %}
-                                {% endfor %}
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- Testimonials With Mockup Wrap -->
-        </div>
-    </div>
-</section>
+{#<section>#}
+{#    <div class="w-100 pt-100 pb-100 position-relative">#}
+{#        <div id="particles3" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"#}
+{#             data-count="8" data-speed="2" data-hide="770" data-image="static"></div>#}
+{#        <div class="container">#}
+{#            <div class="testi-mckp-wrap w-100">#}
+{#                <div class="row align-items-center">#}
+{#                    <div class="col-md-12 col-sm-12 col-lg-6 order-1 d-none d-lg-block">#}
+{#                        <img class="img-fluid" src="{% static 'images/resources/testi-mckp.jpg' %}" alt="Testimonials Mockup">#}
+{#                    </div>#}
+{#                    <div class="col-md-12 col-sm-12 col-lg-6">#}
+{#                        <div class="testi-wrap w-100">#}
+{#                            <div class="testi-caro simple-arrows">#}
+{#                                {% for item in reviews %}#}
+{#                                    {% include 'main_page/reviews/review.html' %}#}
+{#                                {% endfor %}#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                </div>#}
+{#            </div><!-- Testimonials With Mockup Wrap -->#}
+{#        </div>#}
+{#    </div>#}
+{#</section>#}
 {% endblock %}
 
 {% block script %}

@@ -59,7 +59,7 @@
 
                                     </form>
 
-                                    <form id="student" enctype="multipart/form-data" method="POST" data-url="{% url "purchase:entity-ajax-student" SUBMIT %}" class="col-12 col-md-6 d-flex flex-column justify-content-between form-column student">
+                                    <form id="student" enctype="multipart/form-data" method="POST" data-url="{% url "purchase:entity-ajax-student" SUBMIT %}" class="validate-name-form col-12 col-md-6 d-flex flex-column justify-content-between form-column student">
 
                                     </form>
 
@@ -89,5 +89,29 @@
 {% endblock %}
 
 {% block script %}
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script>
+        $.validator.addMethod(
+            "regex",
+            function(value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            },
+            "Incorrect value"
+        );
+
+        function attach_validators() {
+            $(".validate-name-form").validate({
+                errorClass: 'warn',
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.appendTo($(element).parent().siblings('span.warn'));
+                },
+            });
+            $.validator.messages.required = "";
+            const error_messages = {regex: "{% translate 'Имя должно быть в точности как в паспорте' %}", required: ""};
+            $("#id_student_full_name").rules("add", {regex: /^[A-Za-z'` -]+$/, messages: error_messages})
+        }
+    </script>
     <script src="{% static 'js/custom/ajax-form.js' %}"></script>
 {% endblock %}

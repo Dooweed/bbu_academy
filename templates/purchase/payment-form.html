@@ -67,6 +67,10 @@
                                 <small style="margin-top: -8px" class="mb-4">({% translate 'будет использоваться при оплате через Payme' %})</small>
                             </p>
                             <p class="line">
+                                <span class="label">{% translate 'Язык обучения' %}: </span>
+                                <span class="value">{{ record.get_language_display }}</span>
+                            </p>
+                            <p class="line">
                                 <span class="label">{% translate 'Количество студентов' %}: </span>
                                 <span class="value">{{ record.students.count }}</span>
                             </p>
