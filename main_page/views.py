@@ -17,7 +17,7 @@ def main_view(request):
 
     news = Article.objects.filter(status="published").order_by("-date")[:2]
 
-    reviews = Review.objects.filter(active=True, language=request.LANGUAGE_CODE)[:10]
+    # reviews = Review.objects.filter(active=True, language=request.LANGUAGE_CODE)[:10]
 
     context = {
         "page": page,
@@ -25,7 +25,7 @@ def main_view(request):
         "secondary_slides": secondary_slides,
         "single_block": single_block,
         "news": news,
-        "reviews": reviews,
+        # "reviews": reviews,
         "data_offset": "['210','100','100','100']" if request.LANGUAGE_CODE == "ru" else "['270','150','140','120']"  # Width of additional button
     }
     return render(request, "main_page/index.html", context)
