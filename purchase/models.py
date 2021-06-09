@@ -12,7 +12,7 @@ from django.utils.safestring import mark_safe
 
 from django.utils.translation import gettext_lazy as _, gettext as gt
 
-from bbu_academy.settings import BASE_DIR
+from bbu_academy.settings import MEDIA_ROOT
 from payme_billing.mixins import PaymeMerchantMixin
 
 EDUCATION = (
@@ -47,7 +47,7 @@ STUDY_DOCUMENT_SLUG = "study_document"
 PAYER_PASSPORT_SLUG = "payer_passport"
 INVOICE_SLUG = "invoice"
 
-PURCHASE_DOCS_FOLDER = BASE_DIR / "media" / "temp" / "purchase_docs"
+PURCHASE_DOCS_FOLDER = Path(MEDIA_ROOT) / "temp" / "purchase_docs"
 PURCHASE_DOCS_BASE_LINK = "/media/temp/purchase_docs/"
 
 class Student(models.Model):

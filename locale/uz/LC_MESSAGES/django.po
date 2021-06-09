@@ -256,10 +256,8 @@ msgid "Тип обучения"
 msgstr "O'qitish turi"
 
 #: .\purchase\models.py:242 .\templates\purchase\payment-form.html:70
-#, fuzzy
-#| msgid "Тип обучения"
 msgid "Язык обучения"
-msgstr "O'qitish turi"
+msgstr "O'qitish tili"
 
 #: .\purchase\models.py:244
 msgid "Я являюсь членом АТБ"

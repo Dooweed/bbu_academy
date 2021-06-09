@@ -354,7 +354,7 @@ def payment_form_view(request):
                                                 request.build_absolute_uri(reverse("purchase:finished")))
             else:
                 payment_link = None
-            build_invoice(record)
+            build_invoice(record, request)
             html_context = {"payer": record.payer, "students_list": get_students_list(record), "mail": True, "payment_link": payment_link}
             plain_context = {"payer": record.payer, "students_list": record.students.all(), "mail": True}
             html_content = render_to_string("purchase/mail/html_mail.html", html_context, request=request)

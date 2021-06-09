@@ -28,7 +28,7 @@ DEBUG = True
 LOCAL = not bool(environ.get("LOCAL", False))
 
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = ["127.0.0.1", 'tcatb.uz']
 
 # Application definition
 
@@ -205,13 +205,13 @@ SECURE_SSL_REDIRECT = not LOCAL
 
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = "/home/wwwtcatb/public_html/media"
 if LOCAL:
     STATICFILES_DIRS = [
         BASE_DIR / "static",
     ]
 else:
-    STATIC_ROOT = BASE_DIR / "static"
+    STATIC_ROOT = "/home/wwwtcatb/public_html/static"
 
 # Email sending
 if LOCAL:
