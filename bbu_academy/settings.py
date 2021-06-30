@@ -213,6 +213,8 @@ if LOCAL:
 else:
     STATIC_ROOT = "/home/wwwtcatb/public_html/static"
 
+FILE_UPLOAD_MAX_MEMORY_SIZE = 5242880
+
 # Email sending
 if LOCAL:
     EMAIL_BACKEND = 'django.core.mail.backends.filebased.EmailBackend'
@@ -255,9 +257,9 @@ PATH_WKHTMLTOPDF = r'static\wkhtmltox\bin\wkhtmltopdf.exe' if LOCAL else r'stati
 PAYME_BILLING_SETTINGS = {
     "test": False,
     "admin": False,  # Display transactions in Django admin
-    "web_cash_id": "603b480725a2ffecf477012f",
-    "web_cash_key": "sAsEhjP?8?cG@2sI1Hrk3GJX%kQ2rE6&QRg1",
-    "test_web_cash_key": "G2JIkF0vAuYbgkNFjOk0PpvOwxD?BXgitqDm",
+    "web_cash_id": str(environ.get("PAYME_WEB_CASH_ID")),
+    "web_cash_key": str(environ.get("PAYME_WEB_CASH_KEY")),
+    "test_web_cash_key": str(environ.get("PAYME_WEB_CASH_TEST_KEY")),
     "billing_model": "purchase.PurchaseRecord",  # Should be in form "app_label.ModelName"
     "callback_time": 4000,  # Time to wait before redirecting to merchant page (in milliseconds)
 }

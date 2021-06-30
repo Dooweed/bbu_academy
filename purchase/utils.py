@@ -1,6 +1,7 @@
 import pdfkit
 import requests
 from bs4 import BeautifulSoup
+from django.core.exceptions import ValidationError
 from django.db import ProgrammingError, OperationalError
 from django.template.loader import render_to_string
 from django.utils.translation import gettext_lazy as _
@@ -9,6 +10,7 @@ from bbu_academy.settings import PATH_WKHTMLTOPDF, BASE_DIR
 from courses.models import Course
 from trainings.models import Training
 
+FORMFIELD_SIZE_RESTRICTION = 2**21  # 2Mb
 
 def delete_session_purchase_record(request):
     try:
@@ -85,3 +87,14 @@ def get_product_choices():
     except OperationalError:  # SQLite error
         print("get_product_choices() from purchase.utils produced OperationalError. Skip this message if it happened during running 'makemigrations' command")
         return []
+
+def validate_file_2mb(value):
+    print(value, value.size, value.size >= FORMFIELD_SIZE_RESTRICTION)
+    if isinstance(value, ValidationError):
+        raise value
+
+
+    if value.size >= FORMFIELD_SIZE_RESTRICTION:
+        raise ValidationError(_('Размер файла не должен превышать 2Мб'))
+    else:
+        return value

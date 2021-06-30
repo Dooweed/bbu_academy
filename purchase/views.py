@@ -3,6 +3,7 @@ from copy import deepcopy
 from zipfile import ZipFile
 from urllib.parse import urlencode
 
+from django.core.exceptions import ValidationError
 from django.core.mail import EmailMultiAlternatives
 from django.http import Http404, JsonResponse, HttpResponseForbidden, QueryDict, HttpResponseServerError
 from django.template.loader import render_to_string
@@ -24,7 +25,7 @@ from .forms import IndividualPayerForm, StudentForm, SelfPaymentForm, Confirmati
 
 from django.utils.translation import gettext as _
 
-from .utils import delete_session_purchase_record, build_invoice, get_atb_members_list
+from .utils import delete_session_purchase_record, build_invoice, get_atb_members_list, FORMFIELD_SIZE_RESTRICTION
 
 SUBMIT = "submit"
 EDIT = "edit"
@@ -47,6 +48,8 @@ def get_students_list(record):
         students_list.append(student_form)
 
     return students_list
+
+
 def get_record(request):
     if "record_id" in request.session:  # Use created record if it exists
         record = PurchaseRecord.objects.get_or_create(id=request.session["record_id"])[0]
@@ -81,18 +84,25 @@ def individual_form_view(request):
         self_payment_form = SelfPaymentForm(request.POST)
         self_payment = self_payment_form.is_valid() and self_payment_form.cleaned_data.get("self_payment")
 
+        # Copy individual payer's fields to student fields if self_payment is checked
+        # and fill student fields with request data otherwise
         student_post = {}
         student_files = {}
         if self_payment:
             for key in request.POST.keys():
                 student_post[key.replace("individual_payer_", "student_")] = request.POST[key]
             for key in request.FILES.keys():
-                student_files[key.replace("individual_payer_", "student_")] = deepcopy(request.FILES[key]) if key.startswith("individual_payer_") else request.FILES[key]
+                file = request.FILES[key]
+                try:
+                    student_files[key.replace("individual_payer_", "student_")] = deepcopy(file) if key.startswith("individual_payer_") else file
+                except TypeError:
+                    student_files[key.replace("individual_payer_", "student_")] = ValidationError(_('Размер файла не должен превышать 2Мб'))
 
         individual_payer_form = IndividualPayerForm(request.POST, request.FILES)
         student_form = StudentForm(QueryDict(urlencode(student_post)), student_files) if self_payment else StudentForm(request.POST, request.FILES)
 
-        if individual_payer_form.is_valid():  # Save individual_payer_form if it is correct
+        individual_is_valid = individual_payer_form.is_valid()
+        if individual_is_valid:  # Save individual_payer_form if it is correct
             payer: IndividualPayer = individual_payer_form.save(commit=False)
             if record.get_individual_payer_or_none():  # Use existing ID if possible
                 payer.id = record.get_individual_payer_or_none().id
@@ -103,7 +113,8 @@ def individual_form_view(request):
             if record.get_entity_payer_or_none():  # Delete ENTITY PAYER if exists
                 record.get_entity_payer_or_none().delete()
 
-        if student_form.is_valid():  # Save student_form if it is correct
+        student_is_valid = student_form.is_valid()
+        if student_is_valid:  # Save student_form if it is correct
             student: Student = student_form.save(commit=False)
             if record.students.exists():  # Use existing ID if possible
                 student.id = record.students.order_by("-id").first().id
@@ -116,7 +127,7 @@ def individual_form_view(request):
                 record.students.exclude(id=student.id).delete()
 
         # Redirect to the next step if everything is correct
-        if record.individual_form_is_ready():
+        if individual_is_valid and student_is_valid:
             return redirect("purchase:confirmation-form")
 
     else:  # GET method
@@ -402,6 +413,7 @@ def payment_form_view(request):
 
     return render(request, "purchase/payment-form.html", context)
 
+
 def payme_payment_view(request):
     if not request.session["allow_media"]:  # Redirect to offer-agreement if session has no record
         return redirect("index")
@@ -430,6 +442,7 @@ def payme_payment_view(request):
     }
 
     return render(request, "purchase/payme.html", context)
+
 
 def payment_finished_view(request):
     if not request.session["allow_media"]:  # Redirect to offer-agreement if session has no record

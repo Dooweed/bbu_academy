@@ -89,6 +89,7 @@ PAYME_TRANSACTION_DENIAL_REASONS = (
 
 # Choices for receipt "state" attribute
 PAYME_RECEIPT_STATES = (
+    #(None, '----'),
     (0, "Чек создан. Ожидание подтверждения оплаты."),
     (1, "Первая стадия проверок. Создание транзакции в биллинге мерчанта."),
     (2, "Списание денег с карты."),

@@ -7,6 +7,7 @@ from django.utils.functional import lazy
 from courses.models import Course
 from purchase.models import Student, IndividualPayer, PurchaseRecord, EntityPayer
 from purchase.utils import get_product_choices
+from .utils import validate_file_2mb
 from trainings.models import Training
 
 YEARS = tuple([i for i in range(1900, timezone.now().year)])
@@ -14,8 +15,8 @@ YEARS = tuple([i for i in range(1900, timezone.now().year)])
 
 class StudentForm(forms.ModelForm):
     id = forms.IntegerField(widget=forms.HiddenInput, required=False)
-    student_passport = forms.ImageField(label=_("Скан-копия паспорта студента"))
-    study_document = forms.ImageField(label=_("Документы об образовании"))
+    student_passport = forms.ImageField(label=_("Скан-копия паспорта студента"), validators=(validate_file_2mb, ), help_text=_('Размер файла до 2Мб'))
+    study_document = forms.ImageField(label=_("Документы об образовании"), validators=(validate_file_2mb, ), help_text=_('Размер файла до 2Мб'))
 
     def get_student_fields(self):
         return [self[x] for x in self.fields if x.startswith("student_")]
@@ -43,7 +44,7 @@ class StudentForm(forms.ModelForm):
 
 
 class IndividualPayerForm(forms.ModelForm):
-    individual_payer_passport = forms.ImageField(label=_("Скан-копия паспорта плательщика"))
+    individual_payer_passport = forms.ImageField(label=_("Скан-копия паспорта плательщика"), validators=(validate_file_2mb, ), help_text=_('Размер файла до 2Мб'))
 
     def clean(self):
         # Validate inn
