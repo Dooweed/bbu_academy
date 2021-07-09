@@ -31,8 +31,8 @@
                 {% if payme_completed %}
                     <p class="text-center">{% translate 'Оплата через Payme успешно выполнена' %}</p>
                 {% endif %}
-                <p class="warn text-center mt-5 mb-0">{% translate 'Введенные вами данные и счет-фактура были отправлены на указанную почту плательщика.' %}</p>
-                <p class="text-center"><span class="warn">{% translate 'Так-же вы можете скачать счет-фактуру' %} </span>
+                <p class="warn text-center mt-5 mb-0">{% translate 'Введенные вами данные и счет были отправлены на указанную почту плательщика.' %}</p>
+                <p class="text-center"><span class="warn">{% translate 'Так-же вы можете скачать счет' %} </span>
                     <a class="text-underline" href="{{ invoice_link }}" download="{{ INVOICE }}">{% translate 'по этой ссылке' %}</a></p>
 
                 <p class="warn text-center">{% translate 'Если Вы не обнаружили наше сообщение в папке Входящих сообщений, то проверьте папку Спам (Нежелательная почта)' %}</p>
