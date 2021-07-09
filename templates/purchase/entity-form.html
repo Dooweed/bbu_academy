@@ -110,7 +110,7 @@
             });
             $.validator.messages.required = "";
             const error_messages = {regex: "{% translate 'Имя должно быть в точности как в паспорте' %}", required: ""};
-            $("#id_student_full_name").rules("add", {regex: /^[A-Za-z'` -]+$/, messages: error_messages})
+            $("#id_student_full_name").rules("add", {regex: /^[A-Za-z'’` -]+$/, messages: error_messages})
         }
     </script>
     <script src="{% static 'js/custom/ajax-form.js' %}"></script>
