@@ -10,7 +10,7 @@ from purchase.utils import get_product_choices
 from .utils import validate_file_2mb
 from trainings.models import Training
 
-YEARS = tuple([i for i in range(1900, timezone.now().year)])
+YEARS = [i for i in reversed(range(1900, timezone.now().year + 1))]
 
 
 class StudentForm(forms.ModelForm):
