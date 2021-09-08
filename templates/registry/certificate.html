@@ -6,7 +6,7 @@
     <div class="col-md-8 word-document" style="margin-top: 50px;">
         {% if not pdf %}
             <div class="d-flex justify-content-end">
-                <a class="download-pdf" href="{% url 'registry:download_pdf_certificate' certificate.inn %}">{% translate "Скачать PDF сертификат" %}</a>
+                <a class="download-pdf" href="{% url 'registry:download_pdf_certificate' certificate.pinfl_or_inn %}">{% translate "Скачать PDF сертификат" %}</a>
             </div>
         {% endif %}
         <div class="word-sample">
@@ -76,7 +76,7 @@
                 </div>
                 <div class="col-sm-6 d-flex justify-content-center justify-content-sm-end order-1 order-sm-0 wkhtmltopdf-flex wkhtmltopdf-justify-content-end">
                     <div>
-                        <img style="max-height: 220px; margin: 10px;" src="{% if pdf %}{{ qr_path }}{% else %}{% url 'registry:qr_code' certificate.inn %}{% endif %}" alt="">
+                        <img style="max-height: 220px; margin: 10px;" src="{% if pdf %}{{ qr_path }}{% else %}{% url 'registry:qr_code' certificate.pinfl_or_inn %}{% endif %}" alt="">
                         {% if pdf %}<a class="wkhtmltopdf-link" href="{{ link }}">{% translate "Просмотр сертификата на сайте" %}</a>{% endif %}
                     </div>
                 </div>

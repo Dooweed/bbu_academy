@@ -107,7 +107,7 @@ def broken_certificates_report(broken_certificates: List[ParsedCertificate]):
 
             wrong_fields = wrong_fields[:-2]
 
-            cert_string = f"""<p style="margin-bottom: 6px"><b>{certificate.full_name if certificate.has_full_name else certificate.inn}</b> - <i>Ошибки в полях:</i> {wrong_fields}</p>"""
+            cert_string = f"""<p style="margin-bottom: 6px"><b>{certificate.full_name if certificate.has_full_name else certificate.pinfl_or_inn}</b> - <i>Ошибки в полях:</i> {wrong_fields}</p>"""
             report += cert_string
         else:
             completely_wrong += 1
