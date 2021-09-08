@@ -20,9 +20,9 @@ from django.conf import settings
 
 def registry_view(request):
     context = {}
-    if 'inn_or_pinfl' in request.GET:
-        inn_or_pinfl = request.GET.get('inn_or_pinfl')
-        certificate = Certificate.objects.filter(Q(inn=inn_or_pinfl) | Q(pinfl=inn_or_pinfl))
+    if 'pinfl_or_inn' in request.GET:
+        pinfl_or_inn = request.GET.get('pinfl_or_inn')
+        certificate = Certificate.objects.filter(Q(inn=pinfl_or_inn) | Q(pinfl=pinfl_or_inn))
         if certificate.exists():
             return render(request, "registry/certificate_wrap.html", {"certificate": certificate.first()})
         else:
