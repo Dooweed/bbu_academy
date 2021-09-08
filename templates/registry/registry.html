@@ -52,7 +52,7 @@
                                     <form id="search-form" action="{% url 'registry:certificate' %}" method="GET">
                                         {{ form.pinfl_or_inn }}
                                     </form>
-                                    {% if not_found %}<small class="text-danger">{% translate "Сертификата по данному номеру не найдено" %}</small>{% endif %}
+                                    {% if not_found %}<small class="text-danger">{% translate "Сертификата по данному идентификатору не найдено" %}</small>{% endif %}
                                 </div>
                             </div>
                             <div class="pl-3">

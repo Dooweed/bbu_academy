@@ -116,5 +116,5 @@ def model_to_excel(query_set: QuerySet, field_names=None) -> BytesIO:
 
 def pinfl_help_text():
     image_url = static('images/help/pinfl_ru.jpg') if get_language() == 'ru' else static('images/help/pinfl_uz.png')
-    return link_tag(image_url, classes=('text-underline',), name=_('Где я могу узнать свой ПИН ФЛ?'), blank=True)
+    return link_tag(image_url, classes=('text-underline',), name=_('Где я могу узнать свой ПИНФЛ?'), blank=True)
 
