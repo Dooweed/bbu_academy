@@ -97,8 +97,8 @@
                     {% if record.get_entity_payer_or_none %}
                         {% translate 'Идентификационный номер покупателя (ИНН)' %}:
                     {% else %}
-                        {% translate 'Персональный идентификационный номер физического лица (ПИНФЛ)' %}
-                    {% endif %}:
+                        {% translate 'Персональный идентификационный номер физического лица (ПИНФЛ)' %}:
+                    {% endif %}
                 </p></div>
                 <div class="value p-0 col-7"><p>{{ record.invoice_inn_or_pinfl }}</p></div>
             </div>
