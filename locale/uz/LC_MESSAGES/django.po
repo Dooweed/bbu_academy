@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-07-09 13:33+0500\n"
+"POT-Creation-Date: 2021-09-08 21:32+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -23,7 +23,7 @@ msgid "У вас нет доступа к просмотру данного фа
 msgstr "Ushbu faylni ko'rish huquqiga ega emassiz"
 
 #: .\courses\models.py:35 .\courses\models.py:40
-#: .\templates\purchase\invoice\invoice.html:145 .\trainings\models.py:35
+#: .\templates\purchase\invoice\invoice.html:172 .\trainings\models.py:35
 #: .\trainings\models.py:40
 msgid "сум"
 msgstr "sum"
@@ -90,13 +90,17 @@ msgstr "Fayl hajmi 2 MBgacha"
 msgid "Документы об образовании"
 msgstr "Ta'lim to'g'risidagi hujjatlar"
 
-#: .\purchase\forms.py:35 .\purchase\forms.py:53 .\purchase\forms.py:69
-msgid "ИНН должен состоять из 9 цифр"
-msgstr "Soliq identifikatsiya raqami 9 ta raqamdan iborat bo'lishi kerak"
+#: .\purchase\forms.py:35 .\purchase\forms.py:53
+msgid "ПИНФЛ должен состоять из 14 цифр"
+msgstr ""
 
 #: .\purchase\forms.py:47
 msgid "Скан-копия паспорта плательщика"
 msgstr "To'lovchining pasportining skanerlangan nusxasi"
+
+#: .\purchase\forms.py:69
+msgid "ИНН должен состоять из 9 цифр"
+msgstr "Soliq identifikatsiya raqami 9 ta raqamdan iborat bo'lishi kerak"
 
 #: .\purchase\forms.py:80
 msgid "Обучаюсь сам"
@@ -110,43 +114,43 @@ msgstr "Mahsulot tanlovi"
 msgid "Продукт не найден"
 msgstr "Mahsulot topilmadi"
 
-#: .\purchase\models.py:19
+#: .\purchase\models.py:20
 msgid "Среднее"
 msgstr "O'rta"
 
-#: .\purchase\models.py:20
+#: .\purchase\models.py:21
 msgid "Средне-специальное"
 msgstr "O'rta maxsus"
 
-#: .\purchase\models.py:21
+#: .\purchase\models.py:22
 msgid "Высшее образование"
 msgstr "Oliy ma'lumot"
 
-#: .\purchase\models.py:25
+#: .\purchase\models.py:26
 msgid "Офлайн обучение"
 msgstr "Oflayn ta'lim"
 
-#: .\purchase\models.py:26
+#: .\purchase\models.py:27
 msgid "Дистанционное обучение"
 msgstr "Masofaviy ta'lim"
 
-#: .\purchase\models.py:36
+#: .\purchase\models.py:37
 msgid "Оплата через банк"
 msgstr "Bank orqali to'lov"
 
-#: .\purchase\models.py:40
+#: .\purchase\models.py:41
 msgid "Русский"
 msgstr "Ruscha"
 
-#: .\purchase\models.py:41
+#: .\purchase\models.py:42
 msgid "Узбекский"
 msgstr "O'zbekcha"
 
-#: .\purchase\models.py:54
+#: .\purchase\models.py:55
 msgid "ФИО студента"
 msgstr "Talabani ismi, otasini ismi, familiyasi"
 
-#: .\purchase\models.py:54
+#: .\purchase\models.py:55
 msgid ""
 "<span class=\"text-danger font-weight-bold\">(полностью, как в паспорте, "
 "латиницей)</span>"
@@ -154,122 +158,130 @@ msgstr ""
 "<span class=\"text-danger font-weight-bold\">(to'liq lotin alifbosida "
 "pasportda yozilgani kabi)</span>"
 
-#: .\purchase\models.py:55
+#: .\purchase\models.py:56
 msgid "ИНН студента"
 msgstr "Talaba STIR"
 
-#: .\purchase\models.py:56
+#: .\purchase\models.py:57
+msgid "ПИНФЛ студента"
+msgstr ""
+
+#: .\purchase\models.py:58
 msgid "Номер паспорта студента"
 msgstr "Talabani pasport raqami"
 
-#: .\purchase\models.py:57
+#: .\purchase\models.py:59
 msgid "Дата выдачи паспорта студента"
 msgstr "Talaba pasporti berilgan sana"
 
-#: .\purchase\models.py:58
+#: .\purchase\models.py:60
 msgid "Кем выдан паспорт студента"
 msgstr "Kim tomonidan berilgan"
 
-#: .\purchase\models.py:59 .\purchase\models.py:133 .\purchase\models.py:190
+#: .\purchase\models.py:61 .\purchase\models.py:136 .\purchase\models.py:193
 #: .\templates\main_page\index.html:119
 #: .\templates\purchase\payment-form.html:65
 msgid "Номер телефона"
 msgstr "Telefon raqami"
 
-#: .\purchase\models.py:60 .\purchase\models.py:134 .\purchase\models.py:198
+#: .\purchase\models.py:62 .\purchase\models.py:137 .\purchase\models.py:201
 msgid "Адрес электронной почты"
 msgstr "E-mail manzili"
 
-#: .\purchase\models.py:61 .\purchase\models.py:135
+#: .\purchase\models.py:63 .\purchase\models.py:138
 msgid "Контакт в Telegram (если имеется)"
 msgstr "Telegram aloqasi (agar mavjud bo'lsa)"
 
-#: .\purchase\models.py:61
+#: .\purchase\models.py:63
 msgid "(номер телефона, ссылка или юзернейм)"
 msgstr "(telefon raqami, havola yoki foydalanuvchi nomi)"
 
-#: .\purchase\models.py:62
+#: .\purchase\models.py:64
 msgid "Образование"
 msgstr "Ma`lumoti"
 
-#: .\purchase\models.py:128
+#: .\purchase\models.py:130
 msgid "ФИО плательщика"
 msgstr "To'lovchining to'liq ismi"
 
-#: .\purchase\models.py:129
+#: .\purchase\models.py:131
 msgid "ИНН плательщика"
 msgstr "To'lovchining STIR raqami"
 
-#: .\purchase\models.py:130
+#: .\purchase\models.py:132
+msgid "ПИНФЛ плательщика"
+msgstr ""
+
+#: .\purchase\models.py:133
 msgid "Номер паспорта плательщика"
 msgstr "To'lovchining pasport raqami"
 
-#: .\purchase\models.py:131
+#: .\purchase\models.py:134
 msgid "Дата выдачи паспорта плательщика"
 msgstr "To'lovchining pasporti berilgan sana"
 
-#: .\purchase\models.py:132
+#: .\purchase\models.py:135
 msgid "Кем выдан паспорт плательщика"
 msgstr "To'lovchining pasportini kim tomonidan bergan"
 
-#: .\purchase\models.py:135
+#: .\purchase\models.py:138
 msgid "(номер телефона или ссылка)"
 msgstr "(telefon raqami yoki havola)"
 
-#: .\purchase\models.py:188
+#: .\purchase\models.py:191
 msgid "Наименование организации"
 msgstr "Kompaniyaning nomi"
 
-#: .\purchase\models.py:189 .\templates\purchase\invoice\invoice.html:71
-#: .\templates\purchase\invoice\invoice.html:87
+#: .\purchase\models.py:192 .\templates\purchase\invoice\invoice.html:92
+#: .\templates\purchase\invoice\invoice.html:114
 msgid "Адрес"
 msgstr "Manzil"
 
-#: .\purchase\models.py:191
+#: .\purchase\models.py:194
 msgid "Расчётный счёт"
 msgstr "Hisob raqami"
 
-#: .\purchase\models.py:192
+#: .\purchase\models.py:195
 msgid "Наименование банка"
 msgstr "Bank nomi"
 
-#: .\purchase\models.py:193
+#: .\purchase\models.py:196
 msgid "Код банка"
 msgstr "Bank kodi"
 
-#: .\purchase\models.py:194
+#: .\purchase\models.py:197
 msgid "Город местанахождения банка"
 msgstr "Bank joylashgan shahar"
 
-#: .\purchase\models.py:195
+#: .\purchase\models.py:198
 msgid "ИНН организации"
 msgstr "Tashkilotning STIR raqami"
 
-#: .\purchase\models.py:196 .\templates\purchase\invoice\invoice.html:95
+#: .\purchase\models.py:199 .\templates\purchase\invoice\invoice.html:122
 msgid "Регистрационный код плательщика НДС"
 msgstr "QQS to'lovchisini ro'yxatdan o'tkazish raqami"
 
-#: .\purchase\models.py:197
+#: .\purchase\models.py:200
 msgid "ОКЭД организации"
 msgstr "Tashkilotning  faoliyat sanoat turi klassifikatori buyicha raqami"
 
-#: .\purchase\models.py:199
+#: .\purchase\models.py:202
 msgid "ФИО и должность руководителя"
 msgstr "Boshning to'liq ismi va lavozimi"
 
-#: .\purchase\models.py:236
+#: .\purchase\models.py:239
 msgid "Тип обучения"
 msgstr "O'qitish turi"
 
-#: .\purchase\models.py:242 .\templates\purchase\payment-form.html:70
+#: .\purchase\models.py:245 .\templates\purchase\payment-form.html:70
 msgid "Язык обучения"
 msgstr "O'qitish tili"
 
-#: .\purchase\models.py:244
+#: .\purchase\models.py:247
 msgid "Я являюсь членом АТБ"
 msgstr "Men BBU a'zosiman"
 
-#: .\purchase\models.py:247
+#: .\purchase\models.py:250
 msgid "Тип оплаты"
 msgstr "To'lov turi"
 
@@ -586,10 +598,8 @@ msgstr "Davom eting"
 
 #: .\templates\purchase\entity-form.html:112
 #: .\templates\purchase\individual-form.html:146
-#, fuzzy
-#| msgid "(полностью, как в паспорте)"
 msgid "Имя должно быть в точности как в паспорте"
-msgstr "(pasportdagi kabi to'liq)"
+msgstr ""
 
 #: .\templates\purchase\finish.html:8
 msgid "Операция успешно завершена"
@@ -646,105 +656,109 @@ msgstr "avtomatik ravishda to'ldiriladi"
 msgid "используется паспорт плательщика"
 msgstr "to'lovchining pasportidan foydalaniladi"
 
-#: .\templates\purchase\invoice\invoice.html:50
+#: .\templates\purchase\invoice\invoice.html:71
 msgid "Счет"
 msgstr "Hisob"
 
-#: .\templates\purchase\invoice\invoice.html:51
+#: .\templates\purchase\invoice\invoice.html:72
 msgid "от"
 msgstr "dan"
 
-#: .\templates\purchase\invoice\invoice.html:52
+#: .\templates\purchase\invoice\invoice.html:73
 msgid "к договору-оферте"
 msgstr "taklif shartnomasiga"
 
-#: .\templates\purchase\invoice\invoice.html:60
+#: .\templates\purchase\invoice\invoice.html:81
 msgid "Поставщик"
 msgstr "Yetkazib beruvchi"
 
-#: .\templates\purchase\invoice\invoice.html:64
+#: .\templates\purchase\invoice\invoice.html:85
 msgid "Покупатель"
 msgstr "Sotib oluvchi"
 
-#: .\templates\purchase\invoice\invoice.html:75
+#: .\templates\purchase\invoice\invoice.html:98
 msgid "Идентификационный номер покупателя (ИНН)"
 msgstr "Sotib oluvchining identifikatsiya raqami (STIR)"
 
-#: .\templates\purchase\invoice\invoice.html:82
+#: .\templates\purchase\invoice\invoice.html:100
+msgid "Персональный идентификационный номер физического лица (ПИНФЛ)"
+msgstr ""
+
+#: .\templates\purchase\invoice\invoice.html:109
 msgid "Идентификационный номер поставщика (ИНН)"
 msgstr "Yetkazib beruvchining identifikatsiya raqami (STIR)"
 
-#: .\templates\purchase\invoice\invoice.html:102
+#: .\templates\purchase\invoice\invoice.html:129
 msgid "Р/С"
 msgstr "H/R"
 
-#: .\templates\purchase\invoice\invoice.html:109
+#: .\templates\purchase\invoice\invoice.html:136
 msgid "МФО"
 msgstr "Bank kodi"
 
-#: .\templates\purchase\invoice\invoice.html:119
+#: .\templates\purchase\invoice\invoice.html:146
 msgid "Наименование товаров (услуг)"
 msgstr "Tovarlar (xizmatlar) ning nomi"
 
-#: .\templates\purchase\invoice\invoice.html:120
+#: .\templates\purchase\invoice\invoice.html:147
 msgid "Единица измерения"
 msgstr "О'lchov birligi"
 
-#: .\templates\purchase\invoice\invoice.html:121
+#: .\templates\purchase\invoice\invoice.html:148
 msgid "Количество"
 msgstr "Miqdori"
 
-#: .\templates\purchase\invoice\invoice.html:122
+#: .\templates\purchase\invoice\invoice.html:149
 msgid "Цена"
 msgstr "Narx"
 
-#: .\templates\purchase\invoice\invoice.html:123
+#: .\templates\purchase\invoice\invoice.html:150
 msgid "Стоимость поставки"
 msgstr "Yetkazib berish narxi"
 
-#: .\templates\purchase\invoice\invoice.html:124
+#: .\templates\purchase\invoice\invoice.html:151
 msgid "НДС"
 msgstr "QQS"
 
-#: .\templates\purchase\invoice\invoice.html:125
+#: .\templates\purchase\invoice\invoice.html:152
 msgid "Стоимость поставки с учётом НДС"
 msgstr "Yetkazib berish narxi QQS bilan"
 
-#: .\templates\purchase\invoice\invoice.html:128
+#: .\templates\purchase\invoice\invoice.html:155
 msgid "Ставка"
 msgstr "Stavka"
 
-#: .\templates\purchase\invoice\invoice.html:129
+#: .\templates\purchase\invoice\invoice.html:156
 msgid "Сумма"
 msgstr "Jami"
 
-#: .\templates\purchase\invoice\invoice.html:144
+#: .\templates\purchase\invoice\invoice.html:171
 #, python-format
 msgid "предоплата 100%%"
 msgstr "oldindan to'lash 100%%"
 
-#: .\templates\purchase\invoice\invoice.html:149
-#: .\templates\purchase\invoice\invoice.html:163
+#: .\templates\purchase\invoice\invoice.html:176
+#: .\templates\purchase\invoice\invoice.html:190
 msgid "Без НДС"
 msgstr "QQSsiz"
 
-#: .\templates\purchase\invoice\invoice.html:153
+#: .\templates\purchase\invoice\invoice.html:180
 msgid "Итого"
 msgstr "Jami"
 
-#: .\templates\purchase\invoice\invoice.html:163
+#: .\templates\purchase\invoice\invoice.html:190
 msgid "Всего к оплате"
 msgstr "To'lanadigan umumiy"
 
-#: .\templates\purchase\invoice\invoice.html:163
+#: .\templates\purchase\invoice\invoice.html:190
 msgid "00 тийин"
 msgstr "00 tiyin"
 
-#: .\templates\purchase\invoice\invoice.html:168
+#: .\templates\purchase\invoice\invoice.html:195
 msgid "Руководитель"
 msgstr "Rahbar"
 
-#: .\templates\purchase\invoice\invoice.html:172
+#: .\templates\purchase\invoice\invoice.html:199
 msgid "Главный бухгалтер"
 msgstr "Bosh hisobchi"
 
@@ -858,8 +872,8 @@ msgid "Поиск специалистов по ИНН"
 msgstr "STIR kodi bo'yicha mutaxassislarni izlash"
 
 #: .\templates\registry\registry.html:55
-msgid "Сертификата по данному ИНН не найдено"
-msgstr "Ushbu STIR buyicha  sertifikat topilmadi"
+msgid "Сертификата по данному идентификатору не найдено"
+msgstr ""
 
 #: .\templates\registry\registry.html:59
 msgid "поиск"
@@ -940,6 +954,10 @@ msgstr "soat oldin"
 #: .\tools\date_mixin.py:26
 msgid "менее часа назад"
 msgstr "bir soatdan kamroq vaqt oldin"
+
+#: .\tools\utils.py:119
+msgid "Где я могу узнать свой ПИНФЛ?"
+msgstr ""
 
 #~ msgid "Оффлайн:"
 #~ msgstr "Offlayn: "

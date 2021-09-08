@@ -49,7 +49,7 @@ def qr_code(request, inn_or_pinfl: int, only_image=False):
             error_correction=qrcode.constants.ERROR_CORRECT_H
         )
 
-        qr_big.add_data(f"{request.get_host()}{reverse('registry:certificate')}?inn_or_pinfl={inn_or_pinfl}")
+        qr_big.add_data(f"{request.get_host()}{reverse('registry:certificate')}?pinfl_or_inn={inn_or_pinfl}")
         qr_big.make()
         img_qr_big = qr_big.make_image(fill_color="#0D2969").convert('RGB')
 
