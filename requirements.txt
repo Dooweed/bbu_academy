@@ -24,7 +24,6 @@ easy-thumbnails==2.7
 idna==2.10
 importlib-metadata==3.7.3
 lxml==4.6.2
-num2words==0.5.10
 pdfkit==0.6.1
 Pillow==8.0.1
 premailer==3.7.0

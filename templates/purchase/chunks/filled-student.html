@@ -22,8 +22,8 @@
     </div>
 
     <div class="value-group">
-        <p class="fieldname">{{ student.student_inn.label }}</p>
-        <div class="value">{{ student.student_inn.value }}</div>
+        <p class="fieldname">{{ student.student_pinfl.label }}</p>
+        <div class="value">{{ student.student_pinfl.value }}</div>
     </div>
 
     <div class="value-group">
@@ -53,7 +53,7 @@
 
     <div class="value-group">
         <p class="fieldname">{{ student.student_telegram_contact.label }}</p>
-        <div class="value">{{ student.student_telegram_contact.value }}</div>
+        <div class="value">{{ student.student_telegram_contact.value|default:'-' }}</div>
     </div>
 
     <div class="value-group">

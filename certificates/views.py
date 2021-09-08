@@ -4,6 +4,7 @@ from pathlib import Path
 import qrcode
 import pdfkit
 from PIL import Image
+from django.db.models import Q
 from django.http import HttpResponse, Http404
 from django.shortcuts import render, get_object_or_404
 from django.template.loader import render_to_string
@@ -19,10 +20,11 @@ from django.conf import settings
 
 def registry_view(request):
     context = {}
-    if 'inn' in request.GET:
-        inn = Certificate.objects.filter(inn=request.GET.get('inn'))
-        if inn.exists():
-            return render(request, "registry/certificate_wrap.html", {"certificate": inn.first()})
+    if 'inn_or_pinfl' in request.GET:
+        inn_or_pinfl = request.GET.get('inn_or_pinfl')
+        certificate = Certificate.objects.filter(Q(inn=inn_or_pinfl) | Q(pinfl=inn_or_pinfl))
+        if certificate.exists():
+            return render(request, "registry/certificate_wrap.html", {"certificate": certificate.first()})
         else:
             context['not_found'] = True
     form = RegistryForm()
@@ -33,7 +35,7 @@ def registry_view(request):
 
     return render(request, page.template_name, context)
 
-def qr_code(request, inn: int, only_image=False):
+def qr_code(request, inn_or_pinfl: int, only_image=False):
     try:
         logo = Image.open('static/images/logo.png')
         width = 150
@@ -47,7 +49,7 @@ def qr_code(request, inn: int, only_image=False):
             error_correction=qrcode.constants.ERROR_CORRECT_H
         )
 
-        qr_big.add_data(f"{request.get_host()}{reverse('registry:certificate')}?inn={inn}")
+        qr_big.add_data(f"{request.get_host()}{reverse('registry:certificate')}?inn_or_pinfl={inn_or_pinfl}")
         qr_big.make()
         img_qr_big = qr_big.make_image(fill_color="#0D2969").convert('RGB')
 
@@ -65,18 +67,18 @@ def qr_code(request, inn: int, only_image=False):
         raise Http404()
     return response
 
-def download_pdf_certificate(request, inn: int):
+def download_pdf_certificate(request, inn_or_pinfl: int):
     config = pdfkit.configuration(wkhtmltopdf=settings.PATH_WKHTMLTOPDF)
 
-# file:///home/wwwtcatb/bbu_academy
-    certificate = Certificate.objects.filter(inn=inn)
+    # file:///home/wwwtcatb/bbu_academy
+    certificate = Certificate.objects.filter(Q(inn=inn_or_pinfl) | Q(pinfl=inn_or_pinfl))
 
     if certificate.exists():
         # Get QR image
-        qr_name = f"{inn}.jpg"
+        qr_name = f"{inn_or_pinfl}.jpg"
         qr_path = Path("media") / "temp" / "qr"
         qr_path.mkdir(parents=True, exist_ok=True)
-        qr = qr_code(request, inn, True)
+        qr = qr_code(request, inn_or_pinfl, True)
         qr.save(BASE_DIR / qr_path / qr_name, "JPEG")
 
         # Render template
@@ -86,7 +88,7 @@ def download_pdf_certificate(request, inn: int):
             "qr_name": qr_name,
             "qr_path": f"{BASE_DIR / qr_path / qr_name}",
             "FILE_BASE_DIR": BASE_DIR,
-            "link": f"{request.build_absolute_uri(reverse('registry:certificate'))}?inn={inn}",
+            "link": f"{request.build_absolute_uri(reverse('registry:certificate'))}?inn_or_pinfl={inn_or_pinfl}",
             "request": request,
         }
         html = render_to_string('registry/download_certificate_wrap.html', context)
@@ -115,7 +117,7 @@ def download_pdf_certificate(request, inn: int):
 
         # Prepare response
         response = HttpResponse(pdf, content_type='application/pdf')
-        response['Content-Disposition'] = f'attachment; filename="certificate-{inn}.pdf"'
+        response['Content-Disposition'] = f'attachment; filename="certificate-{inn_or_pinfl}.pdf"'
         return response
     else:
         raise Http404("Запрошенный сертификат не существует")

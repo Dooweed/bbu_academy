@@ -15,9 +15,9 @@ from .utils import build_certificate_excel
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "inn", "certificate_n", "date_received")
-    search_fields = ("inn", "certificate_n", "contract_n", "full_name", "date_received")
-    fields = ("contract_n", "certificate_n", "inn", "full_name", "date_received")
+    list_display = ("full_name", "pinfl", "inn", "certificate_n", "date_received")
+    search_fields = ("pinfl", "inn", "certificate_n", "contract_n", "full_name", "date_received")
+    fields = ("contract_n", "certificate_n", "pinfl", "inn", "full_name", "date_received")
     actions = ("download_excel", )
     list_max_show_all = 5000
 

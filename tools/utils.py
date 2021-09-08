@@ -4,6 +4,8 @@ from datetime import datetime
 import xlwt
 from django.core.validators import URLValidator
 from django.core.exceptions import ValidationError
+from django.templatetags.static import static
+from django.utils.translation import get_language, gettext as _
 from easy_thumbnails.files import get_thumbnailer
 
 from io import BytesIO
@@ -22,10 +24,10 @@ def paired_range(start, stop):
         pairs.append((n, n))
     return tuple(pairs)
 
-def link_tag(url, name=None, classes=None):
+def link_tag(url, name=None, classes=None, blank=False):
     if not name:
         name = url
-    return f"""<a href="{url}"{"" if not classes else " ".join(classes)}>{name}</a>"""
+    return f"""<a {'target="_blank"' if blank else ''} href="{url}" class="{"" if not classes else " ".join(classes)}">{name}</a>"""
 
 def make_link(url, classes=None, name=None):
     val = URLValidator()
@@ -110,3 +112,9 @@ def model_to_excel(query_set: QuerySet, field_names=None) -> BytesIO:
     file = BytesIO()
     workbook.save(file)
     return file
+
+
+def pinfl_help_text():
+    image_url = static('images/help/pinfl_ru.jpg') if get_language() == 'ru' else static('images/help/pinfl_uz.png')
+    return link_tag(image_url, classes=('text-underline',), name=_('Где я могу узнать свой ПИН ФЛ?'), blank=True)
+

@@ -16,30 +16,51 @@
         .wkhtmltopdf-flex {
             display: -webkit-box; /* wkhtmltopdf uses this one */
             margin: 0;
-            padding: 0;}
+            padding: 0;
+        }
+
         body {
-            font-size: 14px;}
+            font-size: 14px;
+        }
+
         .main p {
-            margin: 0;}
+            margin: 0;
+        }
+
         .main .header > p {
             font-size: 18px;
-            line-height: 1.2;}
+            line-height: 1.2;
+        }
+
         .text-price {
-            font-size: 16px;}
+            font-size: 16px;
+        }
+
         .supplier {
-            margin-right: 10px;}
+            margin-right: 10px;
+        }
+
         .main .data .value, .main .signatures .value {
             border-bottom: 1px solid #000;
-            width: 100%;}
+            width: 100%;
+        }
+
         .label, body .value {
-            line-height: 1;}
+            line-height: 1;
+        }
+
         .signatures .label p {
-            font-size: 16px;}
+            font-size: 16px;
+        }
+
         table, th, td {
             border: 1px solid #000000;
-            text-align: center;}
+            text-align: center;
+        }
+
         th, td {
-            padding: 2px 4px;}
+            padding: 2px 4px;
+        }
     </style>
 </head>
 <body class="d-flex wkhtmltopdf-flex flex-column align-items-center">
@@ -72,8 +93,14 @@
                 <div class="value p-0 col-7"><p>{{ address }}</p></div>
             </div>
             <div class="col-6 row wkhtmltopdf-flex customer">
-                <div class="label p-0 col-5"><p>{% translate 'Идентификационный номер покупателя (ИНН)' %}:</p></div>
-                <div class="value p-0 col-7"><p>{{ record.invoice_inn }}</p></div>
+                <div class="label p-0 col-5"><p>
+                    {% if record.get_entity_payer_or_none %}
+                        {% translate 'Идентификационный номер покупателя (ИНН)' %}:
+                    {% else %}
+                        {% translate 'Персональный идентификационный номер физического лица (ПИНФЛ)' %}
+                    {% endif %}:
+                </p></div>
+                <div class="value p-0 col-7"><p>{{ record.invoice_inn_or_pinfl }}</p></div>
             </div>
         </div>
 

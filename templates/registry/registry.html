@@ -50,9 +50,9 @@
                             <div class="col-sm-6 col-md-4 p-sm-0">
                                 <div class="contact-form-wrap">
                                     <form id="search-form" action="{% url 'registry:certificate' %}" method="GET">
-                                        {{ form.inn }}
+                                        {{ form.pinfl_or_inn }}
                                     </form>
-                                    {% if not_found %}<small class="text-danger">{% translate "Сертификата по данному ИНН не найдено" %}</small>{% endif %}
+                                    {% if not_found %}<small class="text-danger">{% translate "Сертификата по данному номеру не найдено" %}</small>{% endif %}
                                 </div>
                             </div>
                             <div class="pl-3">

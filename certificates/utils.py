@@ -13,7 +13,7 @@ NUMBER_OF_CERTIFICATE_FIELDS = 4
 class ParsedCertificate:
     contract_n = None
     certificate_n = None
-    inn = None
+    pinfl = None
     full_name = None
     date_received = None
 
@@ -26,8 +26,8 @@ class ParsedCertificate:
         return self.certificate_n is not None
 
     @property
-    def has_inn(self):
-        return self.inn is not None
+    def has_pinfl(self):
+        return self.pinfl is not None
 
     @property
     def has_full_name(self):
@@ -54,9 +54,9 @@ class ParsedCertificate:
                 pass
             self.certificate_n = certificate_n
 
-    def set_inn(self, inn):
+    def set_pinfl(self, pinfl):
         try:
-            self.inn = int(inn)
+            self.pinfl = int(pinfl)
         except ValueError:
             pass
 
@@ -78,7 +78,7 @@ class ParsedCertificate:
         count = 0
         if self.certificate_n is not None:
             count += 1
-        if self.inn is not None:
+        if self.pinfl is not None:
             count += 1
         if self.full_name is not None:
             count += 1
@@ -100,7 +100,7 @@ def broken_certificates_report(broken_certificates: List[ParsedCertificate]):
     report = ""
     completely_wrong = 0
     for certificate in broken_certificates:
-        if certificate.has_inn:
+        if certificate.has_pinfl:
             wrong_fields = "<u>Имя</u>, " if not certificate.has_full_name else ""
             wrong_fields += "<u>Дата получения</u>, " if not certificate.has_date_received else ""
             wrong_fields += "<u>Номер сертификата</u>, " if not certificate.has_certificate_n else ""
@@ -139,7 +139,7 @@ def parse_excel(file):
                 new_certificate = ParsedCertificate()
                 new_certificate.set_full_name(row[1].value)
                 new_certificate.set_contract_n(row[2].value)
-                new_certificate.set_inn(row[3].value)
+                new_certificate.set_pinfl(row[3].value)
                 new_certificate.set_date_received(row[4].value, row[5].value, row[6].value)
                 new_certificate.set_certificate_n(row[7].value)
 

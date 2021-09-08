@@ -12,7 +12,7 @@ ACTION_CHOICES = (
 
 
 class RegistryForm(forms.Form):
-    inn = forms.IntegerField(widget=forms.TextInput(attrs={"class": "w-100 mt-20 fname", "placeholder": "Введите ИНН"}))
+    pinfl_or_inn = forms.IntegerField(widget=forms.TextInput(attrs={"class": "w-100 mt-20 fname", "placeholder": "Введите ПИНФЛ или ИНН"}))
 
 
 class CertificateAdminForm(forms.ModelForm):
@@ -26,6 +26,7 @@ class CertificateAdminForm(forms.ModelForm):
     class Meta:
         widgets = {
             "inn": forms.NumberInput(attrs={"step": "1"}),
+            "pinfl": forms.NumberInput(attrs={"step": "1"}),
             "certificate_n": forms.NumberInput(attrs={"step": "1"}),
             "contract_n": forms.NumberInput(attrs={"step": "1"}),
         }
@@ -57,12 +58,12 @@ class MultiCertificateAdminForm(forms.ModelForm):
         skipped_n = 0
 
         for parsed_certificate in correct_certificates:
-            model_certificate = Certificate.objects.filter(inn=parsed_certificate.inn)
+            model_certificate = Certificate.objects.filter(pinfl=parsed_certificate.pinfl)
             if model_certificate.exists():
                 model_certificate = model_certificate.first()
                 created = False
             else:
-                model_certificate = Certificate(inn=parsed_certificate.inn)
+                model_certificate = Certificate(pinfl=parsed_certificate.pinfl)
                 created = True
             if created:
                 populate_certificate(model_certificate, parsed_certificate)

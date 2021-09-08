@@ -14,6 +14,7 @@ from django.utils.translation import gettext_lazy as _, gettext as gt
 
 from bbu_academy.settings import MEDIA_ROOT
 from payme_billing.mixins import PaymeMerchantMixin
+from tools.utils import link_tag, pinfl_help_text
 
 EDUCATION = (
     ("secondary", _("Среднее")),
@@ -52,7 +53,8 @@ PURCHASE_DOCS_BASE_LINK = "/media/temp/purchase_docs/"
 
 class Student(models.Model):
     student_full_name = models.CharField(_("ФИО студента"), help_text=mark_safe(_('<span class="text-danger font-weight-bold">(полностью, как в паспорте, латиницей)</span>')), max_length=300)
-    student_inn = models.CharField(_("ИНН студента"), validators=[validate_integer], max_length=30)
+    student_inn = models.CharField(_("ИНН студента"), validators=[validate_integer], max_length=30, null=True, blank=True)
+    student_pinfl = models.CharField(_("ПИНФЛ студента"), validators=[validate_integer], help_text=mark_safe(pinfl_help_text), max_length=30, null=True, blank=True)
     student_passport_n = models.CharField(_("Номер паспорта студента"), max_length=30)
     student_passport_received_date = models.DateField(_("Дата выдачи паспорта студента"))
     student_passport_given_by = models.CharField(_("Кем выдан паспорт студента"), max_length=300)
@@ -126,7 +128,8 @@ class Student(models.Model):
 
 class IndividualPayer(models.Model):
     individual_payer_full_name = models.CharField(_("ФИО плательщика"), help_text=mark_safe(f'<span class="text-danger font-weight-bold">{_("(полностью, как в паспорте, латиницей)")}</span>'), max_length=300)
-    individual_payer_inn = models.CharField(_("ИНН плательщика"), validators=[validate_integer], max_length=30)
+    individual_payer_inn = models.CharField(_("ИНН плательщика"), validators=[validate_integer], max_length=30, null=True, blank=True)
+    individual_payer_pinfl = models.CharField(_("ПИНФЛ плательщика"), validators=[validate_integer], help_text=mark_safe(pinfl_help_text), max_length=30, null=True, blank=True)
     individual_payer_passport_n = models.CharField(_("Номер паспорта плательщика"), max_length=30)
     individual_payer_passport_received_date = models.DateField(_("Дата выдачи паспорта плательщика"))
     individual_payer_passport_given_by = models.CharField(_("Кем выдан паспорт плательщика"), max_length=300)
@@ -381,8 +384,8 @@ class PurchaseRecord(PaymeMerchantMixin):
     def invoice_address(self):
         return self.get_entity_payer_or_none().entity_payer_address if self.get_entity_payer_or_none() else None
 
-    def invoice_inn(self):
-        return self.payer.inn
+    def invoice_inn_or_pinfl(self):
+        return self.payer.inn if self.get_individual_payer_or_none() is None else self.payer.individual_payer_pinfl
 
     class Meta:
         verbose_name = "Покупка"

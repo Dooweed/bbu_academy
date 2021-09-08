@@ -30,17 +30,17 @@ class StudentForm(forms.ModelForm):
 
     def clean(self):
         # Validate inn
-        inn = self.cleaned_data.get("student_inn")
-        if not inn or len(inn) != 9:
-            raise ValidationError({"student_inn": [_("ИНН должен состоять из 9 цифр"), ]})
+        inn = self.cleaned_data.get("student_pinfl")
+        if not inn or len(inn) != 14:
+            raise ValidationError({"student_pinfl": [_("ПИНФЛ должен состоять из 14 цифр"), ]})
         return self.cleaned_data
 
     class Meta:
-        fields = ("student_full_name", "student_inn", "student_passport_n", "student_passport_received_date", "student_passport_given_by", "student_phone_number", "student_email",
+        fields = ("student_full_name", "student_pinfl", "student_passport_n", "student_passport_received_date", "student_passport_given_by", "student_phone_number", "student_email",
                   "student_telegram_contact", "study_type", "study_document", "student_passport")
         model = Student
         widgets = {'student_passport_received_date': forms.SelectDateWidget(years=YEARS, attrs={"class": "datepicker"}),
-                   'student_inn': forms.NumberInput(attrs={"class": "hide-arrows"})}
+                   'student_pinfl': forms.NumberInput(attrs={"class": "hide-arrows"})}
 
 
 class IndividualPayerForm(forms.ModelForm):
@@ -48,17 +48,17 @@ class IndividualPayerForm(forms.ModelForm):
 
     def clean(self):
         # Validate inn
-        inn = self.cleaned_data.get("individual_payer_inn")
-        if not inn or len(inn) != 9:
-            raise ValidationError({"individual_payer_inn": [_("ИНН должен состоять из 9 цифр"), ]})
+        inn = self.cleaned_data.get("individual_payer_pinfl")
+        if not inn or len(inn) != 14:
+            raise ValidationError({"individual_payer_pinfl": [_("ПИНФЛ должен состоять из 14 цифр"), ]})
         return self.cleaned_data
 
     class Meta:
-        fields = ("individual_payer_full_name", "individual_payer_inn", "individual_payer_passport_n", "individual_payer_passport_received_date",
+        fields = ("individual_payer_full_name", "individual_payer_pinfl", "individual_payer_passport_n", "individual_payer_passport_received_date",
                   "individual_payer_passport_given_by", "individual_payer_phone_number", "individual_payer_email", "individual_payer_telegram_contact")
         model = IndividualPayer
         widgets = {'individual_payer_passport_received_date': forms.SelectDateWidget(years=YEARS, attrs={"class": "datepicker"}),
-                   'individual_payer_inn': forms.NumberInput(attrs={"class": "hide-arrows"})}
+                   'individual_payer_pinfl': forms.NumberInput(attrs={"class": "hide-arrows"})}
 
 
 class EntityPayerForm(forms.ModelForm):
