@@ -88,7 +88,7 @@ def download_pdf_certificate(request, inn_or_pinfl: int):
             "qr_name": qr_name,
             "qr_path": f"{BASE_DIR / qr_path / qr_name}",
             "FILE_BASE_DIR": BASE_DIR,
-            "link": f"{request.build_absolute_uri(reverse('registry:certificate'))}?inn_or_pinfl={inn_or_pinfl}",
+            "link": f"{request.build_absolute_uri(reverse('registry:certificate'))}?pinfl_or_inn={inn_or_pinfl}",
             "request": request,
         }
         html = render_to_string('registry/download_certificate_wrap.html', context)
