@@ -7,8 +7,8 @@ from django.core.validators import MinValueValidator, MaxValueValidator, validat
 class Certificate(models.Model):
     contract_n = models.IntegerField("Номер договора", null=True, blank=True)
     certificate_n = models.CharField("Номер сертификата", max_length=20, validators=[validate_integer, ])
-    inn = models.PositiveBigIntegerField("ИНН студента", validators=[MinValueValidator, MaxValueValidator], null=True, blank=True)
-    pinfl = models.PositiveBigIntegerField("ПИНФЛ студента", validators=[MinValueValidator, MaxValueValidator], null=True, blank=True)
+    inn = models.PositiveBigIntegerField("ИНН студента", validators=[MinValueValidator, MaxValueValidator], help_text='Оставьте поле пустым если введён ПИНФЛ', null=True, blank=True)
+    pinfl = models.PositiveBigIntegerField("ПИНФЛ студента", validators=[MinValueValidator, MaxValueValidator], help_text='Оставьте поле пустым, если введён ИНН', null=True, blank=True)
     full_name = models.CharField("ФИО студента", max_length=200)
     date_received = models.DateField("Дата получения договора")
 

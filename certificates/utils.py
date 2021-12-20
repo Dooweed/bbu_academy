@@ -6,6 +6,8 @@ import xlrd
 import xlwt
 from xlwt import XFStyle, Borders, easyfont
 
+from certificates.models import Certificate
+
 NUMBER_OF_CERTIFICATE_COLS = 8
 NUMBER_OF_CERTIFICATE_FIELDS = 4
 
@@ -171,18 +173,19 @@ def build_certificate_excel(queryset):
 
     sheet.write(0, 1, "ФИО", title_style)
     sheet.write(0, 2, "№ Договора", title_style)
-    sheet.write(0, 3, "ИНН", title_style)
+    sheet.write(0, 3, "ИНН или ПИНФЛ", title_style)
     sheet.write(0, 4, "День", title_style)
     sheet.write(0, 5, "Месяц", title_style)
     sheet.write(0, 6, "Год", title_style)
     sheet.write(0, 7, "Сертификат №", title_style)
 
     for r, obj in enumerate(queryset):
+        obj: Certificate
         n = r+1
         sheet.write(n, 0, str(n), font_style)
         sheet.write(n, 1, str(obj.full_name), font_style)
         sheet.write(n, 2, str(obj.contract_n), font_style)
-        sheet.write(n, 3, str(obj.inn), font_style)
+        sheet.write(n, 3, str(obj.pinfl_or_inn()), font_style)
         sheet.write(n, 4, str(obj.date_received.year), font_style)
         sheet.write(n, 5, str(obj.date_received.month), font_style)
         sheet.write(n, 6, str(obj.date_received.day), font_style)
@@ -191,7 +194,7 @@ def build_certificate_excel(queryset):
     sheet.col(0).width = 1400
     sheet.col(1).width = 14000
     sheet.col(2).width = 4500
-    sheet.col(3).width = 4000
+    sheet.col(3).width = 5500
     sheet.col(7).width = 5500
 
     file = BytesIO()

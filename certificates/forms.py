@@ -1,6 +1,7 @@
 from django import forms
 from django.core.validators import FileExtensionValidator
 from django.forms import widgets
+from django.utils.translation import gettext_lazy as _
 
 from certificates.models import Certificate
 from certificates.utils import parse_excel, populate_certificate, broken_certificates_report
@@ -12,7 +13,7 @@ ACTION_CHOICES = (
 
 
 class RegistryForm(forms.Form):
-    pinfl_or_inn = forms.IntegerField(widget=forms.TextInput(attrs={"class": "w-100 mt-20 fname", "placeholder": "Введите ПИНФЛ или ИНН"}))
+    pinfl_or_inn = forms.IntegerField(widget=forms.TextInput(attrs={"class": "w-100 mt-20 fname", "placeholder": _("Введите ПИНФЛ или ИНН")}))
 
 
 class CertificateAdminForm(forms.ModelForm):

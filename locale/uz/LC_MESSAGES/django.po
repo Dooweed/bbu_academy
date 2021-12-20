@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-09-08 21:32+0500\n"
+"POT-Creation-Date: 2021-09-09 18:50+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,6 +21,10 @@ msgstr ""
 #: .\bbu_academy\middleware.py:59
 msgid "У вас нет доступа к просмотру данного файла"
 msgstr "Ushbu faylni ko'rish huquqiga ega emassiz"
+
+#: .\certificates\forms.py:16
+msgid "Введите ПИНФЛ или ИНН"
+msgstr "ShShIR yoki STIR kiriting"
 
 #: .\courses\models.py:35 .\courses\models.py:40
 #: .\templates\purchase\invoice\invoice.html:172 .\trainings\models.py:35
@@ -92,7 +96,7 @@ msgstr "Ta'lim to'g'risidagi hujjatlar"
 
 #: .\purchase\forms.py:35 .\purchase\forms.py:53
 msgid "ПИНФЛ должен состоять из 14 цифр"
-msgstr ""
+msgstr "ShShIR 14 ta raqamdan iborat bo'lishi kerak"
 
 #: .\purchase\forms.py:47
 msgid "Скан-копия паспорта плательщика"
@@ -164,7 +168,7 @@ msgstr "Talaba STIR"
 
 #: .\purchase\models.py:57
 msgid "ПИНФЛ студента"
-msgstr ""
+msgstr "Talabaning ShShIR"
 
 #: .\purchase\models.py:58
 msgid "Номер паспорта студента"
@@ -210,7 +214,7 @@ msgstr "To'lovchining STIR raqami"
 
 #: .\purchase\models.py:132
 msgid "ПИНФЛ плательщика"
-msgstr ""
+msgstr "To'lovchining ShShIR"
 
 #: .\purchase\models.py:133
 msgid "Номер паспорта плательщика"
@@ -599,7 +603,7 @@ msgstr "Davom eting"
 #: .\templates\purchase\entity-form.html:112
 #: .\templates\purchase\individual-form.html:146
 msgid "Имя должно быть в точности как в паспорте"
-msgstr ""
+msgstr "Ism pasportdagi bilan bir xil bo'lishi kerak"
 
 #: .\templates\purchase\finish.html:8
 msgid "Операция успешно завершена"
@@ -682,7 +686,7 @@ msgstr "Sotib oluvchining identifikatsiya raqami (STIR)"
 
 #: .\templates\purchase\invoice\invoice.html:100
 msgid "Персональный идентификационный номер физического лица (ПИНФЛ)"
-msgstr ""
+msgstr "Shaxsning shaxsiy identifikatsiya raqami (ShShIR )"
 
 #: .\templates\purchase\invoice\invoice.html:109
 msgid "Идентификационный номер поставщика (ИНН)"
@@ -873,7 +877,7 @@ msgstr "STIR kodi bo'yicha mutaxassislarni izlash"
 
 #: .\templates\registry\registry.html:55
 msgid "Сертификата по данному идентификатору не найдено"
-msgstr ""
+msgstr "Bu identifikator uchun sertifikat topilmadi"
 
 #: .\templates\registry\registry.html:59
 msgid "поиск"
@@ -957,7 +961,7 @@ msgstr "bir soatdan kamroq vaqt oldin"
 
 #: .\tools\utils.py:119
 msgid "Где я могу узнать свой ПИНФЛ?"
-msgstr ""
+msgstr "ShShIR-ni qayerdan topsam bo'ladi?"
 
 #~ msgid "Оффлайн:"
 #~ msgstr "Offlayn: "
