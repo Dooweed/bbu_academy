@@ -13,7 +13,6 @@ from payme_billing.forms import ButtonBasePaymentInitialisationForm
 from payme_billing.utils import get_payment_link
 from payme_billing.vars.settings import URL
 from purchase.utils import get_atb_members_list, build_invoice, delete_session_purchase_record
-from purchase.views import STUDENT_PASSPORT, STUDY_DOCUMENT, INVOICE
 from services.models import Service
 from small_purchase.forms import IndividualPayerForm, EntityPayerForm, ConfirmationForm, PaymentForm
 from small_purchase.models import SmallPurchaseRecord, IndividualPayer, EntityPayer
@@ -21,6 +20,7 @@ from small_purchase.models import SmallPurchaseRecord, IndividualPayer, EntityPa
 
 PASSPORT_EMAIL_FILE_NAME = 'passport'
 PASSPORT = _('Паспорт')
+INVOICE = _("Счёт")
 
 
 def placeholder(request):
@@ -243,10 +243,10 @@ def payme_payment_view(request):
     elif not record.is_confirmed():
         return redirect("small_purchase:confirmation-form")
 
-    payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE,
+    payment_link = get_payment_link(f'S{record.id}', record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE,
                                     request.build_absolute_uri(reverse("small_purchase:finished")))
 
-    button_form = ButtonBasePaymentInitialisationForm(record.id, record.get_9_digit_phone(), record.get_amount() * 100,
+    button_form = ButtonBasePaymentInitialisationForm(f'S{record.id}', record.get_9_digit_phone(), record.get_amount() * 100,
                                                       request.LANGUAGE_CODE, request.build_absolute_uri(reverse("small_purchase:finished")), style="white", width=300)
 
     context = {
