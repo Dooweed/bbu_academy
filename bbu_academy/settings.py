@@ -112,7 +112,7 @@ LOGGING = {
     'disable_existing_loggers': False,
     'handlers': {
         'file': {
-            'level': 'CRITICAL',
+            'level': 'WARNING',
             'class': 'logging.FileHandler',
             'filename': BASE_DIR / 'logs/django.log',
         },
@@ -120,7 +120,7 @@ LOGGING = {
     'loggers': {
         'django': {
             'handlers': ['file'],
-            'level': 'CRITICAL',
+            'level': 'WARNING',
             'propagate': True,
         },
     },

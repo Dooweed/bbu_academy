@@ -8,7 +8,7 @@ TRANSACTION_TIMEOUT = 43200  # In seconds, equal to 12 hours
 
 
 class PaymeTransaction(models.Model):
-    record_id = models.IntegerField("Номер записи", unique=True)
+    record_id = models.CharField("Номер записи", unique=True, max_length=30)
     transaction_id = models.CharField("Идентификатор транзакции", max_length=24, unique=True, primary_key=True)
     amount = models.PositiveBigIntegerField("Цена")
     state = models.IntegerField("Состояние транзакции", choices=PAYME_TRANSACTION_STATES, default=0)
