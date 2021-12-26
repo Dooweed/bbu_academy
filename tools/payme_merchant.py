@@ -6,6 +6,6 @@ def get_model(purchase_id: str):
         from purchase.models import PurchaseRecord
         queryset = PurchaseRecord.objects.filter(id=int(purchase_id))
     if queryset.exists():
-        return queryset.first()
+        return queryset
     else:
         return None
