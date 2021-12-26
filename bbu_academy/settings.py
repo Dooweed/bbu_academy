@@ -260,6 +260,6 @@ PAYME_BILLING_SETTINGS = {
     "web_cash_id": str(environ.get("PAYME_WEB_CASH_ID")),
     "web_cash_key": str(environ.get("PAYME_WEB_CASH_KEY")),
     "test_web_cash_key": str(environ.get("PAYME_WEB_CASH_TEST_KEY")),
-    "billing_model": "purchase.PurchaseRecord",  # Should be in form "app_label.ModelName"
+    "billing_models": ["purchase.PurchaseRecord", "small_purchase.SmallPurchaseRecord"],  # Each of them should be in form "app_label.ModelName" (first match will be selected)
     "callback_time": 4000,  # Time to wait before redirecting to merchant page (in milliseconds)
 }

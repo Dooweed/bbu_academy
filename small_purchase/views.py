@@ -124,7 +124,7 @@ def confirmation_form_view(request):
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("small_purchase:offer-agreement")
     elif not record.is_ready():  # Redirect to form if it is not valid
-        return redirect("small_purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
+        return redirect("small_purchase:entity-form") if record.get_entity_payer_or_none() else redirect("small_purchase:individual-form")
     elif record.finished:
         return redirect("small_purchase:finished")
 
@@ -165,7 +165,7 @@ def payment_form_view(request):
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("small_purchase:offer-agreement")
     elif not record.is_ready():  # Redirect to form if it is not valid
-        return redirect("small_purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
+        return redirect("small_purchase:entity-form") if record.get_entity_payer_or_none() else redirect("small_purchase:individual-form")
     elif not record.is_confirmed():
         return redirect("small_purchase:confirmation-form")
     elif record.finished:
@@ -184,7 +184,7 @@ def payment_form_view(request):
             # Send mail with full information to workers and payer
             if payment_type == "payme":
                 payment_link = get_payment_link(record.id, record.get_9_digit_phone(), record.get_amount() * 100, request.LANGUAGE_CODE,
-                                                request.build_absolute_uri(reverse("purchase:finished")))
+                                                request.build_absolute_uri(reverse("small_purchase:finished")))
             else:
                 payment_link = None
             build_invoice(record, request, True)
@@ -268,7 +268,7 @@ def payment_finished_view(request):
     if not record.offer_agreement:  # Redirect to offer-agreement if user haven't agreed
         return redirect("small_purchase:offer-agreement")
     elif not record.is_ready():  # Redirect to form if it is not valid
-        return redirect("small_purchase:entity-form") if record.get_entity_payer_or_none() else redirect("purchase:individual-form")
+        return redirect("small_purchase:entity-form") if record.get_entity_payer_or_none() else redirect("small_purchase:individual-form")
     elif not record.is_confirmed():
         return redirect("small_purchase:confirmation-form")
 

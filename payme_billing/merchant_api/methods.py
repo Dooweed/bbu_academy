@@ -4,7 +4,7 @@ from payme_billing.models import PaymeTransaction
 
 from payme_billing.merchant_api.classes import Error, Correct, PaymeCheckFailedException
 from payme_billing.merchant_api.checks import check_amount, check_account, check_transaction_id, check_time, check_time_diapason, check_reason
-from payme_billing.vars.settings import MODEL
+from payme_billing.utils import get_first_matching_model
 from payme_billing.vars.static import *
 
 
@@ -21,8 +21,8 @@ def _CheckPerformTransaction(params):
         return e.error()
 
     # Check that purchase exist
-    purchase = MODEL.objects.filter(id=purchase_id, payment_type="payme")
-    if not purchase.exists():
+    purchase = get_first_matching_model(purchase_id)
+    if purchase is None:
         return Error(RECEIPT_NOT_FOUND_ERROR)
     else:
         purchase = purchase.get()
@@ -87,7 +87,7 @@ def _CreateTransaction(params):
             return result
         else:
             transaction = PaymeTransaction.objects.create(transaction_id=transaction_id, record_id=purchase_id, amount=amount, phone=phone, state=1, payme_creation_time=time)
-            if MODEL.objects.filter(id=purchase_id).update(state=1) != 1:
+            if get_first_matching_model(purchase_id).update(state=1) != 1:
                 return Error(RECEIPT_NOT_FOUND_ERROR)
 
     # All checks are passed, returning positive response
@@ -124,7 +124,7 @@ def _PerformTransaction(params):
             # Transaction is NOT timed out
             else:
                 # Return error if model object was not found
-                purchase = MODEL.objects.filter(id=transaction.record_id, payment_type="payme")
+                purchase = get_first_matching_model(transaction.record_id)
                 if purchase.get().is_paid:
                     return Error(RECEIPT_PAID_ERROR)
                 if purchase.update(state=4) != 1:
@@ -228,7 +228,7 @@ def _GetStatement(params):
 
     response = []
     for transaction in transactions:
-        purchase = MODEL.objects.get(id=transaction.record_id)
+        purchase = get_first_matching_model(transaction.record_id)
         response.append({
             "id": transaction.transaction_id,
             "time": transaction.get_payme_creation_time(),

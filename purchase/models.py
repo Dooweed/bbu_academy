@@ -249,7 +249,6 @@ class PurchaseRecord(PaymeMerchantMixin):
     overall_price = models.BigIntegerField("Общая цена", null=True, blank=True)
     payment_type = models.CharField(_("Тип оплаты"), max_length=30, choices=PAYMENT_TYPE_CHOICES, null=True, blank=True)
     finished = models.BooleanField("Завершено", default=False)
-    is_paid = models.BooleanField("Оплачено", default=False, help_text="В случае с оплатой через банк, галочка должна быть поставлена вручную")
 
     def __str__(self):
         return f"Покупка - {self.payer_name()}"
