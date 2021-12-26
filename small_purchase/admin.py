@@ -52,7 +52,7 @@ class SmallPurchaseRecordAdmin(admin.ModelAdmin):
 
     def get_inlines(self, request, obj):
         if obj.payer:
-            return eval(f"{type(obj.payer).__name__}Inline")
+            return (eval(f"{type(obj.payer).__name__}Inline"),)
         else:
             return tuple()
 
