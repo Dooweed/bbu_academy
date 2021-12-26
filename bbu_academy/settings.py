@@ -30,7 +30,7 @@ DEBUG = True
 LOCAL = not bool(environ.get("LOCAL", False))
 
 
-ALLOWED_HOSTS = ["127.0.0.1", 'tcatb.uz']
+ALLOWED_HOSTS = ['tcatb.uz', 'www.tcatb.uz']
 
 # Application definition
 
