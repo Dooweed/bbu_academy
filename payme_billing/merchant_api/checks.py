@@ -2,7 +2,7 @@ import json
 from base64 import b64decode
 from binascii import Error as BinasciiError
 from datetime import datetime
-from typing import Tuple
+from typing import Tuple, Any
 
 from payme_billing.merchant_api.classes import PaymeCheckFailedException
 from payme_billing.vars.settings import WEB_CASH_KEY
@@ -72,7 +72,7 @@ def check_amount(params: dict) -> int:
     return amount
 
 
-def check_account(params: dict) -> Tuple[int, str]:
+def check_account(params: dict) -> Tuple[Any, str]:
     ACCOUNT_PHONE_LENGTH = 9
 
     account = params.get("account")
@@ -84,8 +84,6 @@ def check_account(params: dict) -> Tuple[int, str]:
     purchase_id = account.get("purchase_id")
     if purchase_id is None:
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не указан")
-    elif not isinstance(purchase_id, int) and not (isinstance(purchase_id, str) and purchase_id.isdigit()):
-        raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[purchase_id] не является числом и не может быть конвертирован в число")
 
     phone = account.get("phone")
     if phone is None:
@@ -97,7 +95,7 @@ def check_account(params: dict) -> Tuple[int, str]:
     elif len(phone) != ACCOUNT_PHONE_LENGTH:
         raise PaymeCheckFailedException(FIELD_ERROR, "Параметр account[phone] имеет неверную длину")
 
-    return int(purchase_id), phone
+    return purchase_id, phone
 
 
 def check_transaction_id(params: dict) -> str:

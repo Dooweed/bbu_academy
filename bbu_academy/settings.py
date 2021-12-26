@@ -15,6 +15,8 @@ from easy_thumbnails.conf import Settings as thumbnailSettings  # Image cropping
 from os import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from tools.payme_merchant import get_model
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Quick-start development settings - unsuitable for production
@@ -260,6 +262,7 @@ PAYME_BILLING_SETTINGS = {
     "web_cash_id": str(environ.get("PAYME_WEB_CASH_ID")),
     "web_cash_key": str(environ.get("PAYME_WEB_CASH_KEY")),
     "test_web_cash_key": str(environ.get("PAYME_WEB_CASH_TEST_KEY")),
-    "billing_models": ["purchase.PurchaseRecord", "small_purchase.SmallPurchaseRecord"],  # Each of them should be in form "app_label.ModelName" (first match will be selected)
+    # Function, that receives purchase_id as first positional argument and returns subclass of PaymeMerchantMixin (queryset with a single instance) or None (if not found)
+    "billing_models": get_model,
     "callback_time": 4000,  # Time to wait before redirecting to merchant page (in milliseconds)
 }

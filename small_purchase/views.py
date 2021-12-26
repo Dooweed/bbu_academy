@@ -229,7 +229,7 @@ def payment_form_view(request):
 
 def payme_payment_view(request):
     record_id = request.session.get("allow_media")
-    if record_id:
+    if record_id and SmallPurchaseRecord.objects.filter(id=request.session["allow_media"]).exists():
         record = SmallPurchaseRecord.objects.get(id=request.session["allow_media"])
     else:  # Redirect to index if session has no record
         return redirect("index")
