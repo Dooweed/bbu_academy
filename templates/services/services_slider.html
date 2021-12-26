@@ -1,0 +1,64 @@
+{% load cropping %}
+{% load static %}
+
+<section>
+    <div style="background-color: {{ bg_color }}" class="w-100 pt-30 pb-lg-5">
+        <div class="service-wrap2">
+            <h2 class="mb-30 pt-2 pb-2">{{ slider_title }}</h2>
+            <div id="owl-carousel-services-{{ unique_id }}" class="row owl-carousel owl-theme m-0">
+
+                {% for item in services %}
+                    <div class="chunk-card">
+                        <div style="background-image: url({% if item.has_image %}{% cropped_thumbnail item 'thumbnail_size' %}{% else %}{% static 'images/courses.jpg' %}{% endif %})" class="background course-background">
+                            <a href="{{ item.get_absolute_url }}" class="pad course-pad">
+                                <p class="date">{{ item.date_string }}</p>
+                                <p class="title">{{ item.title }}</p>
+                                <p class="description">{{ item.short_description| safe }}</p>
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+        </div><!-- Service Wrap Style 2 -->
+    </div>
+
+    <script>
+        window.addEventListener("load", function () {
+            const $owl = $('#owl-carousel-services-{{ unique_id }}');
+            window.addEventListener("resize", function (e) {
+                $owl.data('owl.carousel').options.stagePadding = window.innerWidth < 460 ? 0 : (window.innerWidth%440)/2;
+                $owl.trigger( 'refresh.owl.carousel' );
+            }, false);
+            $owl.owlCarousel({
+                nav:true,
+                dots: false,
+                margin: 20,
+                stagePadding: window.innerWidth < 460 ? 0 : (window.innerWidth%440)/2,
+                responsive:{
+                    0: {
+                        items:1
+                    },
+                    440:{
+                        items:1
+                    },
+                    880:{
+                        items:2
+                    },
+                    1320:{
+                        items:3
+                    },
+                    1760:{
+                        items:4
+                    },
+                    2200:{
+                        items:5
+                    },
+                    2640:{
+                        items:6
+                    },
+                }
+            })
+        }, false)
+    </script>
+</section>

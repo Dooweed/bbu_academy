@@ -4,6 +4,7 @@ from urllib.parse import quote
 from django.http import HttpResponse
 from django.template.response import TemplateResponse
 from django.urls import path
+from django.utils.safestring import mark_safe
 
 from .forms import CertificateAdminForm, MultiCertificateAdminForm
 from .models import Certificate
@@ -15,7 +16,7 @@ from .utils import build_certificate_excel
 
 @admin.register(Certificate)
 class CertificateAdmin(admin.ModelAdmin):
-    list_display = ("full_name", "pinfl", "inn", "certificate_n", "date_received")
+    list_display = ("full_name", "inn_or_pinfl", "certificate_n", "date_received")
     search_fields = ("pinfl", "inn", "certificate_n", "contract_n", "full_name", "date_received")
     fields = ("contract_n", "certificate_n", "pinfl", "inn", "full_name", "date_received")
     actions = ("download_excel", )
@@ -82,3 +83,7 @@ class CertificateAdmin(admin.ModelAdmin):
 
         context['form'] = form
         return TemplateResponse(request, "admin/certificates/multi-certificate-form.html", context)
+
+    def inn_or_pinfl(self, obj):
+        return mark_safe(f'<span style="color:gray">ИНН</span>: {obj.inn}' if obj.inn else f'<span style="color:gray">ПИНФЛ</span>: {obj.pinfl}')
+    inn_or_pinfl.short_description = "ИНН или ПИНФЛ"

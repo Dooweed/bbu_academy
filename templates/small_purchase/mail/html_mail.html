@@ -1,0 +1,35 @@
+{% load verbose_choice %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% load i18n %}
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+</head>
+<body>
+
+    {% if payment_link %}<p class="payment-link"><b>{% translate 'Ссылка на оплату' %}</b>: <i><a href="{{ payment_link }}">{% translate 'Оплатить' %}</a></i></p>{% endif %}
+
+    <div class="block">
+        <h2 class="header">{% translate "Данные" %}</h2>
+
+        <div class="records">
+            <div class="record payer">
+
+                <p class="header">{% translate 'Плательщик' %}</p>
+
+                <div class="fields">
+                    {% for field, val in payer %}
+                        <div class="value-group">
+                            <p class="fieldname">{{ field }}</p>
+                            <div class="value">{% if val == "None" %}-{% else %}{{ val }}{% endif %}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>

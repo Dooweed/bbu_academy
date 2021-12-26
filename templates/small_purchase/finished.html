@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load front_tags %}
+{% load i18n %}
+
+{% block title %}
+    <title>{% translate 'Заказ выполнен' %}</title>
+{% endblock %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/library.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{% translate 'Заказ выполнен' %}</h2>
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div class="container">
+            <div class="about-wrap5 form-wrap w-100 mt-5">
+
+                <h1 class="text-center">{% translate 'Благодарим за покупку!' %}</h1>
+                {% if payme_completed %}
+                    <p class="text-center">{% translate 'Оплата через Payme успешно выполнена' %}</p>
+                {% endif %}
+                <p class="warn text-center mt-5 mb-0">{% translate 'Введенные вами данные и счет были отправлены на указанную почту плательщика.' %}</p>
+                <p class="text-center"><span class="warn">{% translate 'Так-же вы можете скачать счет' %} </span>
+                    <a class="text-underline" href="{{ invoice_link }}" download="{{ INVOICE }}">{% translate 'по этой ссылке' %}</a></p>
+
+                <p class="warn text-center">{% translate 'Если Вы не обнаружили наше сообщение в папке Входящих сообщений, то проверьте папку Спам (Нежелательная почта)' %}</p>
+
+                <p class="text-center"><a class="text-underline" href="{% url 'small_purchase:offer-agreement' %}">{% translate 'Желаете оформить ещё один заказ?' %}</a></p>
+                <p class="text-center mt-3"><a class="text-underline" href="{% url 'index' %}">{% translate 'Перейти на главную страницу' %}</a></p>
+            </div><!-- About Wrap 5 -->
+        </div>
+    </div>
+</section>
+
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block main %}
+
+<section>
+    <div class="w-100 pt-60 position-relative">
+        <div class="fixed-bg" style="background-image: url({% static 'images/courses.jpg' %});"></div>
+        <div class="container">
+            <div class="page-title-wrap text-center w-100 d-inline-block">
+                <div class="page-title-inner d-inline-block">
+                    <h2 class="mb-0 text-color7">{{ page.title }}</h2>
+                </div>
+                <div class="breadcrumbs-wrap w-100">
+                    <ul class="breadcrumbs mb-0 list-unstyled d-inline-flex">
+                        {{ page.breadcrumbs| safe }}
+                    </ul><!-- Breadcrumbs -->
+                </div>
+            </div><!-- Page Title Wrap -->
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="w-100 pt-40 pb-100 position-relative">
+        <div id="particles1" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
+             data-count="8" data-speed="2" data-hide="770" data-image="/static"></div>
+        <div class="container">
+            <div class="about-wrap5 w-100">
+                <div class="row">
+
+
+                    <div class="col-md-12 col-sm-12 col-lg-9">
+                        {% for service in services %}
+                            {% include 'services/service_preview.html' %}
+                        {% endfor %}
+                    </div>
+                    <div class="col-md-6 col-sm-6 col-lg-3">
+                        <div class="rightside">
+                            <div class="theiaStickySidebar">
+                                <aside class="w-100 sidebar-wrap d-inline-block mt-25">
+
+                                    {% load courses %}
+                                    {% load trainings %}
+                                    {% courses_sidebar %}
+                                    {% trainings_sidebar %}
+
+                                </aside>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div><!-- About Wrap 5 -->
+    </div>
+</section>
+
+{% endblock %}

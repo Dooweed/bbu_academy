@@ -53,6 +53,10 @@ def get_students_list(record):
 def get_record(request):
     if "record_id" in request.session:  # Use created record if it exists
         record = PurchaseRecord.objects.get_or_create(id=request.session["record_id"])[0]
+        # if record.finished:
+        #     del request.session['record_id']
+        #     request.session.modified = True
+        #     return get_record(request)
     else:
         record = PurchaseRecord.objects.create()
         request.session["record_id"] = record.id
@@ -415,7 +419,7 @@ def payment_form_view(request):
 
 
 def payme_payment_view(request):
-    if not request.session["allow_media"]:  # Redirect to offer-agreement if session has no record
+    if not request.session["allow_media"]:  # Redirect to index if session has no record
         return redirect("index")
     else:
         record = PurchaseRecord.objects.get(id=request.session["allow_media"])
@@ -445,7 +449,7 @@ def payme_payment_view(request):
 
 
 def payment_finished_view(request):
-    if not request.session["allow_media"]:  # Redirect to offer-agreement if session has no record
+    if not request.session["allow_media"]:  # Redirect to index if session has no record
         return redirect("index")
     else:
         record = PurchaseRecord.objects.get(id=request.session["allow_media"])

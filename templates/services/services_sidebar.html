@@ -1,0 +1,30 @@
+{% load static %}
+{% load cropping %}
+{% load i18n %}
+
+<div class="widget style2 mt-45 w-100">
+    <h3 class="position-relative"><a href="{% url 'services:services' %}">{% translate "Услуги" %}</a></h3>
+    <div class="mini-pst-wrap">
+
+        {% for item in services %}
+
+            <div class="mini-pst brd-rd15 d-flex flex-wrap w-100">
+                <div class="mini-img brd-rd10 overflow-hidden">
+                    <a href="{{ item.build_absolute_url }}" title="">
+                        <img
+                                src="{% if item.has_image %}{% cropped_thumbnail item 'sidebar_size' %}{% else %}{% static 'images/blue-square.png' %}{% endif %}"
+                                alt="Recent Image 1">
+                    </a>
+                </div>
+                <div class="mini-inf">
+                    <h4 class="mb-0">
+                        <a style="font-size: 13px" href="{{ item.build_absolute_url }}" title="{{ item.title }}">{{ item.short_title }}</a>
+                    </h4>
+                    <span class="d-inline-block"><a href="{{ item.build_absolute_url }}" title="{{ item.extra_short_description }}">{% translate "Подробнее" %}</a></span>
+                </div>
+            </div>
+
+        {% endfor %}
+
+    </div>
+</div>

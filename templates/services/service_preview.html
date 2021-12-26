@@ -1,0 +1,37 @@
+{% load static %}
+{% load cropping %}
+{% load i18n %}
+
+{% if service.has_image %}
+    <div class="post-list-style1 style4 mt-40 d-flex flex-wrap w-100 align-items-center">
+        <div class="post-img4 brd-rd20 overflow-hidden">
+            <a class="d-block" href="{{ service.get_absolute_url }}" title="">
+                <img src="{% cropped_thumbnail service 'thumbnail_size' %}" alt="{{ service.image.name }}">
+            </a>
+        </div>
+
+        <div class="post-info4">
+            <h3 class="mb-0"><a href="{{ service.get_absolute_url }}" title="{{ service.title }}">{{ service.title }}</a></h3>
+            <p class="mb-0">{{ service.short_description| safe }}</p>
+            <div class="post-info4-bottom d-flex flex-wrap w-100 justify-content-between">
+                <ul class="pst-mta mb-0 list-unstyled d-inline-flex align-items-center">
+                    <li><a href="javascript:void(0);" title=""></a></li>
+                </ul>
+                <a class="d-inline-block read-more" href="{{ service.get_absolute_url }}" title="{{ service.extra_short_description }}">{% translate "Подробнее" %}</a>
+            </div>
+        </div>
+    </div>
+{% else %}
+    <div class="style4 mt-40 d-flex flex-wrap w-100 align-items-center">
+        <div class="w-100">
+            <h3 class="mb-3"><a href="{{ service.get_absolute_url }}" title="{{ service.title }}">{{ service.title }}</a></h3>
+            <p class="mb-2">{{ service.description| safe }}</p>
+            <div class="post-info4-bottom d-flex flex-wrap w-100 justify-content-between">
+                <ul class="pst-mta mb-0 list-unstyled d-inline-flex align-items-center">
+                    <li><a href="javascript:void(0);" title=""></a></li>
+                </ul>
+                <a class="d-inline-block read-more" href="{{ service.get_absolute_url }}" title="{{ service.extra_short_description }}">{% translate "Подробнее" %}</a>
+            </div>
+        </div>
+    </div>
+{% endif %}

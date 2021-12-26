@@ -51,6 +51,8 @@ INSTALLED_APPS = [
     'main_page.apps.MainPageConfig',
     'purchase.apps.PurchaseConfig',
     'payme_billing.apps.PaymeBillingConfig',
+    'services.apps.ServicesConfig',
+    'small_purchase.apps.SmallPurchaseConfig',
     # Package apps
     'front',  # Edit page text in frontend
     'adminsortable2',  # Drag-n-drop admin sorting

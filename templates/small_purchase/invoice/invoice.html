@@ -1,0 +1,207 @@
+{% load i18n %}
+<!doctype html>
+<html lang="en">
+<head>
+    {% load static %}
+    <meta charset="UTF-8">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <style>
+        .wkhtmltopdf-flex {
+            display: -webkit-box; /* wkhtmltopdf uses this one */
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-size: 14px;
+        }
+
+        .main p {
+            margin: 0;
+        }
+
+        .main .header > p {
+            font-size: 18px;
+            line-height: 1.2;
+        }
+
+        .text-price {
+            font-size: 16px;
+        }
+
+        .supplier {
+            margin-right: 10px;
+        }
+
+        .main .data .value, .main .signatures .value {
+            border-bottom: 1px solid #000;
+            width: 100%;
+        }
+
+        .label, body .value {
+            line-height: 1;
+        }
+
+        .signatures .label p {
+            font-size: 16px;
+        }
+
+        table, th, td {
+            border: 1px solid #000000;
+            text-align: center;
+        }
+
+        th, td {
+            padding: 2px 4px;
+        }
+    </style>
+</head>
+<body class="d-flex wkhtmltopdf-flex flex-column align-items-center">
+<div class="main">
+
+
+    <div class="header text-center mb-5">
+        <h3>{% translate 'Счет' %}</h3>
+        <p class="mb-0">№ {{ record.invoice_n }} {% translate 'от' %} {{ record.dotted_date_finished }}</p>
+        <p>{% translate 'к договору-оферте' %}</p>
+    </div>
+
+
+    <div class="data mb-4">
+
+        <div class="mb-2 row wkhtmltopdf-flex">
+            <div class="col-6 row wkhtmltopdf-flex supplier">
+                <div class="label p-0 col-5"><p>{% translate 'Поставщик' %}:</p></div>
+                <div class="value p-0 col-7"><p>{{ supplier_name }}</p></div>
+            </div>
+            <div class="col-6 row wkhtmltopdf-flex customer">
+                <div class="label p-0 col-5"><p>{% translate 'Покупатель' %}:</p></div>
+                <div class="value p-0 col-7"><p>{{ record.invoice_payer_name }}</p></div>
+            </div>
+        </div>
+
+        <div class="mb-2 row wkhtmltopdf-flex">
+            <div class="col-6 row wkhtmltopdf-flex supplier">
+                <div class="label p-0 col-5"><p>{% translate 'Адрес' %}:</p></div>
+                <div class="value p-0 col-7"><p>{{ address }}</p></div>
+            </div>
+            <div class="col-6 row wkhtmltopdf-flex customer">
+                <div class="label p-0 col-5"><p>
+                    {% if record.get_entity_payer_or_none %}
+                        {% translate 'Идентификационный номер покупателя (ИНН)' %}:
+                    {% else %}
+                        {% translate 'Персональный идентификационный номер физического лица (ПИНФЛ)' %}:
+                    {% endif %}
+                </p></div>
+                <div class="value p-0 col-7"><p>{{ record.invoice_inn_or_pinfl }}</p></div>
+            </div>
+        </div>
+
+        <div class="mb-2 row wkhtmltopdf-flex">
+            <div class="col-6 row wkhtmltopdf-flex supplier">
+                <div class="label p-0 col-5"><p>{% translate 'Идентификационный номер поставщика (ИНН)' %}:</p></div>
+                <div class="value p-0 col-7"><p>{{ supplier_inn }}</p></div>
+            </div>
+            {% if record.invoice_address %}
+                <div class="col-6 row wkhtmltopdf-flex customer">
+                    <div class="label p-0 col-5"><p>{% translate 'Адрес' %}:</p></div>
+                    <div class="value p-0 col-7"><p>{{ record.get_entity_payer_or_none.address }}</p></div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="mb-2 row wkhtmltopdf-flex">
+            <div class="col-6 row wkhtmltopdf-flex supplier">
+                <div class="label p-0 col-5"><p>{% translate 'Регистрационный код плательщика НДС' %}:</p></div>
+                <div class="value p-0 col-7"><p></p></div>
+            </div>
+        </div>
+
+        <div class="mb-2 row wkhtmltopdf-flex">
+            <div class="col-6 row wkhtmltopdf-flex supplier">
+                <div class="label p-0 col-5"><p>{% translate 'Р/С' %}:</p></div>
+                <div class="value p-0 col-7"><p>{{ checking_account }}</p></div>
+            </div>
+        </div>
+
+        <div class="mb-2 row wkhtmltopdf-flex">
+            <div class="col-6 row wkhtmltopdf-flex supplier">
+                <div class="label p-0 col-5"><p>{% translate 'МФО' %}:</p></div>
+                <div class="value p-0 col-7"><p>{{ mfo }}</p></div>
+            </div>
+        </div>
+
+    </div>
+
+    <table class="mb-3">
+        <tr>
+            <th rowspan="2">№</th>
+            <th rowspan="2">{% translate 'Наименование товаров (услуг)' %}</th>
+            <th rowspan="2">{% translate 'Единица измерения' %}</th>
+            <th rowspan="2">{% translate 'Количество' %}</th>
+            <th rowspan="2">{% translate 'Цена' %}</th>
+            <th rowspan="2">{% translate 'Стоимость поставки' %}</th>
+            <th colspan="2">{% translate 'НДС' %}</th>
+            <th rowspan="2">{% translate 'Стоимость поставки с учётом НДС' %}</th>
+        </tr>
+        <tr>
+            <th>{% translate 'Ставка' %}</th>
+            <th>{% translate 'Сумма' %}</th>
+        </tr>
+        <tr>
+            <td></td>
+            <td>1</td>
+            <td>2</td>
+            <td>3</td>
+            <td>4</td>
+            <td>5</td>
+            <td>6</td>
+            <td>7</td>
+            <td>8</td>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>{{ record.product.title }} <b>{% translate 'предоплата 100%' %}</b></td>
+            <td>{% translate 'сум' %}</td>
+            <td></td>
+            <td></td>
+            <td>{{ record.overall_price }}.00</td>
+            <td colspan="2">{% translate 'Без НДС' %}</td>
+            <td>{{ record.overall_price }}.00</td>
+        </tr>
+        <tr>
+            <th colspan="2" class="text-right">{% translate 'Итого' %}</th>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th>{{ record.overall_price }}.00</th>
+            <th colspan="2"></th>
+            <th>{{ record.overall_price }}.00</th>
+        </tr>
+    </table>
+
+    <p class="text-price mb-5">{% translate 'Всего к оплате' %}: {{ record.f_overall_price }} {% translate '00 тийин' %}. {% translate 'Без НДС' %}.</p>
+
+    <div class="signatures w-50">
+
+        <div class="row wkhtmltopdf-flex mb-4">
+            <div class="label p-0 col-5"><p>{% translate 'Руководитель' %}:</p></div>
+            <div class="value p-0 col-7"></div>
+        </div>
+        <div class="row wkhtmltopdf-flex">
+            <div class="label p-0 col-5"><p>{% translate 'Главный бухгалтер' %}:</p></div>
+            <div class="value p-0 col-7"></div>
+        </div>
+
+    </div>
+
+</div>
+</body>
+</html>

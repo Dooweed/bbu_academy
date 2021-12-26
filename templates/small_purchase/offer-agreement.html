@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load front_tags %}
+{% load i18n %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/shining-button.css' %}">
+{% endblock %}
+
+{% block title %}
+    <title>{% translate 'Договор-оферта' %}</title>
+{% endblock %}
+
+{% block main %}
+
+
+    <section>
+        <div class="w-100 pt-60 position-relative">
+            <div class="fixed-bg" style="background-image: url({% static 'images/trainigs.jpg' %});"></div>
+            <div class="container">
+                <div class="page-title-wrap text-center w-100 d-inline-block">
+                    <div class="page-title-inner d-inline-block">
+                        <h2 class="mb-0 text-color7">{% translate 'Договор-оферта' %}</h2>
+                    </div>
+                </div><!-- Page Title Wrap -->
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="w-100 pt-40 pb-100 position-relative">
+            <div class="container">
+                <div class="about-wrap5 w-100">
+
+                    <div class="offer_agreement-content">
+                        {% front_edit "offer_agreement_S" request.path request.LANGUAGE_CODE %}
+                            <p>Текст договора-оферты услуг</p>
+                        {% end_front_edit %}
+                    </div>
+
+                    <div class="agreement-buttons d-flex justify-content-center p-5">
+                        <button class="button sheen disagree" onclick="location.href = '{% url 'index' %}'">{% translate "Отказываюсь" %}</button>
+                        <form method="POST">
+                            {% csrf_token %}
+                            <button class="button sheen no-sheen">{% translate "Соглашаюсь" %}</button>
+                        </form>
+                    </div>
+
+                </div><!-- About Wrap 5 -->
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}
+
+
+{% block script %}
+    {% front_edit_scripts editor="ckeditor" %}
+    {% if request.user.is_staff %}
+        <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    {% endif %}
+{% endblock %}

@@ -33,7 +33,7 @@ class CourseAdmin(SortableAdminMixin, ImageCroppingMixin, TranslationAdmin):
         ("Изображение", {"fields": ("image", "sidebar_size", "thumbnail_size"), "classes": ("visual-group", "wide",)}),
         ("Текст", {"fields": ("text",), "classes": ("visual-group", "wide",)}),
         ("Краткое описание", {"fields": ("short_text",), "classes": ("visual-group",)}),
-        ("Мета-теги (Описание)", {"fields": ("meta_description",), "classes": ("visual-group",)}),
+        ("Мета-теги (Описание)", {"fields": ("meta_description",), "classes": ("visual-group", "collapse")}),
     )
     prepopulated_fields = {'url': ('title',), }
     form = CourseForm

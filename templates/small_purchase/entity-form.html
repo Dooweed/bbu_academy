@@ -1,0 +1,111 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load front_tags %}
+{% load i18n %}
+
+{% block title %}
+    <title>{% translate 'Заполнение данных' %}</title>
+{% endblock %}
+
+{% block links %}
+    <link rel="stylesheet" href="{% static 'css/shining-button.css' %}">
+{% endblock %}
+
+{% block main %}
+
+    <section>
+        <div class="w-100 pt-60 position-relative">
+            <div class="fixed-bg" style="background-image: url({% static 'images/library.jpg' %});"></div>
+            <div class="container">
+                <div class="page-title-wrap text-center w-100 d-inline-block">
+                    <div class="page-title-inner d-inline-block">
+                        <h2 class="mb-0 text-color7">{% translate 'Заполнение данных' %}</h2>
+                    </div>
+                </div><!-- Page Title Wrap -->
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="w-100 pt-40 pb-100 position-relative">
+            <div class="container">
+                <div class="about-wrap5 form-wrap w-100">
+                    <div class="row align-items-center">
+
+                        <p class="warning-message text-center mt-3 mb-60 w-75 ml-auto mr-auto">
+                            <b>{% translate 'Внимание!' %}</b> {% translate 'Вводите данные корректно. Ошибка при вводе данных может привести к ошибкам в последующих документах.' %}
+                        </p>
+
+
+                        <ul class="nav nav-tabs w-100">
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'small_purchase:individual-form' %}">{% translate 'Физическое лицо' %}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link active">{% translate 'Юридическое лицо' %}</a>
+                            </li>
+                        </ul>
+
+                        <div class="form-tab-content">
+
+                            <div class="tab-pane fade show active individual" id="individual">
+                                <form class="validate-name-form form" enctype="multipart/form-data" method="POST">
+                                    {% csrf_token %}
+                                    <h2 class="text-center mt-2">{% translate 'Юридическое лицо' %}</h2>
+
+                                    <div class="mt-4 row justify-content-center">
+                                        <div id="payer" class="col-12 col-md-6 form-column payer">
+                                            {% for field in form %}
+                                                <div class="form-group">
+                                                    {{ field.label_tag }}
+                                                    <span class="warn">{% for error in field.errors %}{{ error }}{% endfor %}</span>
+                                                    <div class="field">{{ field }}</div>
+                                                    <small>{{ field.help_text }}</small>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+
+                                        <div class="submit-button col-12 d-flex justify-content-end">
+                                            <button type="submit" class="sheen no-sheen">{% translate 'Отправить' %}</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div><!-- About Wrap 5 -->
+            </div>
+        </div>
+    </section>
+
+{% endblock %}
+
+{% block script %}
+    <script src="{% static 'js/custom/individual_form_script.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.3/dist/jquery.validate.min.js"></script>
+    <script>
+        $.validator.addMethod(
+            "regex",
+            function(value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            },
+            "Incorrect value"
+        );
+
+        $(document).ready(function () {
+            $(".validate-name-form").validate({
+                errorClass: 'warn',
+                errorElement: 'span',
+                errorPlacement: function (error, element) {
+                    error.appendTo($(element).parent().siblings('span.warn'));
+                },
+            });
+            $.validator.messages.required = "";
+            const error_messages = {regex: "{% translate 'Имя должно быть в точности как в паспорте' %}", required: ""};
+            $("#id_full_name").rules("add", {regex: /^[A-Za-z'’` -]+$/, messages: error_messages})
+        });
+    </script>
+{% endblock %}
