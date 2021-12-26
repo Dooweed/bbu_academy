@@ -173,6 +173,10 @@ class SmallPurchaseRecord(PaymeMerchantMixin):
         return self.payer._meta.verbose_name if self.payer else "(не заполнено)"
     payer_type.short_description = "Тип плательщика"
 
+    def payer_name(self):
+        return self.payer.name if self.payer else "(не заполнено)"
+    payer_name.short_description = "Плательщик"
+
     @property
     def payer(self):
         try:
