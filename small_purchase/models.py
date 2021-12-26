@@ -219,7 +219,7 @@ class SmallPurchaseRecord(PaymeMerchantMixin):
 
     @property
     def folder_path(self) -> Path:
-        path = PURCHASE_DOCS_FOLDER / f"record_{self.id}"
+        path = PURCHASE_DOCS_FOLDER / f"record_S{self.id}"
         path.mkdir(exist_ok=True, parents=True)
         return path
 
@@ -235,7 +235,7 @@ class SmallPurchaseRecord(PaymeMerchantMixin):
     admin_invoice_link.short_description = "Счёт"
 
     def invoice_link(self) -> str:
-        return PURCHASE_DOCS_BASE_LINK + f"record_{self.id}/{INVOICE_SLUG}.pdf" if self.invoice_path.exists() else ""
+        return PURCHASE_DOCS_BASE_LINK + f"record_S{self.id}/{INVOICE_SLUG}.pdf" if self.invoice_path.exists() else ""
 
     def delete_temp_files(self):
         try:
