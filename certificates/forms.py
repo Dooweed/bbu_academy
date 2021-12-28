@@ -59,12 +59,21 @@ class MultiCertificateAdminForm(forms.ModelForm):
         skipped_n = 0
 
         for parsed_certificate in correct_certificates:
+            # Try to find existing certificate
             if parsed_certificate.inn is not None:
-                model_certificate = Certificate(inn=parsed_certificate.inn)
-                created = not Certificate.objects.filter(inn=parsed_certificate.inn).exists()
+                queryset = Certificate.objects.filter(inn=parsed_certificate.inn)
             else:
-                model_certificate = Certificate(pinfl=parsed_certificate.pinfl)
-                created = not Certificate.objects.filter(pinfl=parsed_certificate.pinfl).exists()
+                queryset = Certificate.objects.filter(pinfl=parsed_certificate.pinfl)
+
+            if queryset.exists():
+                model_certificate = queryset.first()
+                created = False
+            else:  # Create new one if no existing ones
+                if parsed_certificate.inn is not None:
+                    model_certificate = Certificate(inn=parsed_certificate.inn)
+                else:
+                    model_certificate = Certificate(pinfl=parsed_certificate.pinfl)
+                created = True
 
             if created or cleaned_choice == "renew":
                 populate_certificate(model_certificate, parsed_certificate)
