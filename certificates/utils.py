@@ -13,11 +13,10 @@ NUMBER_OF_CERTIFICATE_FIELDS = 4
 
 
 class ParsedCertificate:
-    contract_n = None
-    certificate_n = None
-    pinfl = None
-    full_name = None
-    date_received = None
+    __slots__ = ('contract_n', 'certificate_n', 'inn', 'pinfl', 'full_name', 'date_received')
+
+    def __init__(self):
+        self.contract_n, self.certificate_n, self.inn, self.pinfl, self.full_name, self.date_received = None, None, None, None, None, None
 
     @property
     def has_contract_n(self):
@@ -28,8 +27,8 @@ class ParsedCertificate:
         return self.certificate_n is not None
 
     @property
-    def has_pinfl(self):
-        return self.pinfl is not None
+    def has_inn_or_pinfl(self):
+        return self.inn is not None or self.pinfl is not None
 
     @property
     def has_full_name(self):
@@ -56,9 +55,16 @@ class ParsedCertificate:
                 pass
             self.certificate_n = certificate_n
 
-    def set_pinfl(self, pinfl):
+    def set_inn_or_pinfl(self, inn_or_pinfl):
+        def clean(value):
+            return str(value).strip().replace('.0', '')
+
         try:
-            self.pinfl = int(pinfl)
+            inn_or_pinfl = clean(inn_or_pinfl)
+            if len(str(inn_or_pinfl)) <= 9:
+                self.inn = int(inn_or_pinfl)
+            else:
+                self.pinfl = int(inn_or_pinfl)
         except ValueError:
             pass
 
@@ -80,7 +86,7 @@ class ParsedCertificate:
         count = 0
         if self.certificate_n is not None:
             count += 1
-        if self.pinfl is not None:
+        if self.pinfl is not None or self.inn is not None:
             count += 1
         if self.full_name is not None:
             count += 1
@@ -90,6 +96,9 @@ class ParsedCertificate:
 
     def is_correct(self):
         return self.filled_fields() == NUMBER_OF_CERTIFICATE_FIELDS
+
+    def pinfl_or_inn(self):
+        return self.pinfl if self.pinfl else self.inn
 
 def populate_certificate(model_certificate, parsed_certificate):
     model_certificate.full_name = parsed_certificate.full_name
@@ -102,7 +111,7 @@ def broken_certificates_report(broken_certificates: List[ParsedCertificate]):
     report = ""
     completely_wrong = 0
     for certificate in broken_certificates:
-        if certificate.has_pinfl:
+        if certificate.has_inn_or_pinfl:
             wrong_fields = "<u>Имя</u>, " if not certificate.has_full_name else ""
             wrong_fields += "<u>Дата получения</u>, " if not certificate.has_date_received else ""
             wrong_fields += "<u>Номер сертификата</u>, " if not certificate.has_certificate_n else ""
@@ -141,7 +150,7 @@ def parse_excel(file):
                 new_certificate = ParsedCertificate()
                 new_certificate.set_full_name(row[1].value)
                 new_certificate.set_contract_n(row[2].value)
-                new_certificate.set_pinfl(row[3].value)
+                new_certificate.set_inn_or_pinfl(row[3].value)
                 new_certificate.set_date_received(row[4].value, row[5].value, row[6].value)
                 new_certificate.set_certificate_n(row[7].value)
 

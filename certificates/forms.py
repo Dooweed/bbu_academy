@@ -59,21 +59,17 @@ class MultiCertificateAdminForm(forms.ModelForm):
         skipped_n = 0
 
         for parsed_certificate in correct_certificates:
-            model_certificate = Certificate.objects.filter(pinfl=parsed_certificate.pinfl)
-            if model_certificate.exists():
-                model_certificate = model_certificate.first()
-                created = False
+            if parsed_certificate.inn is not None:
+                model_certificate = Certificate(inn=parsed_certificate.inn)
+                created = not Certificate.objects.filter(inn=parsed_certificate.inn).exists()
             else:
                 model_certificate = Certificate(pinfl=parsed_certificate.pinfl)
-                created = True
-            if created:
+                created = not Certificate.objects.filter(pinfl=parsed_certificate.pinfl).exists()
+
+            if created or cleaned_choice == "renew":
                 populate_certificate(model_certificate, parsed_certificate)
                 model_certificate.save()
                 created_n += 1
-            elif cleaned_choice == "renew":
-                populate_certificate(model_certificate, parsed_certificate)
-                model_certificate.save()
-                renewed_n += 1
             else:
                 skipped_n += 1
 
