@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-28 13:25+0500\n"
+"POT-Creation-Date: 2021-12-28 18:09+0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -100,7 +100,7 @@ msgstr "Ta'lim to'g'risidagi hujjatlar"
 msgid "ПИНФЛ должен состоять из 14 цифр"
 msgstr "ShShIR 14 ta raqamdan iborat bo'lishi kerak"
 
-#: .\purchase\forms.py:54 .\small_purchase\forms.py:12
+#: .\purchase\forms.py:54
 msgid "Скан-копия паспорта плательщика"
 msgstr "To'lovchining pasportining skanerlangan nusxasi"
 
@@ -349,6 +349,10 @@ msgstr "Bizda boshqa xizmatlar ham bor"
 msgid "Попробуйте наши услуги"
 msgstr "Xizmatlarimizni sinab ko'ring"
 
+#: .\small_purchase\forms.py:12
+msgid "Скан-копия паспорта"
+msgstr "Pasportining skanerlangan nusxasi"
+
 #: .\small_purchase\models.py:54
 msgid "ФИО"
 msgstr "Familiyasi ismi otasini ismi"
@@ -360,6 +364,15 @@ msgstr "Jismoniy shaxsning shaxsiy identifikatsiya raqami"
 #: .\small_purchase\models.py:57
 msgid "Номер паспорта"
 msgstr "Pasport raqami"
+
+#: .\small_purchase\models.py:137
+msgid "Услуга"
+msgstr "Xizmat"
+
+#: .\small_purchase\models.py:140
+#: .\templates\small_purchase\payment-form.html:79
+msgid "Кол-во наименований товаров"
+msgstr "Tovarlar turlarining miqdori"
 
 #: .\small_purchase\views.py:22
 msgid "Паспорт"
@@ -1017,7 +1030,9 @@ msgstr "Xizmatlar"
 msgid ""
 "Вводите данные корректно. Ошибка при вводе данных может привести к ошибкам в "
 "последующих документах."
-msgstr "Ma'lumotlarni to'g'ri kiriting. Ma'lumotlarni kiritishdagi xatolar keyingi hujjatlarda xatolarga olib kelishi mumkin."
+msgstr ""
+"Ma'lumotlarni to'g'ri kiriting. Ma'lumotlarni kiritishdagi xatolar keyingi "
+"hujjatlarda xatolarga olib kelishi mumkin."
 
 #: .\templates\small_purchase\mail\html_mail.html:15
 #: .\templates\small_purchase\mail\text_mail.html:5
@@ -1035,10 +1050,6 @@ msgstr "Yuridik shaxs"
 #: .\templates\small_purchase\payment-form.html:68
 msgid "Физ. лицо"
 msgstr "Jismoniy shaxs"
-
-#: .\templates\small_purchase\payment-form.html:79
-msgid "Кол-во наименований товаров"
-msgstr "Tovarlar turlarining miqdori"
 
 #: .\templates\small_purchase\payment-form.html:92
 msgid "Итого к оплате"

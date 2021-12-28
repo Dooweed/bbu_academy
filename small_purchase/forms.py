@@ -1,7 +1,7 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
-from django.utils.translation import gettext as _
+from django.utils.translation import gettext_lazy as _
 
 from purchase.utils import validate_file_2mb
 from small_purchase.models import IndividualPayer, EntityPayer, SmallPurchaseRecord
@@ -9,7 +9,7 @@ from small_purchase.models import IndividualPayer, EntityPayer, SmallPurchaseRec
 YEARS = [i for i in reversed(range(1900, timezone.now().year + 1))]
 
 class IndividualPayerForm(forms.ModelForm):
-    passport = forms.ImageField(label=_("Скан-копия паспорта плательщика"), validators=(validate_file_2mb, ), help_text=_('Размер файла до 2Мб'))
+    passport = forms.ImageField(label=_("Скан-копия паспорта"), validators=(validate_file_2mb, ), help_text=_('Размер файла до 2Мб'))
 
     def clean(self):
         # Validate inn
