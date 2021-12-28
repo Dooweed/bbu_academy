@@ -37,7 +37,7 @@ class MultiCertificateAdminForm(forms.ModelForm):
     certificates = forms.FileField(
         widget=forms.FileInput(),
         validators=[FileExtensionValidator(allowed_extensions=['xls', 'xlt', 'xlm', 'xlsx', 'xlsm', 'xltx', 'xltm', 'xlsb', 'xla', 'xlam', 'xll', 'xlw'],
-                                           message="Пожалуста, загрузите Excel файл"), ],
+                                           message="Пожалуйста, загрузите Excel файл"), ],
         label="Загрузите файл Excel с сертификатами",
     )
     existing_action = forms.ChoiceField(
