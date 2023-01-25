@@ -23,14 +23,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = ''
+SECRET_KEY = '123'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 LOCAL = not bool(environ.get("LOCAL", False))
 
 
-ALLOWED_HOSTS = ['tcatb.uz', 'www.tcatb.uz']
+ALLOWED_HOSTS = ['127.0.0.1', 'tcatb.uz', 'www.tcatb.uz']
 
 # Application definition
 
@@ -107,24 +107,24 @@ TEMPLATES = [
 WSGI_APPLICATION = 'bbu_academy.wsgi.application'
 
 # Logging
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'file': {
-            'level': 'WARNING',
-            'class': 'logging.FileHandler',
-            'filename': BASE_DIR / 'logs/django.log',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['file'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-    },
-}
+# LOGGING = {
+#     'version': 1,
+#     'disable_existing_loggers': False,
+#     'handlers': {
+#         'file': {
+#             'level': 'WARNING',
+#             'class': 'logging.FileHandler',
+#             'filename': BASE_DIR / 'logs/django.log',
+#         },
+#     },
+#     'loggers': {
+#         'django': {
+#             'handlers': ['file'],
+#             'level': 'WARNING',
+#             'propagate': True,
+#         },
+#     },
+# }
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases

@@ -137,7 +137,7 @@ class SmallPurchaseRecord(PaymeMerchantMixin):
     service = models.ForeignKey(verbose_name=_('Услуга'), to='services.Service', on_delete=models.RESTRICT, null=True, blank=True)
     special_price = models.BooleanField(_("Я являюсь членом АТБ"), default=False)
     price = models.BigIntegerField("Цена на услугу", null=True, blank=True)
-    amount = models.IntegerField(_('Кол-во наименований товаров'), null=True, blank=True)
+    amount = models.IntegerField(_('Кол-во наименований услуг'), null=True, blank=True)
     overall_price = models.BigIntegerField("Общая цена", null=True, blank=True)
     payment_type = models.CharField(_("Тип оплаты"), max_length=30, choices=PAYMENT_TYPE_CHOICES, null=True, blank=True)
     finished = models.BooleanField("Завершено", default=False)

@@ -9,6 +9,7 @@ from django.core.validators import validate_integer
 from django.db import models
 from django.contrib.contenttypes.fields import GenericForeignKey
 from django.utils.safestring import mark_safe
+from django.utils.text import slugify
 
 from django.utils.translation import gettext_lazy as _, gettext as gt
 

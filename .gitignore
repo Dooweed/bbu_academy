@@ -21,6 +21,10 @@
 
 /emails/
 
-/media/temp/
+/media/
+
+*.rar
+*.zip
+*.json
 
 **/__pycache__/
