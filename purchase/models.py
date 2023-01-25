@@ -201,7 +201,7 @@ class EntityPayer(models.Model):
     entity_payer_org_class = models.CharField(_("ОКЭД организации"), max_length=100)
     entity_payer_email = models.EmailField(_("Адрес электронной почты"))
     entity_payer_head_name = models.CharField(_("ФИО и должность руководителя"), max_length=300)
-    record = models.OneToOneField(verbose_name="Запись", to="PurchaseRecord", on_delete=models.CASCADE, related_name="entity_payer")
+    record = models.OneToOneField(verbose_name=_("Запись"), to="PurchaseRecord", on_delete=models.CASCADE, related_name="entity_payer")
 
     def __str__(self):
         return self.name
@@ -234,20 +234,20 @@ class EntityPayer(models.Model):
 
 
 class PurchaseRecord(PaymeMerchantMixin):
-    offer_agreement = models.BooleanField("Пользовательское соглашение", default=False)
-    date_started = models.DateTimeField("Дата и время создания заказа", auto_now_add=True)
-    date_finished = models.DateTimeField("Дата и время завершения заказа", null=True, blank=True)
+    offer_agreement = models.BooleanField(_("Пользовательское соглашение"), default=False)
+    date_started = models.DateTimeField(_("Дата и время создания заказа"), auto_now_add=True)
+    date_finished = models.DateTimeField(_("Дата и время завершения заказа"), null=True, blank=True)
     study_type = models.CharField(verbose_name=_("Тип обучения"), choices=STUDY_TYPE_CHOICES, max_length=20)
 
-    content_type = models.ForeignKey(verbose_name="Продукт", to=ContentType, related_name="content_type_timelines", on_delete=models.DO_NOTHING, null=True, blank=True,
-                                     limit_choices_to=models.Q(app_label='trainings', model='training', active=True) | models.Q(app_label='courses', model='course'))
+    content_type = models.ForeignKey(verbose_name=_("Продукт"), to=ContentType, related_name="purchases", on_delete=models.DO_NOTHING, null=True, blank=True,
+                                     limit_choices_to=models.Q(app_label='courses', model='Course', active=True))
     object_id = models.PositiveIntegerField(null=True, blank=True)
     product = GenericForeignKey()
     language = models.CharField(_("Язык обучения"), max_length=10, choices=LANGUAGE_CHOICES, null=True, blank=True)
 
     special_price = models.BooleanField(_("Я являюсь членом АТБ"), default=False)
-    price = models.BigIntegerField("Цена на курс/тренинг", null=True, blank=True)
-    overall_price = models.BigIntegerField("Общая цена", null=True, blank=True)
+    price = models.BigIntegerField(_("Цена на курс/тренинг"), null=True, blank=True)
+    overall_price = models.BigIntegerField(_("Общая цена"), null=True, blank=True)
     payment_type = models.CharField(_("Тип оплаты"), max_length=30, choices=PAYMENT_TYPE_CHOICES, null=True, blank=True)
     finished = models.BooleanField("Завершено", default=False)
 
