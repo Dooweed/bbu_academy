@@ -58,7 +58,7 @@ class IndividualPayer(models.Model):
     phone_number = models.CharField(_("Номер телефона"), max_length=40)
     email = models.EmailField(_("Адрес электронной почты"))
     telegram_contact = models.CharField(_("Контакт в Telegram (если имеется)"), help_text=_("(номер телефона или ссылка)"), max_length=300, null=True, blank=True)
-    record = models.OneToOneField(verbose_name="Запись", to="SmallPurchaseRecord", on_delete=models.CASCADE, related_name="individual_payer")
+    record = models.OneToOneField(verbose_name=_("Запись"), to="SmallPurchaseRecord", on_delete=models.CASCADE, related_name="individual_payer")
 
     def __str__(self):
         return self.name
@@ -105,7 +105,7 @@ class EntityPayer(models.Model):
     org_inn = models.CharField(_("ИНН организации"), validators=[validate_integer], max_length=30)
     email = models.EmailField(_("Адрес электронной почты"))
     head_name = models.CharField(_("ФИО и должность руководителя"), max_length=300)
-    record = models.OneToOneField(verbose_name="Запись", to="SmallPurchaseRecord", on_delete=models.CASCADE, related_name="entity_payer")
+    record = models.OneToOneField(verbose_name=_("Запись"), to="SmallPurchaseRecord", on_delete=models.CASCADE, related_name="entity_payer")
 
     def __str__(self):
         return self.name
@@ -134,7 +134,12 @@ class SmallPurchaseRecord(PaymeMerchantMixin):
     offer_agreement = models.BooleanField("Пользовательское соглашение", default=False)
     date_started = models.DateTimeField("Дата и время создания заказа", auto_now_add=True)
     date_finished = models.DateTimeField("Дата и время завершения заказа", null=True, blank=True)
-    service = models.ForeignKey(verbose_name=_('Услуга'), to='services.Service', on_delete=models.RESTRICT, null=True, blank=True)
+
+    content_type = models.ForeignKey(verbose_name="Продукт", to=ContentType, related_name="small_purchases", on_delete=models.DO_NOTHING, null=True, blank=True,
+                                     limit_choices_to=models.Q(app_label='trainings', model='Training', active=True) | models.Q(app_label='services', model='Service', active=True))
+    object_id = models.PositiveIntegerField(null=True, blank=True)
+    product = GenericForeignKey()
+
     special_price = models.BooleanField(_("Я являюсь членом АТБ"), default=False)
     price = models.BigIntegerField("Цена на услугу", null=True, blank=True)
     amount = models.IntegerField(_('Кол-во наименований услуг'), null=True, blank=True)
