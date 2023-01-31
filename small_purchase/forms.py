@@ -41,7 +41,7 @@ class EntityPayerForm(forms.ModelForm):
 class ConfirmationForm(forms.ModelForm):
     class Meta:
         model = SmallPurchaseRecord
-        fields = ("service", "amount", "special_price")
+        fields = ("product", "amount", "special_price")
 
 class PaymentForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
