@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from django.contrib import admin
+from django.db.models import Q
 from django.http import HttpResponse
 from urllib.parse import quote
 
@@ -66,3 +67,9 @@ class PaymentRecordAdmin(admin.ModelAdmin):
 
     def has_add_permission(self, request):
         return False
+
+    # def get_queryset(self, request):
+    #     return super().get_queryset(request).filter(
+    #         Q(overall_price__isnull=False) | Q(price__isnull=False) | Q(date_finished__isnull=False) |
+    #         Q(finished=True) | Q(entity_payer__isnull=False) | Q(students__isnull=False)
+    #     ).distinct()
