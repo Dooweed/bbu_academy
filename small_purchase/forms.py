@@ -1,10 +1,12 @@
 from django import forms
 from django.core.exceptions import ValidationError
 from django.utils import timezone
+from django.utils.functional import lazy
 from django.utils.translation import gettext_lazy as _
 
 from purchase.utils import validate_file_2mb
 from small_purchase.models import IndividualPayer, EntityPayer, SmallPurchaseRecord
+from small_purchase.utils import get_product_choices
 
 YEARS = [i for i in reversed(range(1900, timezone.now().year + 1))]
 
@@ -39,6 +41,8 @@ class EntityPayerForm(forms.ModelForm):
 
 
 class ConfirmationForm(forms.ModelForm):
+    product = forms.ChoiceField(label=_("Выбор продукта"), choices=lazy(get_product_choices, tuple))
+
     class Meta:
         model = SmallPurchaseRecord
         fields = ("product", "amount", "special_price")

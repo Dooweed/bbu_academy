@@ -72,15 +72,11 @@ def get_atb_members_list():
 def get_product_choices():
     try:
         courses = Course.objects.filter(active=True)
-        trainings = Training.objects.filter(active=True)
 
         choices = [(None, '---------')]
         appendix = "(" + str(_('Онлайн: ')) + "{online}" + "/" + str(_('Офлайн: ')) + "{offline}" + ")"
         for item in courses:
             choices.append((f"course-{item.id}", _('Курс: ') + item.title + appendix.format(online=item.online_beautified_price(), offline=item.offline_beautified_price())))
-
-        for item in trainings:
-            choices.append((f"training-{item.id}", _("Тренинг: ") + item.title + appendix.format(online=item.online_beautified_price(), offline=item.offline_beautified_price())))
 
         return tuple(choices)
     except ProgrammingError:
