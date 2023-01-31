@@ -60,6 +60,10 @@ def pretty_string(value):
     else:
         return str(value)
 
+
+def get_column_width(value) -> int:
+    return max(len(item) for item in value.split('\n')) if len(value) > 4 else 4
+
 def model_to_excel(query_set: QuerySet, field_names=None) -> BytesIO:
     workbook = xlwt.Workbook()
     sheet = workbook.add_sheet("Сертификаты")
@@ -96,7 +100,7 @@ def model_to_excel(query_set: QuerySet, field_names=None) -> BytesIO:
         else:
             name = str(attr.short_description if hasattr(attr, 'short_description') else attr.__name__)
         sheet.write(0, c, name, title_style)
-        width = len(name) if len(name) > 4 else 4
+        width = get_column_width(name)
 
         for r, record in enumerate(record_list):
             if is_field:
@@ -105,7 +109,7 @@ def model_to_excel(query_set: QuerySet, field_names=None) -> BytesIO:
                 value = attr(record)
             value = pretty_string(value)
             sheet.write(r+1, c, value, font_style)
-            width = len(value) if len(value) > width else width
+            width = max(get_column_width(value), width)
 
         sheet.col(c).width = width*440
 

@@ -273,6 +273,14 @@ class SmallPurchaseRecord(PaymeMerchantMixin):
     def invoice_inn_or_pinfl(self):
         return self.payer.inn if self.get_individual_payer_or_none() is None else self.payer.pinfl
 
+    def email(self):
+        payer = self.payer
+        if payer is None:
+            return '-'
+
+        return f'{self.payer_name()}: {payer.email}'
+    email.short_description = 'Почта'
+
     class Meta:
         verbose_name = "Мини-покупка"
         verbose_name_plural = "Мини-покупки"

@@ -387,6 +387,20 @@ class PurchaseRecord(PaymeMerchantMixin):
     def invoice_inn_or_pinfl(self):
         return self.payer.inn if self.get_individual_payer_or_none() is None else self.payer.individual_payer_pinfl
 
+    def payer_email(self):
+        payer = self.payer
+        if payer is None:
+            return '-'
+
+        email = payer.entity_payer_email if isinstance(payer, EntityPayer) else payer.individual_payer_email
+        return f'{self.payer_name()}: {email}'
+    payer_email.short_description = 'Почта плательщика'
+
+    def student_emails(self):
+        return '\n'.join(f'{student.name}: {student.student_email}'
+                         for student in self.students.all())
+    student_emails.short_description = 'Почта студентов'
+
     class Meta:
         verbose_name = "Покупка"
         verbose_name_plural = "Покупки"

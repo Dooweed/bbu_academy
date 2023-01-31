@@ -50,7 +50,7 @@ class PaymentRecordAdmin(admin.ModelAdmin):
 
     def download_excel(self, request, queryset):
         fields = ("id", "payer_type", "payer_name", "student_name", "get_study_type_display", "get_payment_type_display", "price", "overall_price", "date_started", "date_finished", "offer_agreement",
-                  "special_price", "is_paid", "finished")
+                  "special_price", "is_paid", "finished", 'payer_email', 'student_emails')
         file = model_to_excel(queryset, fields)
         file.name = f"Покупки-({datetime.now()}).xls"
         response = HttpResponse(file.getvalue(), content_type='application/vnd.ms-excel')
