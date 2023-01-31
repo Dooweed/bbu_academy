@@ -37,7 +37,7 @@ class EntityPayerInline(admin.StackedInline):
 @admin.register(PurchaseRecord)
 class PaymentRecordAdmin(admin.ModelAdmin):
     list_filter = ("is_paid", "language", "finished", "study_type", "overall_price", "payment_type", "date_started", "date_finished")
-    list_display = ("invoice_n", "payer_name", "payer_type", "student_name", "overall_price", "payment_type", "study_type", "language", "date_started", "finished")
+    list_display = ("invoice_n", "product", "payer_name", "payer_type", "student_name", "overall_price", "payment_type", "study_type", "language", "date_started", "finished")
 
     # "id", "finished", "study_type", "payment_type", "get_price", "overall_price", "date_started", "date_finished"
     fields = ("id", "admin_invoice_link", "state", "offer_agreement", "is_paid", "finished", "study_type", "language", "special_price", "payment_type", "price",
