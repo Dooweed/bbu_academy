@@ -1,4 +1,5 @@
 from django.db import ProgrammingError, OperationalError
+from django.utils.translation import gettext as _
 
 from services.models import Service
 from trainings.models import Training

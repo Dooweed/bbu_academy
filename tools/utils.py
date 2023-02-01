@@ -111,7 +111,7 @@ def model_to_excel(query_set: QuerySet, field_names=None) -> BytesIO:
             sheet.write(r+1, c, value, font_style)
             width = max(get_column_width(value), width)
 
-        sheet.col(c).width = width*440
+        sheet.col(c).width = min(width*440, 65500)
 
     file = BytesIO()
     workbook.save(file)
