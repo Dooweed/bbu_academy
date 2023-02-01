@@ -50,7 +50,7 @@ class PaymentRecordAdmin(admin.ModelAdmin):
     save_on_top = True
 
     def download_excel(self, request, queryset):
-        fields = ("id", "payer_type", "payer_name", "student_name", "get_study_type_display", "get_payment_type_display", "price", "overall_price", "date_started", "date_finished", "offer_agreement",
+        fields = ("id", "product", "payer_type", "payer_name", "student_name", "get_study_type_display", "get_payment_type_display", "price", "overall_price", "date_started", "date_finished", "offer_agreement",
                   "special_price", "is_paid", "finished", 'payer_email', 'student_emails')
         file = model_to_excel(queryset, fields)
         file.name = f"Покупки-({datetime.now()}).xls"
