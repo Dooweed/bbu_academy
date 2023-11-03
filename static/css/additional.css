@@ -655,6 +655,10 @@ input.hide-arrows[type=number] {
     flex-direction: column;
     background-color: #FFF;
 }
+.main-slider .fixed-bg {
+    width: 65%;
+    position: inherit;
+}
 .main_slider-section .main-slider .slide .content .header {
     font-size: 2.5em;
     color: var(--color12);
