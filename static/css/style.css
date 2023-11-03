@@ -501,9 +501,8 @@ footer,
 .fixed-bg {
   background-position: center;
   height:100%;
-  width:100%;
   margin:0;
-  position:absolute;
+  /*position:absolute;*/
   left:0;
   top:0;
   z-index:-2;
@@ -1292,6 +1291,7 @@ header.style1 {
   position: absolute;
   left: 0;
   top: 0;
+  background-color: rgba(0, 0, 0, 0.2);
 }
 header.style1 .main-menu > li,
 header.style1 .menu-left-icons > *,

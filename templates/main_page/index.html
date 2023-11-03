@@ -3,208 +3,209 @@
 {% load i18n %}
 
 {% block main %}
-<section class="main_slider-section">
+  <section class="main_slider-section">
     <div id="main_slider" class="owl-carousel owl-theme main-slider w-100">
-        {% for item in main_slides %}
-            <div class="blurred-background slide">
-                <div class="fixed-bg" style="background-image: url('{% if item.get_key.has_image %}{{ item.get_key.image.url }}{% else %}{% static 'images/resources/service-img2-1.jpg' %}{% endif %}')"></div>
-                <div class="content">
-                    <div class="d-flex justify-content-center flex-column h-100">
-                        <h2 class="header header-normal">{{ item.get_title }}</h2>
-                    </div>
-                    <div>
-                        <div class="text pt-3">{{ item.get_text| safe }}</div>
-                        <div class="buttons pt-2">
-                            <a href="{{ item.get_link }}" class="tp-caption theme-btn fill-btn2 tp-withaction">{% translate 'Подробнее' %}</a>
-                            {% if item.has_button %}
-                                <a href="{{ item.get_button_action }}" class="tp-caption theme-btn bordered-btn2 tp-withaction">{{ item.get_button_text }}</a>
-                            {% endif %}
-                        </div>
-                    </div>
+      {% for item in main_slides %}
+        <div class="slide d-flex">
+          <div class="fixed-bg" style="background-image: url('{% if item.get_key.has_image %}{{ item.get_key.image.url }}{% else %}{% static 'images/resources/service-img2-1.jpg' %}{% endif %}')"></div>
+          <div class="content">
+            <div class="d-flex justify-content-center flex-column h-100">
+              <h2 class="header header-normal">{{ item.get_title }}</h2>
+              <div>
+                <div class="text pt-3">{{ item.get_text| safe }}</div>
+                <div class="buttons pt-2">
+                  <a href="{{ item.get_link }}" class="tp-caption theme-btn fill-btn2 tp-withaction">{% translate 'Подробнее' %}</a>
+                  {% if item.has_button %}
+                    <a href="{{ item.get_button_action }}" class="tp-caption theme-btn bordered-btn2 tp-withaction">{{ item.get_button_text }}</a>
+                  {% endif %}
                 </div>
+              </div>
             </div>
-        {% endfor %}
+          </div>
+        </div>
+      {% endfor %}
     </div>
     <div class="owl-controls">
-        <div class="owl-nav">
-            <div class="owl-prev">prev</div>
-            <div class="owl-next">next</div>
-        </div>
-        <div class="owl-dots">
-            <div class="owl-dot active"><span></span></div>
-            <div class="owl-dot"><span></span></div>
-            <div class="owl-dot"><span></span></div>
-        </div>
+      <div class="owl-nav">
+        <div class="owl-prev">prev</div>
+        <div class="owl-next">next</div>
+      </div>
+      <div class="owl-dots">
+        <div class="owl-dot active"><span></span></div>
+        <div class="owl-dot"><span></span></div>
+        <div class="owl-dot"><span></span></div>
+      </div>
     </div>
-</section>
+  </section>
 
-<section>
+  <section>
     <div class="w-100 bg-color5 position-relative service-wrap">
-        <div class="bg-waves">
-            <div class="wave wave-bottom-left">
-                <img class="layer" src="{% static 'images/bottom-left2.png' %}" alt="bottom-left2">
-                <img class="layer" src="{% static 'images/bottom-left1.png' %}" alt="bottom-left1">
-            </div>
-            <div class="wave wave-bottom-right">
-                <img class="layer" src="{% static 'images/bottom-right2.png' %}" alt="bottom-right2">
-                <img class="layer" src="{% static 'images/bottom-right1.png' %}" alt="bottom-right1">
-            </div>
+      <div class="bg-waves">
+        <div class="wave wave-bottom-left">
+          <img class="layer" src="{% static 'images/bottom-left2.png' %}" alt="bottom-left2">
+          <img class="layer" src="{% static 'images/bottom-left1.png' %}" alt="bottom-left1">
         </div>
-        <div class="container">
-            <div class="service-caro">
-                {% for item in secondary_slides %}
-                    {% include 'main_page/secondary_slider/service-box-wrap.html' %}
-                {% endfor %}
-            </div>
+        <div class="wave wave-bottom-right">
+          <img class="layer" src="{% static 'images/bottom-right2.png' %}" alt="bottom-right2">
+          <img class="layer" src="{% static 'images/bottom-right1.png' %}" alt="bottom-right1">
         </div>
+      </div>
+      <div class="container">
+        <div class="service-caro">
+          {% for item in secondary_slides %}
+            {% include 'main_page/secondary_slider/service-box-wrap.html' %}
+          {% endfor %}
+        </div>
+      </div>
     </div><!-- Service Wrap -->
-</section>
-<section>
+  </section>
+  <section>
     <div class="w-100 pt-120 pb-120 position-relative">
-        <div id="particles1" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
-             data-count="8" data-speed="2" data-hide="770" data-image="static"></div>
-        <div class="container">
-            <div class="about-wrap w-100">
-                <div class="row align-items-center">
-                    <div class="col-md-6 col-sm-12 col-lg-6">
-                        <img class="img-fluid" src="{% static 'images/resources/about-mckp1.png' %}" alt="About Mockup">
-                    </div>
-                    <div class="col-md-6 col-sm-12 col-lg-6">
-                        <div class="about-desc w-100">
-                            <h2 class="single-header mb-0">{{ single_block.get_title }}</h2>
-                            <p class="mb-0">
-                                {{ single_block.get_text| safe }}
-                            </p>
-                            <div class="btns">
-                                <a class="icon-btn theme-btn icon-right fill-btn text-uppercase" href="{{ single_block.get_link }}" title="{% translate "Читать дальше" %}"><i class="metaicon-028-arrow-metamax"></i>{% translate "Читать" %}<i class="metaicon-028-arrow-metamax"></i></a>
-                                <a class="simple-btn theme-btn bordered-btn" href="{% url 'contacts' %}" title="{% translate "Связаться с нами" %}">{% translate "Написать" %}</a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div><!-- About Style 1 -->
-        </div>
-    </div>
-</section>
-
-
-<section>
-    <div class="w-100 pt-30 bg-color10">
-        <div class="service-wrap2">
-            <div class="row">
-                {% for item in news %}
-                    {% include 'main_page/chunks/static-block.html' %}
-                {% endfor %}
+      <div id="particles1" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
+           data-count="8" data-speed="2" data-hide="770" data-image="static"></div>
+      <div class="container">
+        <div class="about-wrap w-100">
+          <div class="row align-items-center">
+            <div class="col-md-6 col-sm-12 col-lg-6">
+              <img class="img-fluid" src="{% static 'images/resources/about-mckp1.png' %}" alt="About Mockup">
             </div>
-        </div><!-- Service Wrap Style 2 -->
+            <div class="col-md-6 col-sm-12 col-lg-6">
+              <div class="about-desc w-100">
+                <h2 class="single-header mb-0">{{ single_block.get_title }}</h2>
+                <p class="mb-0">
+                  {{ single_block.get_text| safe }}
+                </p>
+                <div class="btns">
+                  <a class="icon-btn theme-btn icon-right fill-btn text-uppercase" href="{{ single_block.get_link }}" title="{% translate "Читать дальше" %}"><i
+                          class="metaicon-028-arrow-metamax"></i>{% translate "Читать" %}<i class="metaicon-028-arrow-metamax"></i></a>
+                  <a class="simple-btn theme-btn bordered-btn" href="{% url 'contacts' %}" title="{% translate "Связаться с нами" %}">{% translate "Написать" %}</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div><!-- About Style 1 -->
+      </div>
     </div>
-</section>
+  </section>
 
 
-<section>
+  <section>
+    <div class="w-100 pt-30 bg-color10">
+      <div class="service-wrap2">
+        <div class="row">
+          {% for item in news %}
+            {% include 'main_page/chunks/static-block.html' %}
+          {% endfor %}
+        </div>
+      </div><!-- Service Wrap Style 2 -->
+    </div>
+  </section>
+
+
+  <section>
     <div class="w-100 bg-color2 pt-120 pb-120">
-        <div class="container">
-            <div class="check-website-form w-100">
-                <div class="sec-title text-uppercase w-100 d-md-flex text-center text-md-left justify-content-center">
-                    <span class="d-block">{% translate "Позвоните" %}</span>
-                    <h2 class="mb-0">{{ phone1 }}</h2>
-                </div>
-                <div class="sec-title pt-4 pb-4 w-100 d-flex justify-content-center">
-                    <span class="text-center">{% translate "или" %}</span>
-                </div>
-                <div class="form-wrap sec-title position-relative w-100 text-center">
-                    <span class="text-uppercase">{% translate "Мы сами вам позвоним" %}</span>
-                    <form class="w-100 mt-10 d-flex justify-content-center">
-                        <div class="input-field w-100 position-relative">
-                            <input type="url" placeholder="{% translate "Номер телефона" %}">
-                        </div>
-                        <div class="form-button">
-                            <button class="theme-btn with-icon fill-btn2" type="submit">{% translate "Отправить" %}</button>
-                        </div>
-                    </form>
-                </div>
-            </div><!-- Check Websit Form -->
-        </div>
+      <div class="container">
+        <div class="check-website-form w-100">
+          <div class="sec-title text-uppercase w-100 d-md-flex text-center text-md-left justify-content-center">
+            <span class="d-block">{% translate "Позвоните" %}</span>
+            <h2 class="mb-0">{{ phone1 }}</h2>
+          </div>
+          <div class="sec-title pt-4 pb-4 w-100 d-flex justify-content-center">
+            <span class="text-center">{% translate "или" %}</span>
+          </div>
+          <div class="form-wrap sec-title position-relative w-100 text-center">
+            <span class="text-uppercase">{% translate "Мы сами вам позвоним" %}</span>
+            <form class="w-100 mt-10 d-flex justify-content-center">
+              <div class="input-field w-100 position-relative">
+                <input type="url" placeholder="{% translate "Номер телефона" %}">
+              </div>
+              <div class="form-button">
+                <button class="theme-btn with-icon fill-btn2" type="submit">{% translate "Отправить" %}</button>
+              </div>
+            </form>
+          </div>
+        </div><!-- Check Websit Form -->
+      </div>
     </div>
-</section>
-<section>
+  </section>
+  <section>
     <div class="w-100 py-100 position-relative">
-        <div id="particles2" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
-             data-count="8" data-speed="2" data-hide="770" data-image="static"></div>
-        <div class="container">
-            <div class="sec-title2 mb-70 text-center w-100">
-                <div class="d-inline-block">
-                    <h2 class="mb-0 text-uppercase text-color2">{% translate "<span>этапы</span>Обучения" %}</h2>
-                    <p class="mb-0">{% translate "Мы разделили тренинги на несколько этапов, <br> чтобы материал усваивался легче." %}
-                    </p>
-                </div>
-            </div><!-- Section Title Style 2 -->
-            <div class="roadmap-wrap text-center w-100 position-relative d-flex flex-nowrap flex-row justify-content-between align-items-start">
-                <div class="roadmap-item color1 position-relative">
+      <div id="particles2" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"
+           data-count="8" data-speed="2" data-hide="770" data-image="static"></div>
+      <div class="container">
+        <div class="sec-title2 mb-70 text-center w-100">
+          <div class="d-inline-block">
+            <h2 class="mb-0 text-uppercase text-color2">{% translate "<span>этапы</span>Обучения" %}</h2>
+            <p class="mb-0">{% translate "Мы разделили тренинги на несколько этапов, <br> чтобы материал усваивался легче." %}
+            </p>
+          </div>
+        </div><!-- Section Title Style 2 -->
+        <div class="roadmap-wrap text-center w-100 position-relative d-flex flex-nowrap flex-row justify-content-between align-items-start">
+          <div class="roadmap-item color1 position-relative">
                         <span class="d-inline-block position-absolute roadmap-icon"><i
-                                    class="metaicon-search-1"></i></span>
-                    <span class="d-inline-block roadmap-label"><i class="font-style-normal">01</i></span>
-                    <h5 class="mb-0">{% translate "Определние навыков" %}</h5>
-                </div>
-                <div class="roadmap-item color2 position-relative">
-                    <span class="d-inline-block position-absolute roadmap-icon"><i class="metaicon-idea"></i></span>
-                    <span class="d-inline-block roadmap-label"><i class="font-style-normal">02</i></span>
-                    <h5 class="mb-0">{% translate "Подбор группы" %}</h5>
-                </div>
-                <div class="roadmap-item color3 position-relative">
+                                class="metaicon-search-1"></i></span>
+            <span class="d-inline-block roadmap-label"><i class="font-style-normal">01</i></span>
+            <h5 class="mb-0">{% translate "Определние навыков" %}</h5>
+          </div>
+          <div class="roadmap-item color2 position-relative">
+            <span class="d-inline-block position-absolute roadmap-icon"><i class="metaicon-idea"></i></span>
+            <span class="d-inline-block roadmap-label"><i class="font-style-normal">02</i></span>
+            <h5 class="mb-0">{% translate "Подбор группы" %}</h5>
+          </div>
+          <div class="roadmap-item color3 position-relative">
                         <span class="d-inline-block position-absolute roadmap-icon"><i
-                                    class="metaicon-analytics"></i></span>
-                    <span class="d-inline-block roadmap-label"><i class="font-style-normal">03</i></span>
-                    <h5 class="mb-0">{% translate "Начало обучения" %}</h5>
-                </div>
-                <div class="roadmap-item color4 position-relative">
-                    <span class="d-inline-block position-absolute roadmap-icon"><i class="metaicon-analytics-1"></i></span>
-                    <span class="d-inline-block roadmap-label"><i class="font-style-normal">04</i></span>
-                    <h5 class="mb-0">{% translate "Применение навыков" %}</h5>
-                </div>
-            </div><!-- Roadmap Wrap -->
-        </div>
+                                class="metaicon-analytics"></i></span>
+            <span class="d-inline-block roadmap-label"><i class="font-style-normal">03</i></span>
+            <h5 class="mb-0">{% translate "Начало обучения" %}</h5>
+          </div>
+          <div class="roadmap-item color4 position-relative">
+            <span class="d-inline-block position-absolute roadmap-icon"><i class="metaicon-analytics-1"></i></span>
+            <span class="d-inline-block roadmap-label"><i class="font-style-normal">04</i></span>
+            <h5 class="mb-0">{% translate "Применение навыков" %}</h5>
+          </div>
+        </div><!-- Roadmap Wrap -->
+      </div>
     </div>
-</section>
-{#<section>#}
-{#    <div class="w-100 pt-100 pb-100 position-relative">#}
-{#        <div id="particles3" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"#}
-{#             data-count="8" data-speed="2" data-hide="770" data-image="static"></div>#}
-{#        <div class="container">#}
-{#            <div class="testi-mckp-wrap w-100">#}
-{#                <div class="row align-items-center">#}
-{#                    <div class="col-md-12 col-sm-12 col-lg-6 order-1 d-none d-lg-block">#}
-{#                        <img class="img-fluid" src="{% static 'images/resources/testi-mckp.jpg' %}" alt="Testimonials Mockup">#}
-{#                    </div>#}
-{#                    <div class="col-md-12 col-sm-12 col-lg-6">#}
-{#                        <div class="testi-wrap w-100">#}
-{#                            <div class="testi-caro simple-arrows">#}
-{#                                {% for item in reviews %}#}
-{#                                    {% include 'main_page/reviews/review.html' %}#}
-{#                                {% endfor %}#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div><!-- Testimonials With Mockup Wrap -->#}
-{#        </div>#}
-{#    </div>#}
-{#</section>#}
+  </section>
+  {#<section>#}
+  {#    <div class="w-100 pt-100 pb-100 position-relative">#}
+  {#        <div id="particles3" class="particles-js top-left" data-color="#ffe27a" data-saturation="300" data-size="40"#}
+  {#             data-count="8" data-speed="2" data-hide="770" data-image="static"></div>#}
+  {#        <div class="container">#}
+  {#            <div class="testi-mckp-wrap w-100">#}
+  {#                <div class="row align-items-center">#}
+  {#                    <div class="col-md-12 col-sm-12 col-lg-6 order-1 d-none d-lg-block">#}
+  {#                        <img class="img-fluid" src="{% static 'images/resources/testi-mckp.jpg' %}" alt="Testimonials Mockup">#}
+  {#                    </div>#}
+  {#                    <div class="col-md-12 col-sm-12 col-lg-6">#}
+  {#                        <div class="testi-wrap w-100">#}
+  {#                            <div class="testi-caro simple-arrows">#}
+  {#                                {% for item in reviews %}#}
+  {#                                    {% include 'main_page/reviews/review.html' %}#}
+  {#                                {% endfor %}#}
+  {#                            </div>#}
+  {#                        </div>#}
+  {#                    </div>#}
+  {#                </div>#}
+  {#            </div><!-- Testimonials With Mockup Wrap -->#}
+  {#        </div>#}
+  {#    </div>#}
+  {#</section>#}
 {% endblock %}
 
 {% block script %}
-    <script>
-    $(document).ready(function(){
-      $(".owl-carousel").owlCarousel({
-          items: 1,
-          loop: true,
-          nav: true,
-          autoplay: true,
-          autoplayTimeout: 4000,
-          autoplaySpeed: 1000,
-          navText : ['<i class="fa fa-angle-left" aria-hidden="true"></i>','<i class="fa fa-angle-right" aria-hidden="true"></i>'],
-          autoWidth:false,
+  <script>
+      $(document).ready(function () {
+          $(".owl-carousel").owlCarousel({
+              items: 1,
+              loop: true,
+              nav: true,
+              autoplay: true,
+              autoplayTimeout: 15000,
+              autoplaySpeed: 1000,
+              navText: ['<i class="fa fa-angle-left" aria-hidden="true"></i>', '<i class="fa fa-angle-right" aria-hidden="true"></i>'],
+              autoWidth: false,
+          });
       });
-    });
-    </script>
+  </script>
 {% endblock %}
